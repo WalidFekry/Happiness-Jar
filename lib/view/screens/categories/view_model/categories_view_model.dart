@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/enums/status.dart';
 import 'package:happiness_jar/locator.dart';
@@ -5,6 +6,7 @@ import 'package:happiness_jar/models/resources.dart';
 import 'package:happiness_jar/services/api_service.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../enums/screen_state.dart';
 import '../../../../routs/routs_names.dart';
@@ -15,7 +17,6 @@ class CategoriesViewModel extends BaseViewModel{
 
   List<MessagesCategories> list = [];
   List<MessagesCategories> content = [];
-  bool isDone = true;
   var apiService = locator<ApiService>();
   var appDatabase = locator<AppDatabase>();
 
@@ -26,9 +27,6 @@ class CategoriesViewModel extends BaseViewModel{
     if(resource.status == Status.SUCCESS){
       await appDatabase.insertData(resource);
       list = await appDatabase.getMessagesCategories();
-      isDone = true;
-    }else{
-      isDone = false;
     }
   }
   setState(ViewState.Idle);
@@ -40,12 +38,17 @@ class CategoriesViewModel extends BaseViewModel{
       Resource<MessagesContentModel> resource = await apiService.getMessagesContent();
       if(resource.status == Status.SUCCESS){
         await appDatabase.insertData(resource);
-        list = await appDatabase.getMessagesContent(categorie);
-        isDone = true;
-      }else{
-        isDone = false;
+        content = await appDatabase.getMessagesContent(categorie);
       }
     }
+    setState(ViewState.Idle);
+  }
+
+  Future<void> saveFavoriteMessage(int index) async {
+    DateTime now = DateTime.now();
+    String createdAt = "${now.day}-${now.month}-${now.year}";
+    await appDatabase.saveFavoriteMessage(content[index].title,createdAt);
+    content[index].isFavourite = !content[index].isFavourite;
     setState(ViewState.Idle);
   }
 
@@ -54,6 +57,17 @@ class CategoriesViewModel extends BaseViewModel{
     navigate.navigateTo(RouteName.MESSAGES_CATEGORIES_CONTENT,
         arguments: list[index],
         queryParams: {'index': index.toString()});
+  }
+
+  Future<void> shareMessage(int index) async {
+    await Share.share(
+        '${content[index].title} \n\n 💙 من تطبيق برطمان السعادة');
+  }
+
+  void copyMessage(int index) {
+    FlutterClipboard.copy(
+      '${content[index].title} \n \n 💙 من تطبيق برطمان السعادة',
+    );
   }
 
 }

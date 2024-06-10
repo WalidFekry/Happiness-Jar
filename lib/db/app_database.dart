@@ -1,7 +1,10 @@
 
 
 
+import 'dart:ffi';
+
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
+import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -23,6 +26,9 @@ class AppDatabase {
     );
     db.execute(
       'CREATE TABLE messages_content(id INTEGER UNIQUE, title TEXT, categorie INTEGER)',
+    );
+    db.execute(
+      'CREATE TABLE favorite_messages(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, created_at TEXT)',
     );
   }
 
@@ -46,7 +52,29 @@ class AppDatabase {
     await batch?.commit(noResult: true);
   }
 
-  Future<List<MessagesCategories>> getMessagesCategories() async {
+  Future<void> saveFavoriteMessage(String? title, String createdAt) async {
+    final Database? db = await getDb();
+    await db?.insert(
+      'favorite_messages',
+      {
+        'title': title,
+        'created_at': createdAt,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<int?> deleteFavoriteMessage(int? id) async {
+    final Database? db = await getDb();
+    await db?.delete(
+      'favorite_messages',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+
+    Future<List<MessagesCategories>> getMessagesCategories() async {
     final Database db = await mainDatabase();
     final List<Map<String, dynamic>> maps =
     await db.rawQuery('SELECT * FROM messages_categories ORDER BY RANDOM()');
@@ -67,4 +95,17 @@ class AppDatabase {
     }
     return data;
   }
+
+  Future<List<FavoriteMessagesModel>> getFavoriteMessages() async {
+    final Database db = await mainDatabase();
+    final List<Map<String, dynamic>> maps =
+    await db.rawQuery('SELECT * FROM favorite_messages ORDER BY id DESC');
+    List<FavoriteMessagesModel> data = [];
+    for (var item in maps) {
+      data.add(FavoriteMessagesModel.fromJson(item));
+    }
+    return data;
+  }
+
+
 }

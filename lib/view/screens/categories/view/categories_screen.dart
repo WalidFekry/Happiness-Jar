@@ -29,7 +29,9 @@ class CategoriesScreen extends StatelessWidget {
               child: Image.asset(AssetsManager.iconAppBar),
             ),
           ),
-          body: Padding(
+          body:
+          viewModel.list.isNotEmpty ?
+          Padding(
             padding: const EdgeInsets.only(top: 20),
             child: ListView.builder(itemCount: viewModel.list.length,itemBuilder: (context,index){
               return InkWell(
@@ -52,7 +54,13 @@ class CategoriesScreen extends StatelessWidget {
                 ),
               );
             }),
-          ),
+          ): Center(
+          child: CircularProgressIndicator(
+          backgroundColor: Theme.of(context).iconTheme.color,
+          strokeAlign: 5,
+          strokeWidth: 5,
+        ),
+        ),
         );
       }
     );
