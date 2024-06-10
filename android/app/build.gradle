@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.walid.happiness.jar.happiness_jar"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

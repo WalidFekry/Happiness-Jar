@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SubtitleTextWidget extends StatelessWidget {
-  const SubtitleTextWidget({
+class ContentTextWidget extends StatelessWidget {
+  const ContentTextWidget({
     super.key,
     required this.label,
-    this.fontSize = 20,
-    this.fontWeight = FontWeight.w600,
+    this.fontSize = 18,
+    this.fontWeight = FontWeight.normal,
     this.color,
-    this.fontFamily = "avenir_medium",
+    this.fontFamily = "avenir_regular",
   });
 
   final String? label;
@@ -23,7 +23,6 @@ class SubtitleTextWidget extends StatelessWidget {
         fontFamily: fontFamily,
         fontSize: fontSize,
         fontWeight: fontWeight,
-        fontStyle: FontStyle.normal,
         color: color,
       ),
     );

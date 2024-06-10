@@ -4,13 +4,13 @@ class TitleTextWidget extends StatelessWidget {
   const TitleTextWidget({
     Key? key,
     required this.label,
-    this.fontSize = 20,
+    this.fontSize = 22,
     this.color,
     this.maxLines,
     this.fontFamily = "avenir_bold",
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final double fontSize;
   final Color? color;
   final int? maxLines;
@@ -18,7 +18,7 @@ class TitleTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      label,
+      label!,
       maxLines: maxLines,
       // textAlign: TextAlign.justify,
       style: TextStyle(
