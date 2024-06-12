@@ -26,15 +26,6 @@ class FavoriteScreen extends StatelessWidget {
     viewModel.getFavoriteMessages();
     }, builder: (context, viewModel, child) {
       return Scaffold(
-          appBar: AppBar(
-            title: const AppBarTextWidget(
-              title: "المفضلة",
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(AssetsManager.iconAppBar),
-            ),
-          ),
           body: Stack(
             children: [
               viewModel.list.isNotEmpty ?

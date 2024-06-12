@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           title: 'برطمان السعادة',
           theme: Styles.themeData(
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-          initialRoute: RouteName.HOME,
+          initialRoute: RouteName.REGISTER,
           navigatorKey: locator<NavigationService>().navigatorKey,
           onGenerateRoute: AppRouter.generateRoute,
         );

@@ -20,15 +20,6 @@ class CategoriesScreen extends StatelessWidget {
       },
       builder: (context,viewModel, child){
         return Scaffold(
-          appBar: AppBar(
-            title: const AppBarTextWidget(
-              title: "أقسام الرسائل",
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(AssetsManager.iconAppBar),
-            ),
-          ),
           body:
           viewModel.list.isNotEmpty ?
           Padding(
@@ -42,7 +33,7 @@ class CategoriesScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Theme.of(context).iconTheme.color!,width: 1),
+                        border: Border.all(color: const Color.fromARGB(178, 158, 158, 158)),
                         borderRadius: const BorderRadius.only(topLeft: Radius.circular(22),bottomLeft:Radius.circular(22))
                     ),
                     child: ListTile(

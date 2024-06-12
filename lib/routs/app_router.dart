@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/routs/routing_data.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
+import 'package:happiness_jar/view/screens/auth/view/register_screen.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/categories/view/messages_categories_content.dart';
 import 'package:happiness_jar/view/screens/home/view/home_screen.dart';
+import 'package:happiness_jar/view/screens/profile/view/profile_screen.dart';
 
 import '../view/screens/not_found_screen/not_found_screen.dart';
 
@@ -21,7 +23,11 @@ class AppRouter {
 
     switch (routingData.route) {
       case RouteName.HOME:
-        return _getPageRoute(const HomeScreen(), settings);
+      return _getPageRoute(const HomeScreen(), settings);
+      case RouteName.REGISTER:
+        return _getPageRoute(const RegisterScreen(), settings);
+      case RouteName.PROFILE:
+        return _getPageRoute(const ProfileScreen(), settings);
       case RouteName.MESSAGES_CATEGORIES_CONTENT:
         var messagesCategoriesArguments = settings.arguments as MessagesCategories;
         return _getPageRoute(MessagesCategoriesContent(

@@ -41,35 +41,42 @@ class Styles {
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
+        fillColor: Colors.transparent,
+        labelStyle: TextStyle(
+          color: isDarkTheme ? Colors.white : Colors.black,
+          fontSize: 16.0,
+          fontWeight: FontWeight.w600,
+          fontFamily: "avenir_medium"
+        ),
         filled: true,
-        contentPadding: const EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(15),
         enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
           borderSide: const BorderSide(
-            width: 1,
-            color: Colors.transparent,
+            color: Colors.grey,
+            width: 2.0,
           ),
-          borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 1,
-            color: isDarkTheme ? Colors.white : Colors.black,
+          borderSide: const BorderSide(
+            width: 2,
+            color: Colors.grey,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1,
+            width: 2,
             color: Theme.of(context).colorScheme.error,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1,
+            width: 2,
             color: Theme.of(context).colorScheme.error,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );
