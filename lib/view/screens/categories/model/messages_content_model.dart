@@ -8,9 +8,9 @@ class MessagesContentModel {
   MessagesContentModel({this.content});
 
   MessagesContentModel.fromJson(Map<String, dynamic> json) {
-    if (json['messages_categories'] != null) {
+    if (json['messages_content'] != null) {
       content = <MessagesContent>[];
-      json['messages_categories'].forEach((v) {
+      json['messages_content'].forEach((v) {
         content!.add(MessagesContent.fromJson(v));
       });
     }
@@ -19,7 +19,7 @@ class MessagesContentModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (content != null) {
-      data['messages_categories'] =
+      data['messages_content'] =
           content!.map((v) => v.toJson()).toList();
     }
     return data;

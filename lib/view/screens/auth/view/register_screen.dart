@@ -18,7 +18,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseView<RegisterViewModel>(
-      onModelReady: (viewModel) {},
+      onModelReady: (viewModel) {
+      },
       builder: (context, viewModel, child) {
         return Scaffold(
           body: SafeArea(

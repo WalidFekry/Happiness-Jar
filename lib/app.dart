@@ -3,6 +3,7 @@ import 'package:happiness_jar/providers/theme_provider.dart';
 import 'package:happiness_jar/routs/app_router.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
+import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/home/view/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           title: 'برطمان السعادة',
           theme: Styles.themeData(
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-          initialRoute: RouteName.REGISTER,
+          initialRoute: RouteName.HOME,
           navigatorKey: locator<NavigationService>().navigatorKey,
           onGenerateRoute: AppRouter.generateRoute,
         );

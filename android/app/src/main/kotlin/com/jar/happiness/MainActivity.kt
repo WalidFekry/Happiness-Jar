@@ -1,4 +1,4 @@
-package com.walid.happiness.jar.happiness_jar
+package com.jar.happiness
 
 import io.flutter.embedding.android.FlutterActivity
 

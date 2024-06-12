@@ -5,5 +5,7 @@ class AssetsManager {
 
   static const String iconAppBar = "$iconsPath/hearts.png";
   static const String darkMode = "$iconsPath/dark_mode.png";
+  static const String userProfile = "$iconsPath/user.png";
   static const String imageJar30 = "$imagesPath/jar_30.png";
+
 }
