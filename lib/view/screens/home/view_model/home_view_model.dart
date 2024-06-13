@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:happiness_jar/consts/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
@@ -53,6 +54,20 @@ class HomeViewModel extends BaseViewModel {
         appBarTitle = "الرئيسية";
     }
     setState(ViewState.Idle);
+  }
+
+  setFirebaseMessaging(){
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('Message clicked!');
+      jumpToPage(1);
+    });
   }
 
   Future<void> isUserLogin() async {

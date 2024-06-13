@@ -1,16 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/providers/theme_provider.dart';
 import 'package:happiness_jar/routs/app_router.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
 import 'locator.dart';
 
 Future<void> initServices() async {
   await Firebase.initializeApp();
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  var status = await Permission.notification.request();
+  if (status.isDenied) {
+    print("isDenied");
+  }
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupLocator();
 }
 
@@ -47,6 +55,14 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Handling a background message: ${message.messageId}');
+}
+
+
+
 
 EasyLocalization easyLocalization(Widget child) {
   return EasyLocalization(
