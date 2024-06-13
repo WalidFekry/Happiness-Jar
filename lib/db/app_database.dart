@@ -3,12 +3,14 @@
 
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/resources.dart';
+import '../view/screens/notifications/model/notification_model.dart';
 
 
 class AppDatabase {
@@ -29,6 +31,9 @@ class AppDatabase {
     );
     db.execute(
       'CREATE TABLE favorite_messages(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, created_at TEXT)',
+    );
+    db.execute(
+      'CREATE TABLE messages_notifications(id INTEGER UNIQUE, text TEXT, created_at TEXT)',
     );
   }
 
@@ -92,6 +97,17 @@ class AppDatabase {
     List<MessagesCategories> data = [];
     for (var item in maps) {
       data.add(MessagesCategories.fromJson(item));
+    }
+    return data;
+  }
+
+  Future<List<MessagesNotifications>> getMessagesNotificationContent() async {
+    final Database db = await mainDatabase();
+    final List<Map<String, dynamic>> maps =
+    await db.rawQuery('SELECT * FROM messages_notifications ORDER BY RANDOM()');
+    List<MessagesNotifications> data = [];
+    for (var item in maps) {
+      data.add(MessagesNotifications.fromJson(item));
     }
     return data;
   }

@@ -5,6 +5,7 @@ import 'package:happiness_jar/view/screens/categories/model/messages_content_mod
 
 import '../enums/status.dart';
 import '../models/resources.dart';
+import '../view/screens/notifications/model/notification_model.dart';
 
 class ApiService {
 
@@ -33,8 +34,19 @@ class ApiService {
   Future<Resource<MessagesContentModel>> getMessagesContent() async {
     try {
       var response = await dio.get('messages_content.php');
-      var contentMessagesContent = MessagesContentModel.fromJson(response.data);
-      return Resource(Status.SUCCESS, data: contentMessagesContent);
+      var contentMessages = MessagesContentModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: contentMessages);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<NotificationsModel>> getMessagesNotificationContent() async {
+    try {
+      var response = await dio.get('messages_notifications.php');
+      var contentMessagesNotification = NotificationsModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: contentMessagesNotification);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

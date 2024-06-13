@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../categories/view/categories_screen.dart';
 import '../../favorite/view/favorite_screen.dart';
 import '../../messages/view/messages_screen.dart';
+import '../../notifications/view/notifications_screen.dart';
 import '../../profile/view/profile_screen.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -22,9 +23,9 @@ class HomeViewModel extends BaseViewModel {
 
   List<Widget> screens = [
     const MessagesScreen(),
+    const NotificationsScreen(),
     const CategoriesScreen(),
     const FavoriteScreen(),
-    const ProfileScreen()
   ];
 
   void setController() {
@@ -37,16 +38,16 @@ class HomeViewModel extends BaseViewModel {
     controller?.jumpToPage(selectedIndex);
     switch (index) {
       case 0:
-        appBarTitle = "الرئيسية";
+        appBarTitle = "رسائل البرطمان";
         break;
       case 1:
-        appBarTitle = "الأقسام";
+        appBarTitle = "إشعارات البرطمان";
         break;
       case 2:
-        appBarTitle = "المفضلة";
+        appBarTitle = "الأقسام";
         break;
       case 3:
-        appBarTitle = "الحساب";
+        appBarTitle = "المفضلة";
         break;
       default:
         appBarTitle = "الرئيسية";

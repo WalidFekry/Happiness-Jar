@@ -46,7 +46,7 @@ class CategoriesViewModel extends BaseViewModel{
 
   Future<void> saveFavoriteMessage(int index) async {
     DateTime now = DateTime.now();
-    String createdAt = "${now.day}-${now.month}-${now.year}";
+    String createdAt = "${now.year}-${now.month}-${now.day}";
     await appDatabase.saveFavoriteMessage(content[index].title,createdAt);
     content[index].isFavourite = !content[index].isFavourite;
     setState(ViewState.Idle);
