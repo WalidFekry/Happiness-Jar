@@ -5,6 +5,7 @@ class SubtitleTextWidget extends StatelessWidget {
     super.key,
     required this.label,
     this.fontSize = 20,
+    this.textAlign = TextAlign.start,
     this.fontWeight = FontWeight.w600,
     this.color,
     this.fontFamily = "avenir_medium",
@@ -15,10 +16,12 @@ class SubtitleTextWidget extends StatelessWidget {
   final FontWeight? fontWeight;
   final Color? color;
   final String fontFamily;
+  final TextAlign textAlign;
   @override
   Widget build(BuildContext context) {
     return Text(
       label!,
+      textAlign: textAlign,
       style: TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSize,

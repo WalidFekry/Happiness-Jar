@@ -21,6 +21,7 @@ class HomeViewModel extends BaseViewModel {
   String? appBarTitle = "الرئيسية";
   var prefs = locator<SharedPrefServices>();
   bool isLogin = false;
+  bool getStarted = false;
 
   List<Widget> screens = [
     const MessagesScreen(),
@@ -56,7 +57,7 @@ class HomeViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
-  setFirebaseMessaging(){
+  setFirebaseMessaging() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
@@ -71,10 +72,18 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> isUserLogin() async {
+    // locator<NavigationService>().navigateToAndClearStack(RouteName.GET_STARTED);
     await prefs.init();
+    getStarted = await prefs.getBoolean(SharedPrefsConstants.GET_STARTED);
     isLogin = await prefs.getBoolean(SharedPrefsConstants.IS_LOGIN);
-    if(!isLogin){
+    if (!getStarted) {
+      locator<NavigationService>()
+          .navigateToAndClearStack(RouteName.GET_STARTED);
+      return;
+    }
+    if (!isLogin) {
       locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
+      return;
     }
   }
 }

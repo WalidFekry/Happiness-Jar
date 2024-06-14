@@ -6,6 +6,7 @@ import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/auth/view_model/register_view_model.dart';
 import 'package:happiness_jar/view/screens/categories/view_model/categories_view_model.dart';
 import 'package:happiness_jar/view/screens/favorite/view_model/favorite_view_model.dart';
+import 'package:happiness_jar/view/screens/get_started/view_model/get_started_view_model.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:happiness_jar/view/screens/messages/view_model/messages_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
@@ -21,12 +22,13 @@ void setupLocator() {
   locator.registerLazySingleton(() => CategoriesViewModel());
   locator.registerLazySingleton(() => FavoriteViewModel());
   locator.registerLazySingleton(() => ProfileViewModel());
-  locator.registerLazySingleton(() => RegisterViewModel());
   locator.registerLazySingleton(() => HomeViewModel());
   locator.registerLazySingleton(() => NotificationsViewModel());
+  locator.registerLazySingleton(() => GetStartedViewModel());
 
   // initSingleton();
 
+  locator.registerFactory(() => RegisterViewModel());
   locator.registerFactory(() => MessagesViewModel());
 
 }

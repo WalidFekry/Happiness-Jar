@@ -5,10 +5,13 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/view/screens/auth/view/register_screen.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/categories/view/messages_categories_content.dart';
+import 'package:happiness_jar/view/screens/get_started/view/get_notification_screen.dart';
+import 'package:happiness_jar/view/screens/get_started/view/get_started_screen.dart';
 import 'package:happiness_jar/view/screens/home/view/home_screen.dart';
 import 'package:happiness_jar/view/screens/profile/view/profile_screen.dart';
 
 import '../view/screens/not_found_screen/not_found_screen.dart';
+import '../view/screens/notifications/view/notifications_screen.dart';
 
 
 class AppRouter {
@@ -24,6 +27,10 @@ class AppRouter {
     switch (routingData.route) {
       case RouteName.HOME:
       return _getPageRoute(const HomeScreen(), settings);
+      case RouteName.GET_STARTED:
+        return _getPageRoute(const GetStartedScreen(), settings);
+      case RouteName.GET_NOTIFICATION_SCREEN:
+        return _getPageRoute(const GetNotificationScreen(), settings);
       case RouteName.REGISTER:
         return _getPageRoute(const RegisterScreen(), settings);
       case RouteName.PROFILE:

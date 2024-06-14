@@ -14,10 +14,6 @@ import 'locator.dart';
 Future<void> initServices() async {
   await Firebase.initializeApp();
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  var status = await Permission.notification.request();
-  if (status.isDenied) {
-    print("isDenied");
-  }
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupLocator();
 }

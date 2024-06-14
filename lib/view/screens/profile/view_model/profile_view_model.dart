@@ -30,7 +30,7 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   void logOut() {
-    prefs.clearPrefs();
+    clearPrefs();
     locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
   }
 
@@ -77,6 +77,13 @@ class ProfileViewModel extends BaseViewModel {
       final File localImage = await image!.copy('$path/$newFileName');
       await prefs.saveString(SharedPrefsConstants.USER_IMAGE, localImage.path);
     }
+    setState(ViewState.Idle);
+  }
+
+  void clearPrefs() {
+    prefs.saveString(SharedPrefsConstants.USER_NAME, "");
+    prefs.saveString(SharedPrefsConstants.USER_IMAGE, "");
+    prefs.saveBoolean(SharedPrefsConstants.IS_LOGIN, false);
     setState(ViewState.Idle);
   }
 
