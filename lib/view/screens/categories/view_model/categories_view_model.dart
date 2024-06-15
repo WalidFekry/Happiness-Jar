@@ -21,6 +21,7 @@ class CategoriesViewModel extends BaseViewModel{
   var appDatabase = locator<AppDatabase>();
 
   Future<void> getCategories() async {
+  list.clear();
   list = await appDatabase.getMessagesCategories();
   if(list.isEmpty){
     Resource<MessagesCategoriesModel> resource = await apiService.getMessagesCategories();
@@ -33,6 +34,7 @@ class CategoriesViewModel extends BaseViewModel{
   }
 
   Future<void> getContent(int? categorie) async {
+    content.clear();
     content = await appDatabase.getMessagesContent(categorie);
     if(content.isEmpty){
       Resource<MessagesContentModel> resource = await apiService.getMessagesContent();
