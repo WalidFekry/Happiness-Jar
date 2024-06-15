@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:happiness_jar/consts/shared_preferences_constants.dart';
@@ -22,6 +24,7 @@ class HomeViewModel extends BaseViewModel {
   var prefs = locator<SharedPrefServices>();
   bool isLogin = false;
   bool getStarted = false;
+  File? image;
 
   List<Widget> screens = [
     const MessagesScreen(),
@@ -72,7 +75,6 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> isUserLogin() async {
-    // locator<NavigationService>().navigateToAndClearStack(RouteName.GET_STARTED);
     await prefs.init();
     getStarted = await prefs.getBoolean(SharedPrefsConstants.GET_STARTED);
     isLogin = await prefs.getBoolean(SharedPrefsConstants.IS_LOGIN);
@@ -84,6 +86,10 @@ class HomeViewModel extends BaseViewModel {
     if (!isLogin) {
       locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
       return;
+    }
+    final imagePath = await prefs.getString(SharedPrefsConstants.USER_IMAGE);
+    if (imagePath.isNotEmpty) {
+      image = File(imagePath);
     }
   }
 }

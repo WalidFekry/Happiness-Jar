@@ -33,7 +33,7 @@ class CategoriesScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: const Color.fromARGB(178, 158, 158, 158)),
+                        border: Border.all(color: Colors.grey,width: 1),
                         borderRadius: const BorderRadius.only(topLeft: Radius.circular(22),bottomLeft:Radius.circular(22))
                     ),
                     child: ListTile(

@@ -44,7 +44,7 @@ class FavoriteScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: const Color.fromARGB(178, 158, 158, 158),
+                            color: Colors.grey,
                             width: 2
                           ),
                         ),
@@ -114,58 +114,65 @@ class FavoriteScreen extends StatelessWidget {
                           },
                           child: Column(
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SubtitleTextWidget(label: viewModel.list[index].createdAt,fontSize: 16,),
-                                  Image.asset(
-                                    AssetsManager.iconAppBar,
-                                    height: 35,
-                                  ),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            viewModel.copyMessage(index);
-                                            showTopSnackBar(
-                                              Overlay.of(context),
-                                              CustomSnackBar.success(
-                                                backgroundColor: Theme.of(context).iconTheme.color!,
-                                                message:
-                                                "تم النسخ",
-                                                icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
-                                                  size: 50,),
-                                              ),
-                                            );
-                                          },
-                                          icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                           viewModel.shareMessage(index);
-                                          },
-                                          icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            viewModel.deleteFavoriteMessage(index);
-                                            showTopSnackBar(
-                                              Overlay.of(context),
-                                              CustomSnackBar.error(
-                                                backgroundColor: Theme.of(context).cardColor,
-                                                message:
-                                                "تم الحذف",
-                                                icon: Icon(Icons.delete,color: Theme.of(context).iconTheme.color,
-                                                  size: 50,),
-                                              ),
-                                            );
-                                          },
-                                          icon: Icon(IconlyLight.delete,color:Theme.of(context).cardColor),
-                                        ),
-                                      ]),
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SubtitleTextWidget(label: viewModel.list[index].createdAt,fontSize: 16,),
+                                    Image.asset(
+                                      AssetsManager.iconAppBar,
+                                      height: 35,
+                                    ),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              viewModel.copyMessage(index);
+                                              showTopSnackBar(
+                                                Overlay.of(context),
+                                                CustomSnackBar.success(
+                                                  backgroundColor: Theme.of(context).iconTheme.color!,
+                                                  message:
+                                                  "تم النسخ",
+                                                  icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
+                                                    size: 50,),
+                                                ),
+                                              );
+                                            },
+                                            icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                             viewModel.shareMessage(index);
+                                            },
+                                            icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              viewModel.deleteFavoriteMessage(index);
+                                              showTopSnackBar(
+                                                Overlay.of(context),
+                                                CustomSnackBar.error(
+                                                  backgroundColor: Theme.of(context).cardColor,
+                                                  message:
+                                                  "تم الحذف",
+                                                  icon: Icon(Icons.delete,color: Theme.of(context).iconTheme.color,
+                                                    size: 50,),
+                                                ),
+                                              );
+                                            },
+                                            icon: Icon(IconlyLight.delete,color:Theme.of(context).cardColor),
+                                          ),
+                                        ]),
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Divider(  color: Colors.grey, thickness: 1),
                               ),
                               Padding(
                                   padding: const EdgeInsets.all(8.0),

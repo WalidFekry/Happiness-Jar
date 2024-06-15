@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
           child,
           ) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           locale: context.locale,
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,

@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
@@ -30,15 +29,31 @@ class _HomeScreenState extends State<HomeScreen> {
             title: AppBarTextWidget(
               title: viewModel.appBarTitle,
             ),
-            leading: GestureDetector(
-              onTap: () {
-                locator<NavigationService>().navigateTo(RouteName.PROFILE);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(AssetsManager.iconAppBar),
-              ),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(AssetsManager.iconAppBar,height: 50,),
             ),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  locator<NavigationService>().navigateTo(RouteName.PROFILE);
+                },
+                child: Container(
+                  height: 50,
+                  width: 70,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: viewModel.image != null
+                          ? FileImage(viewModel.image!)
+                          : const AssetImage(AssetsManager.userProfile)
+                              as ImageProvider,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           body: PageView(
             controller: viewModel.controller,
