@@ -44,6 +44,7 @@ class FavoriteScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             color: const Color.fromARGB(178, 158, 158, 158),
+                            width: 2
                           ),
                         ),
                         child: InkWell(

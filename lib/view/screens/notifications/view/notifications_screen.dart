@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
 import 'package:iconly/iconly.dart';
@@ -36,71 +37,141 @@ class NotificationsScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: const Color.fromARGB(178, 158, 158, 158),
+                            color: Colors.grey,
+                            width: 2
                           ),
                         ),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor:Theme.of(context).scaffoldBackgroundColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(18)),
+                                  title: Row(
+                                    children: [
+                                      const TitleTextWidget(label: "رسالة من البرطمان"),
+                                      const Spacer(),
+                                      IconButton(
+                                        onPressed: () =>
+                                            viewModel.shareMessage(
+                                                index),
+                                        icon: Icon(
+                                          Icons.share,
+                                          color: Theme.of(context).iconTheme.color,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          // locator<NavigationService>().goBack();
+                                          viewModel.copyMessage(
+                                              index);
+                                        },
+                                        icon: Icon(
+                                          CupertinoIcons.doc_on_clipboard_fill,
+                                          color: Theme.of(context).iconTheme.color,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  content: ContentTextWidget(
+                                    label: viewModel.list[index].text,
+                                  ),
+                                  actions: [
+                                    Center(
+                                      child: TextButton(
+                                        style: TextButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                            backgroundColor: Theme.of(context).iconTheme.color,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    15))),
+                                        onPressed: () {
+                                          viewModel.goBack();
+                                        },
+                                        child: SubtitleTextWidget(
+                                          label: "اغلاق",
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 18,
+                                        )
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                           child: Column(
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SubtitleTextWidget(label: viewModel.list[index].createdAt?.split(" ")[0],fontSize: 16,),
-                                  Image.asset(
-                                    AssetsManager.iconAppBar,
-                                    height: 35,
-                                  ),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: [
-                                        IconButton(
-                                            onPressed: () {
-                                              viewModel.saveFavoriteMessage(index);
-                                              showTopSnackBar(
-                                                Overlay.of(context),
-                                                CustomSnackBar.success(
-                                                  backgroundColor: Theme.of(context).iconTheme.color!,
-                                                  message:
-                                                  "تمت الإضافة للمفضلة",
-                                                  icon: Icon(IconlyBold.heart,color: Theme.of(context).cardColor,
-                                                    size: 50,),
-                                                ),
-                                              );
-                                            },
-                                            icon: viewModel.list[index].isFavourite ? Icon(IconlyBold.heart,color: Theme.of(context).iconTheme.color) : Icon(IconlyLight.heart,color: Theme.of(context).iconTheme.color)),
-
-                                        IconButton(
-                                          onPressed: () {
-                                            viewModel.copyMessage(index);
-                                            showTopSnackBar(
-                                              Overlay.of(context),
-                                              CustomSnackBar.success(
-                                                backgroundColor: Theme.of(context).iconTheme.color!,
-                                                message:
-                                                "تم النسخ",
-                                                icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
-                                                  size: 50,),
-                                              ),
-                                            );
-                                          },
-                                          icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            viewModel.shareMessage(index);
-                                          },
-                                          icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
-                                        ),
-                                      ]),
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SubtitleTextWidget(label: "إشعار رقم : ${viewModel.list[index].id}",fontSize: 16,),
+                                    Image.asset(
+                                      AssetsManager.iconAppBar,
+                                      height: 35,
+                                    ),
+                                    SubtitleTextWidget(label: viewModel.list[index].createdAt?.split(" ")[0],fontSize: 16,),
+                                  ],
+                                ),
                               ),
                               Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: ContentTextWidget(
                                     label: viewModel.list[index].text,
                                   )),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Divider(  color: Colors.grey, thickness: 1),
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          viewModel.saveFavoriteMessage(index);
+                                          showTopSnackBar(
+                                            Overlay.of(context),
+                                            CustomSnackBar.success(
+                                              backgroundColor: Theme.of(context).iconTheme.color!,
+                                              message:
+                                              "تمت الإضافة للمفضلة",
+                                              icon: Icon(IconlyBold.heart,color: Theme.of(context).cardColor,
+                                                size: 50,),
+                                            ),
+                                          );
+                                        },
+                                        icon: viewModel.list[index].isFavourite ? Icon(IconlyBold.heart,color: Theme.of(context).iconTheme.color) : Icon(IconlyLight.heart,color: Theme.of(context).iconTheme.color)),
+                                    IconButton(
+                                      onPressed: () {
+                                        viewModel.copyMessage(index);
+                                        showTopSnackBar(
+                                          Overlay.of(context),
+                                          CustomSnackBar.success(
+                                            backgroundColor: Theme.of(context).iconTheme.color!,
+                                            message:
+                                            "تم النسخ",
+                                            icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
+                                              size: 50,),
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        viewModel.shareMessage(index);
+                                      },
+                                      icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
+                                    ),
+                                  ]),
                             ],
                           ),
                         ),

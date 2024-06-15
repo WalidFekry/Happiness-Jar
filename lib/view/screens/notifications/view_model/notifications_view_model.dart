@@ -8,6 +8,7 @@ import '../../../../enums/status.dart';
 import '../../../../locator.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/api_service.dart';
+import '../../../../services/navigation_service.dart';
 import '../../categories/model/messages_content_model.dart';
 import '../model/notification_model.dart';
 
@@ -35,12 +36,12 @@ class NotificationsViewModel extends BaseViewModel{
 
   Future<void> shareMessage(int index) async {
     await Share.share(
-        '${list[index].text} \n\n 💙 من تطبيق برطمان السعادة');
+        '${list[index].text} \n\n من تطبيق برطمان السعادة 💙');
   }
 
   void copyMessage(int index) {
     FlutterClipboard.copy(
-      '${list[index].text} \n \n 💙 من تطبيق برطمان السعادة',
+      '${list[index].text} \n\n من تطبيق برطمان السعادة 💙',
     );
   }
 
@@ -50,6 +51,10 @@ class NotificationsViewModel extends BaseViewModel{
     await appDatabase.saveFavoriteMessage(list[index].text,createdAt);
     list[index].isFavourite = !list[index].isFavourite;
     setState(ViewState.Idle);
+  }
+
+  void goBack() {
+    locator<NavigationService>().goBack();
   }
 
 }
