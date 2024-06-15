@@ -61,13 +61,17 @@ class CategoriesViewModel extends BaseViewModel{
 
   Future<void> shareMessage(int index) async {
     await Share.share(
-        '${content[index].title} \n\n 💙 من تطبيق برطمان السعادة');
+        '${content[index].title} \n\n من تطبيق برطمان السعادة 💙');
   }
 
   void copyMessage(int index) {
     FlutterClipboard.copy(
-      '${content[index].title} \n \n 💙 من تطبيق برطمان السعادة',
+      '${content[index].title} \n\n من تطبيق برطمان السعادة 💙',
     );
+  }
+
+  void goBack() {
+    locator<NavigationService>().goBack();
   }
 
 }

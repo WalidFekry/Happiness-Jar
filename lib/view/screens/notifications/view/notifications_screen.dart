@@ -78,7 +78,7 @@ class NotificationsScreen extends StatelessWidget {
                                     ],
                                   ),
                                   content: ContentTextWidget(
-                                    label: viewModel.list[index].text,
+                                    label: viewModel.list[index].text,textAlign:TextAlign.center
                                   ),
                                   actions: [
                                     Center(

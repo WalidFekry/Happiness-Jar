@@ -6,6 +6,8 @@ import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../services/navigation_service.dart';
+
 class FavoriteViewModel extends BaseViewModel {
 
   var appDatabase = locator<AppDatabase>();
@@ -23,13 +25,17 @@ class FavoriteViewModel extends BaseViewModel {
 
   Future<void> shareMessage(int index) async {
     await Share.share(
-      '${list[index].title} \n\n 💙 من تطبيق برطمان السعادة');
+      '${list[index].title} \n\n من تطبيق برطمان السعادة 💙');
   }
 
   void copyMessage(int index) {
     FlutterClipboard.copy(
-      '${list[index].title} \n \n 💙 من تطبيق برطمان السعادة',
+      '${list[index].title} \n\n من تطبيق برطمان السعادة 💙',
     );
+  }
+
+  void goBack() {
+    locator<NavigationService>().goBack();
   }
 
 }

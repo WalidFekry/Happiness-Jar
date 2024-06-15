@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/consts/app_colors.dart';
 import 'package:happiness_jar/view/screens/favorite/view_model/favorite_view_model.dart';
@@ -48,7 +49,69 @@ class FavoriteScreen extends StatelessWidget {
                           ),
                         ),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor:Theme.of(context).scaffoldBackgroundColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(18)),
+                                  title: Row(
+                                    children: [
+                                      const TitleTextWidget(label: "رسالة من البرطمان"),
+                                      const Spacer(),
+                                      IconButton(
+                                        onPressed: () =>
+                                            viewModel.shareMessage(
+                                                index),
+                                        icon: Icon(
+                                          Icons.share,
+                                          color: Theme.of(context).iconTheme.color,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          // locator<NavigationService>().goBack();
+                                          viewModel.copyMessage(
+                                              index);
+                                        },
+                                        icon: Icon(
+                                          CupertinoIcons.doc_on_clipboard_fill,
+                                          color: Theme.of(context).iconTheme.color,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  content: ContentTextWidget(
+                                    label: viewModel.list[index].title,textAlign:TextAlign.center,
+                                  ),
+                                  actions: [
+                                    Center(
+                                      child: TextButton(
+                                          style: TextButton.styleFrom(
+                                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                              backgroundColor: Theme.of(context).iconTheme.color,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      15))),
+                                          onPressed: () {
+                                            viewModel.goBack();
+                                          },
+                                          child: SubtitleTextWidget(
+                                            label: "اغلاق",
+                                            color: Theme.of(context).primaryColor,
+                                            fontSize: 18,
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                           child: Column(
                             children: [
                               Row(
