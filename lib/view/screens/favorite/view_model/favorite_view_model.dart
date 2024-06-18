@@ -14,7 +14,6 @@ class FavoriteViewModel extends BaseViewModel {
   List<FavoriteMessagesModel> list = [];
 
   Future<void> getFavoriteMessages() async {
-    list.clear();
     list = await appDatabase.getFavoriteMessages();
     setState(ViewState.Idle);
   }
