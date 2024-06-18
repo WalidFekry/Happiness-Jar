@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -13,33 +14,66 @@ import '../../../../services/api_service.dart';
 import '../../../../services/shared_pref_services.dart';
 import '../model/messages_model.dart';
 
-class MessagesViewModel extends BaseViewModel{
+class MessagesViewModel extends BaseViewModel {
   List<Messages> list = [];
   String? userName;
+  String? lastGetMessagesTime;
   var apiService = locator<ApiService>();
   var prefs = locator<SharedPrefServices>();
   File? image;
+  bool showEmptyJar = false;
+  bool showMessages = true;
+  int currentPage = 0;
+  bool nextMessage = true;
+  bool prevMessage = true;
+  PageController? controller;
 
   Future<void> getUserData() async {
     userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
-    final imagePath = await prefs.getString(SharedPrefsConstants.USER_IMAGE);
-    if (imagePath.isNotEmpty) {
-      image = File(imagePath);
+    setState(ViewState.Idle);
+  }
+
+  void setController() {
+    controller = PageController(initialPage: currentPage);
+    setState(ViewState.Idle);
+  }
+
+  Future<void> getLastMessagesTime() async {
+    lastGetMessagesTime =
+        await prefs.getString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME);
+    if (lastGetMessagesTime != "") {
+      DateTime lastRunTime = DateTime.parse(lastGetMessagesTime!);
+      Duration difference = DateTime.now().difference(lastRunTime);
+      if (difference.inHours >= 12) {
+        showEmptyJar = false;
+        showMessages = true;
+        await getMessages();
+      } else {
+        showEmptyJar = true;
+        showMessages = false;
+        print('Function has already been run within the last 12 hours.');
+      }
+    } else {
+      showEmptyJar = false;
+      showMessages = true;
+      await getMessages();
     }
     setState(ViewState.Idle);
   }
 
   Future<void> getMessages() async {
+    if (list.isNotEmpty) {
+      return;
+    }
     Resource<MessagesModel> resource = await apiService.getMessages();
-    if(resource.status == Status.SUCCESS){
+    if (resource.status == Status.SUCCESS) {
       list = resource.data!.content!;
     }
     setState(ViewState.Idle);
   }
 
   Future<void> shareMessage(int index) async {
-    await Share.share(
-        '${list[index].body} \n\n من تطبيق برطمان السعادة 💙');
+    await Share.share('${list[index].body} \n\n من تطبيق برطمان السعادة 💙');
   }
 
   void copyMessage(int index) {
@@ -48,5 +82,34 @@ class MessagesViewModel extends BaseViewModel{
     );
   }
 
+  nextMessages() {
+    if (currentPage >= 0 && currentPage < 3) {
+      currentPage++;
+      nextMessage = true;
+      prevMessage = true;
+    } else if (currentPage == 3) {
+      currentPage++;
+      nextMessage = false;
+      saveMessagesTime();
+    }
+    controller?.jumpToPage(currentPage);
+    setState(ViewState.Idle);
+  }
 
+  prevMessages() {
+    if (currentPage <= 4 && currentPage != 1) {
+      currentPage--;
+      prevMessage = true;
+      nextMessage = true;
+    } else if (currentPage == 1) {
+      currentPage--;
+      prevMessage = false;
+    }
+    controller?.jumpToPage(currentPage);
+    setState(ViewState.Idle);
+  }
+
+  Future<void> saveMessagesTime() async {
+    await prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME, DateTime.now().toIso8601String());
+  }
 }

@@ -75,7 +75,6 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> isUserLogin() async {
-    await prefs.init();
     getStarted = await prefs.getBoolean(SharedPrefsConstants.GET_STARTED);
     isLogin = await prefs.getBoolean(SharedPrefsConstants.IS_LOGIN);
     if (!getStarted) {

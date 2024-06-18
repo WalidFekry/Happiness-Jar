@@ -5,5 +5,6 @@ class SharedPrefsConstants{
   static const String USER_NAME = 'USER_NAME';
   static const String USER_IMAGE = 'USER_IMAGE';
   static const String GET_STARTED = 'GET_STARTED';
+  static const String LAST_GET_MESSAGES_TIME = 'LAST_GET_MESSAGES_TIME';
 }
 

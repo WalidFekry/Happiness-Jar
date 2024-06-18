@@ -25,7 +25,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => GetStartedViewModel());
   locator.registerLazySingleton(() => MessagesViewModel());
 
-  // initSingleton();
+  initSingleton();
 
   locator.registerFactory(() => RegisterViewModel());
   locator.registerFactory(() => HomeViewModel());
@@ -33,6 +33,6 @@ void setupLocator() {
 
 }
 
-// void initSingleton() {
-//   locator<SharedPrefServices>();
-// }
+void initSingleton() {
+  locator<SharedPrefServices>();
+}
