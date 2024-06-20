@@ -5,6 +5,7 @@ import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:iconly/iconly.dart';
 
+import '../../../../consts/shared_preferences_constants.dart';
 import '../../../../services/assets_manager.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../base_screen.dart';
@@ -19,10 +20,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BaseView<HomeViewModel>(onModelReady: (viewModel) {
-      viewModel.setFirebaseMessaging();
-      viewModel.isUserLogin();
+    return BaseView<HomeViewModel>(onModelReady: (viewModel) async {
+      viewModel.getStarted = await viewModel.prefs.getBoolean(SharedPrefsConstants.GET_STARTED);
+      viewModel.isLogin = await viewModel.prefs.getBoolean(SharedPrefsConstants.IS_LOGIN);
+      if (!viewModel.getStarted) {
+        locator<NavigationService>()
+            .navigateToAndClearStack(RouteName.GET_STARTED);
+        return;
+      }
+      if (!viewModel.isLogin) {
+        locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
+        return;
+      }
+      viewModel.getUserData();
       viewModel.setController();
+      viewModel.setFirebaseMessaging();
+      viewModel.refreshToken();
     }, builder: (context, viewModel, child) {
       return Scaffold(
           appBar: AppBar(

@@ -28,7 +28,7 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   Future<void> saveData() async {
-    await prefs.saveString(SharedPrefsConstants.USER_NAME, nameController.text);
+    await prefs.saveString(SharedPrefsConstants.USER_NAME, nameController.text.trim());
     if (image != null) {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;

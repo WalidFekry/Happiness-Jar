@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
+import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
 
 import '../enums/status.dart';
 import '../models/resources.dart';
@@ -9,8 +10,8 @@ import '../view/screens/messages/model/messages_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
 
 class ApiService {
-
-  static const String BASE_URL = "https://post.walid-fekry.com/happiness-jar/api/";
+  static const String BASE_URL =
+      "https://post.walid-fekry.com/happiness-jar/api/";
 
   var dio = Dio();
 
@@ -24,7 +25,8 @@ class ApiService {
   Future<Resource<MessagesCategoriesModel>> getMessagesCategories() async {
     try {
       var response = await dio.get('messages_categories.php');
-      var contentMessagesCategories = MessagesCategoriesModel.fromJson(response.data);
+      var contentMessagesCategories =
+          MessagesCategoriesModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessagesCategories);
     } catch (e) {
       debugPrint(e.toString());
@@ -46,7 +48,8 @@ class ApiService {
   Future<Resource<NotificationsModel>> getMessagesNotificationContent() async {
     try {
       var response = await dio.get('messages_notifications.php');
-      var contentMessagesNotification = NotificationsModel.fromJson(response.data);
+      var contentMessagesNotification =
+          NotificationsModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessagesNotification);
     } catch (e) {
       debugPrint(e.toString());
@@ -59,6 +62,26 @@ class ApiService {
       var response = await dio.get('messages.php');
       var contentMessages = MessagesModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessages);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<RefreshTokenModel>> refreshToken(
+      String fcmToken, String name) async {
+    try {
+      var response = await dio.post(
+        'register.php',
+        data: {'server': 'Register', 'fcm_token': fcmToken, 'name': name},
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+      );
+      var refreshToken = RefreshTokenModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: refreshToken);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

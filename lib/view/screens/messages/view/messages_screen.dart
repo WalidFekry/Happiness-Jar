@@ -6,6 +6,7 @@ import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
 import '../view_model/messages_view_model.dart';
 import '../widgets/card_message.dart';
+import '../widgets/empty_message.dart';
 
 class MessagesScreen extends StatelessWidget {
   const MessagesScreen({super.key});
@@ -29,7 +30,7 @@ class MessagesScreen extends StatelessWidget {
               children: [
                 Visibility(
                     visible: viewModel.showEmptyJar,
-                    child: Image.asset(AssetsManager.imageJar30)),
+                    child: const EmptyMessageWidget()),
                 Visibility(
                   visible: viewModel.showMessages,
                   child: viewModel.list.isEmpty

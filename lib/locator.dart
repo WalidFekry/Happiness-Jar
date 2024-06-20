@@ -35,4 +35,5 @@ void setupLocator() {
 
 void initSingleton() {
   locator<SharedPrefServices>();
+  // locator<ApiService>();
 }

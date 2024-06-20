@@ -9,8 +9,12 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
+import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../enums/status.dart';
+import '../../../../models/resources.dart';
+import '../../../../services/api_service.dart';
 import '../../categories/view/categories_screen.dart';
 import '../../favorite/view/favorite_screen.dart';
 import '../../messages/view/messages_screen.dart';
@@ -22,8 +26,10 @@ class HomeViewModel extends BaseViewModel {
   PageController? controller;
   String? appBarTitle = "الرئيسية";
   var prefs = locator<SharedPrefServices>();
+  var apiService = locator<ApiService>();
   bool isLogin = false;
   bool getStarted = false;
+  String? lastRefreshTokenTime;
   File? image;
 
   List<Widget> screens = [
@@ -74,21 +80,39 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
-  Future<void> isUserLogin() async {
-    getStarted = await prefs.getBoolean(SharedPrefsConstants.GET_STARTED);
-    isLogin = await prefs.getBoolean(SharedPrefsConstants.IS_LOGIN);
-    if (!getStarted) {
-      locator<NavigationService>()
-          .navigateToAndClearStack(RouteName.GET_STARTED);
-      return;
-    }
-    if (!isLogin) {
-      locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
-      return;
-    }
+  Future<void> getUserData() async {
     final imagePath = await prefs.getString(SharedPrefsConstants.USER_IMAGE);
     if (imagePath.isNotEmpty) {
       image = File(imagePath);
     }
+  }
+
+  Future<void> refreshToken() async {
+    lastRefreshTokenTime =
+        await prefs.getString(SharedPrefsConstants.LAST_REFRESH_TOKEN_TIME);
+    if (lastRefreshTokenTime != "") {
+      DateTime lastRunTime = DateTime.parse(lastRefreshTokenTime!);
+      Duration difference = DateTime.now().difference(lastRunTime);
+      if (difference.inHours >= 24) {
+        await sendToken();
+      } else {
+        print('Function has already been run within the last 24 hours.');
+      }
+    } else {
+      await sendToken();
+    }
+    setState(ViewState.Idle);
+  }
+
+  sendToken() async {
+    String? userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
+    FirebaseMessaging.instance.subscribeToTopic("all");
+    FirebaseMessaging.instance.getToken().then((value) async {
+      Resource<RefreshTokenModel> resource = await apiService.refreshToken(value!,userName);
+      if (resource.status == Status.SUCCESS) {
+        await prefs.saveString(
+            SharedPrefsConstants.LAST_REFRESH_TOKEN_TIME, DateTime.now().toIso8601String());
+      }
+    });
   }
 }

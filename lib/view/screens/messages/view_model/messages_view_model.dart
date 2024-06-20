@@ -44,7 +44,7 @@ class MessagesViewModel extends BaseViewModel {
     if (lastGetMessagesTime != "") {
       DateTime lastRunTime = DateTime.parse(lastGetMessagesTime!);
       Duration difference = DateTime.now().difference(lastRunTime);
-      if (difference.inHours >= 12) {
+      if (difference.inHours >= 6) {
         showEmptyJar = false;
         showMessages = true;
         await getMessages();
