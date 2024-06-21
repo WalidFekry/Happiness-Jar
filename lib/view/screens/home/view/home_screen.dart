@@ -10,6 +10,8 @@ import '../../../../services/assets_manager.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../base_screen.dart';
 
+
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -44,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset(AssetsManager.iconAppBar,height: 50,),
+              child: Image.asset(AssetsManager.iconAppBar, height: 50,),
             ),
             actions: [
               GestureDetector(
@@ -59,8 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     image: DecorationImage(
                       image: viewModel.image != null
                           ? FileImage(viewModel.image!)
-                          : const AssetImage(AssetsManager.userProfile)
-                              as ImageProvider,
+                          : const AssetImage(AssetsManager.userProfile) as ImageProvider,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -99,4 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ));
     });
   }
+
+
 }

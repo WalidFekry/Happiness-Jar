@@ -9,10 +9,7 @@ import 'package:happiness_jar/view/screens/get_started/view/get_notification_scr
 import 'package:happiness_jar/view/screens/get_started/view/get_started_screen.dart';
 import 'package:happiness_jar/view/screens/home/view/home_screen.dart';
 import 'package:happiness_jar/view/screens/profile/view/profile_screen.dart';
-
-import '../view/screens/not_found_screen/not_found_screen.dart';
-import '../view/screens/notifications/view/notifications_screen.dart';
-
+import '../view/screens/exit_app/exit_app_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -26,7 +23,7 @@ class AppRouter {
 
     switch (routingData.route) {
       case RouteName.HOME:
-      return _getPageRoute(const HomeScreen(), settings);
+        return _getPageRoute(const HomeScreen(), settings);
       case RouteName.GET_STARTED:
         return _getPageRoute(const GetStartedScreen(), settings);
       case RouteName.GET_NOTIFICATION_SCREEN:
@@ -36,14 +33,15 @@ class AppRouter {
       case RouteName.PROFILE:
         return _getPageRoute(const ProfileScreen(), settings);
       case RouteName.MESSAGES_CATEGORIES_CONTENT:
-        var messagesCategoriesArguments = settings.arguments as MessagesCategories;
-        return _getPageRoute(MessagesCategoriesContent(
-            messagesCategoriesArguments,int.parse(routingData['index'].toString())
-        ), settings);
+        var messagesCategoriesArguments =
+            settings.arguments as MessagesCategories;
+        return _getPageRoute(
+            MessagesCategoriesContent(messagesCategoriesArguments,
+                int.parse(routingData['index'].toString())),
+            settings);
       default:
-        return _getPageRoute(const NotFoundScreen(), settings);
+        return _getPageRoute(const ExitAppScreen(), settings);
     }
-
   }
 }
 
