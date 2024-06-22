@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/consts/app_consts.dart';
 import 'package:happiness_jar/view/screens/base_screen.dart';
 import 'package:happiness_jar/view/screens/categories/view_model/categories_view_model.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
@@ -21,37 +22,58 @@ class CategoriesScreen extends StatelessWidget {
       builder: (context,viewModel, child){
         return Scaffold(
           body:
-          viewModel.list.isNotEmpty ?
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: ListView.builder(itemCount: viewModel.list.length,itemBuilder: (context,index){
-              return InkWell(
-                onTap: (){
-                  viewModel.navigateToContent(index);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey,width: 1),
-                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(22),bottomLeft:Radius.circular(22))
-                    ),
-                    child: ListTile(
-                      title: Center(child: SubtitleTextWidget(label: viewModel.list[index].title)),
-                      leading: Icon(Icons.tag,color: Theme.of(context).cardColor),
-                      trailing: Icon(IconlyLight.arrow_left,color: Theme.of(context).iconTheme.color),
+            Stack(
+              children: [
+                viewModel.list.isNotEmpty ?
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: ListView.builder(itemCount: viewModel.list.length,itemBuilder: (context,index){
+                    return InkWell(
+                      onTap: (){
+                        viewModel.navigateToContent(index);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey,width: 1),
+                              borderRadius: const BorderRadius.only(topLeft: Radius.circular(22),bottomLeft:Radius.circular(22))
+                          ),
+                          child: ListTile(
+                            title: Center(child: SubtitleTextWidget(label: viewModel.list[index].title)),
+                            leading: Icon(Icons.tag,color: Theme.of(context).cardColor),
+                            trailing: Icon(IconlyLight.arrow_left,color: Theme.of(context).iconTheme.color),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                ): Visibility(
+                  visible: viewModel.isDone,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Theme.of(context).iconTheme.color,
+                      strokeAlign: 5,
+                      strokeWidth: 5,
                     ),
                   ),
                 ),
-              );
-            }),
-          ): Center(
-          child: CircularProgressIndicator(
-          backgroundColor: Theme.of(context).iconTheme.color,
-          strokeAlign: 5,
-          strokeWidth: 5,
-        ),
-        ),
+                if (!viewModel.isDone)
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SubtitleTextWidget(
+                          label:
+                          AppConsts.NO_INTERNET_MESSAGE,textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
         );
       }
     );

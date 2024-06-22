@@ -19,6 +19,9 @@ class CategoriesViewModel extends BaseViewModel{
   List<MessagesCategories> content = [];
   var apiService = locator<ApiService>();
   var appDatabase = locator<AppDatabase>();
+  bool isDone = true;
+  bool isDoneContent = true;
+
 
   Future<void> getCategories() async {
   if(list.isNotEmpty){
@@ -28,8 +31,11 @@ class CategoriesViewModel extends BaseViewModel{
   if(list.isEmpty){
     Resource<MessagesCategoriesModel> resource = await apiService.getMessagesCategories();
     if(resource.status == Status.SUCCESS){
+      isDone = true;
       await appDatabase.insertData(resource);
       list = await appDatabase.getMessagesCategories();
+    }else{
+        isDone = false;
     }
   }
   setState(ViewState.Idle);
@@ -41,8 +47,11 @@ class CategoriesViewModel extends BaseViewModel{
     if(content.isEmpty){
       Resource<MessagesContentModel> resource = await apiService.getMessagesContent();
       if(resource.status == Status.SUCCESS){
+        isDoneContent = true;
         await appDatabase.insertData(resource);
         content = await appDatabase.getMessagesContent(categorie);
+      }else{
+        isDoneContent = false;
       }
     }
     setState(ViewState.Idle);

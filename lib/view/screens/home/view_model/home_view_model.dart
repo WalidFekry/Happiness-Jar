@@ -10,6 +10,7 @@ import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../enums/status.dart';
@@ -20,6 +21,7 @@ import '../../favorite/view/favorite_screen.dart';
 import '../../messages/view/messages_screen.dart';
 import '../../notifications/view/notifications_screen.dart';
 import '../../profile/view/profile_screen.dart';
+import '../widgets/greeting_dialog.dart';
 
 class HomeViewModel extends BaseViewModel {
   int selectedIndex = 0;
@@ -31,6 +33,7 @@ class HomeViewModel extends BaseViewModel {
   bool getStarted = false;
   String? lastRefreshTokenTime;
   File? image;
+  final GreetingDialog greetingDialog = GreetingDialog();
 
   List<Widget> screens = [
     const MessagesScreen(),
@@ -114,5 +117,9 @@ class HomeViewModel extends BaseViewModel {
             SharedPrefsConstants.LAST_REFRESH_TOKEN_TIME, DateTime.now().toIso8601String());
       }
     });
+  }
+
+  void showGreetingDialog(BuildContext context) {
+      greetingDialog.showGreeting(context);
   }
 }

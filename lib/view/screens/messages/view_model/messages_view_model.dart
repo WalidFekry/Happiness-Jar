@@ -23,6 +23,7 @@ class MessagesViewModel extends BaseViewModel {
   File? image;
   bool showEmptyJar = false;
   bool showMessages = true;
+  bool noInternet = false;
   int currentPage = 0;
   bool nextMessage = true;
   bool prevMessage = true;
@@ -44,14 +45,18 @@ class MessagesViewModel extends BaseViewModel {
     if (lastGetMessagesTime != "") {
       DateTime lastRunTime = DateTime.parse(lastGetMessagesTime!);
       Duration difference = DateTime.now().difference(lastRunTime);
+      await getMessages();
       if (difference.inHours >= 6) {
         showEmptyJar = false;
         showMessages = true;
-        await getMessages();
       } else {
-        showEmptyJar = true;
+        print('Function has already been run within the last 6 hours.');
         showMessages = false;
-        print('Function has already been run within the last 12 hours.');
+        if(noInternet){
+          showEmptyJar = false;
+          return;
+        }
+        showEmptyJar = true;
       }
     } else {
       showEmptyJar = false;
@@ -67,7 +72,11 @@ class MessagesViewModel extends BaseViewModel {
     }
     Resource<MessagesModel> resource = await apiService.getMessages();
     if (resource.status == Status.SUCCESS) {
+      noInternet = false;
       list = resource.data!.content!;
+    }else{
+      noInternet = true;
+      showMessages = false;
     }
     setState(ViewState.Idle);
   }
