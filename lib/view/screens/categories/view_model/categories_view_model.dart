@@ -21,7 +21,9 @@ class CategoriesViewModel extends BaseViewModel{
   var appDatabase = locator<AppDatabase>();
 
   Future<void> getCategories() async {
-  list.clear();
+  if(list.isNotEmpty){
+    return;
+  }
   list = await appDatabase.getMessagesCategories();
   if(list.isEmpty){
     Resource<MessagesCategoriesModel> resource = await apiService.getMessagesCategories();
