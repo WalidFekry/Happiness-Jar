@@ -38,6 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
       viewModel.setController();
       viewModel.setFirebaseMessaging();
       viewModel.refreshToken();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        viewModel.showGreetingDialog(context);
+      });
     }, builder: (context, viewModel, child) {
       return Scaffold(
           appBar: AppBar(
