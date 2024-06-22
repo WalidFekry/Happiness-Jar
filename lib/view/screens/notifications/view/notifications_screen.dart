@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/consts/app_consts.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
 import 'package:iconly/iconly.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -200,7 +201,7 @@ class NotificationsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SubtitleTextWidget(
-               label: 'يلزم وجود اتصال بالانترنت لاول مره فقط حتى يتم تحميل بيانات هذا القسم 👀',
+               label: AppConsts.NO_INTERNET_MESSAGE,textAlign: TextAlign.center,
                       ),
                     ],
                   ),

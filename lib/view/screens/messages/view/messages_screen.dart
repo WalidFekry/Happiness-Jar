@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/view/screens/messages/widgets/no_internet.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../services/assets_manager.dart';
@@ -29,8 +30,11 @@ class MessagesScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Visibility(
+                    visible: viewModel.noInternet,
+                    child: NoInternetWidget(viewModel.userName)),
+                Visibility(
                     visible: viewModel.showEmptyJar,
-                    child: const EmptyMessageWidget()),
+                    child: EmptyMessageWidget(viewModel.userName)),
                 Visibility(
                   visible: viewModel.showMessages,
                   child: viewModel.list.isEmpty

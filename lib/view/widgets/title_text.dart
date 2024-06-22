@@ -6,6 +6,7 @@ class TitleTextWidget extends StatelessWidget {
     required this.label,
     this.fontSize = 22,
     this.color,
+    this.textAlign,
     this.maxLines,
     this.fontFamily = "avenir_bold",
   }) : super(key: key);
@@ -15,12 +16,14 @@ class TitleTextWidget extends StatelessWidget {
   final Color? color;
   final int? maxLines;
   final String fontFamily;
+  final TextAlign? textAlign;
+
   @override
   Widget build(BuildContext context) {
     return Text(
       label!,
       maxLines: maxLines,
-      // textAlign: TextAlign.justify,
+      textAlign: textAlign,
       style: TextStyle(
           color: color,
           fontSize: fontSize,

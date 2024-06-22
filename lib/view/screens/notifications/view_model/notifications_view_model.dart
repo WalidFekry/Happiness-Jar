@@ -26,7 +26,9 @@ class NotificationsViewModel extends BaseViewModel{
       list = resource.data!.content!;
       await appDatabase.insertData(resource);
     }else{
-      list.clear();
+      if(list.isNotEmpty){
+        return;
+      }
       list = await appDatabase.getMessagesNotificationContent();
       if(list.isEmpty){
         isDone = false;
