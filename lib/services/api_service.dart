@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../enums/status.dart';
 import '../models/resources.dart';
@@ -20,6 +21,10 @@ class ApiService {
       baseUrl: BASE_URL,
     );
     dio.options = options;
+    dio.interceptors.add(PrettyDioLogger(
+      requestBody: true,
+      requestHeader: true,
+    ));
   }
 
   Future<Resource<MessagesCategoriesModel>> getMessagesCategories() async {
@@ -74,11 +79,11 @@ class ApiService {
       var response = await dio.post(
         'register.php',
         data: {'server': 'Register', 'fcm_token': fcmToken, 'name': name},
-          options: Options(
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          ),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
       );
       var refreshToken = RefreshTokenModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: refreshToken);

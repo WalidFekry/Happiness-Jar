@@ -20,15 +20,15 @@ class NotificationsViewModel extends BaseViewModel{
 
 
   Future<void> getContent() async {
+    if(list.isNotEmpty){
+      return;
+    }
     Resource<NotificationsModel> resource = await apiService.getMessagesNotificationContent();
     if(resource.status == Status.SUCCESS){
       isDone = true;
       list = resource.data!.content!;
       await appDatabase.insertData(resource);
     }else{
-      if(list.isNotEmpty){
-        return;
-      }
       list = await appDatabase.getMessagesNotificationContent();
       if(list.isEmpty){
         isDone = false;
