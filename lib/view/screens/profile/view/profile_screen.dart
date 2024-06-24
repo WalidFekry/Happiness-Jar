@@ -14,6 +14,7 @@ import '../../../widgets/app_name_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
+import '../widgets/change_name_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -66,8 +67,8 @@ class ProfileScreen extends StatelessWidget {
                                 image: viewModel.image != null
                                     ? FileImage(viewModel.image!)
                                     : const AssetImage(
-                                            AssetsManager.userProfile)
-                                        as ImageProvider,
+                                    AssetsManager.userProfile)
+                                as ImageProvider,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -89,14 +90,35 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TitleTextWidget(
-                              label: "مرحباً يا ${viewModel.userName} 🦋"),
-                          const SubtitleTextWidget(
-                              label: "اتمنى ان تكون بخير 💙"),
-                        ],
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TitleTextWidget(
+                                      label: "مرحباً يا ${viewModel.userName} 🦋"),
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    final newUserName = await ChangeNameDialog.show(context, viewModel.userName);
+                                    if (newUserName != null) {
+                                      viewModel.changeUserName(newUserName);
+                                    }
+                                  },
+                                  icon: Icon(
+                                      Icons.edit,
+                                      color: Theme.of(context).iconTheme.color,
+                                      size: 25
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SubtitleTextWidget(
+                                label: "اتمنى ان تكون بخير 💙"),
+                          ],
+                        ),
                       ),
                     ],
                   ),

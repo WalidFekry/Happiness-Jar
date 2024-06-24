@@ -87,6 +87,12 @@ class ProfileViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
+  void changeUserName(String newUserName) {
+    userName = newUserName;
+    prefs.saveString(SharedPrefsConstants.USER_NAME, newUserName);
+    setState(ViewState.Idle);
+  }
+
 
 
 }
