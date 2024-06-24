@@ -10,7 +10,9 @@ import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
+import 'package:happiness_jar/view/screens/home/widgets/open_setting_app_dialog.dart';
 import 'package:path/path.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../enums/status.dart';
@@ -121,5 +123,33 @@ class HomeViewModel extends BaseViewModel {
 
   void showGreetingDialog(BuildContext context) {
       greetingDialog.showGreeting(context);
+  }
+
+  Future<void> checkNotificationsPermission(BuildContext context) async {
+    var status = await Permission.notification.request();
+    if (status.isPermanentlyDenied) {
+      OpenSettingAppDialog.show(context);
+    } else if (status.isDenied) {
+      print('Permission denied');
+    }
+
+    // FirebaseMessaging.instance
+    //     .requestPermission(sound: true, alert: true, badge: true)
+    //     .then((value) {
+    //   if (value.authorizationStatus == AuthorizationStatus.authorized) {
+    //     print('User granted permission');
+    //   } else if (value.authorizationStatus ==
+    //       AuthorizationStatus.provisional) {
+    //     print('User granted provisional permission');
+    //   } else {
+    //     print('User denied permission');
+    //   }
+    // });
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 }
