@@ -1,8 +1,7 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/locator.dart';
-import 'package:system_settings/system_settings.dart';
-
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
@@ -35,8 +34,8 @@ class OpenSettingAppDialog {
               children: [
                 TextButton(
                   onPressed: () {
-                    // locator<NavigationService>().goBack();
-                    SystemSettings.app();
+                    locator<NavigationService>().goBack();
+                    AppSettings.openAppSettings(type: AppSettingsType.notification);
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).iconTheme.color,
@@ -44,12 +43,12 @@ class OpenSettingAppDialog {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 25),
+                        vertical: 8, horizontal: 20),
                   ),
-                  child: TitleTextWidget(
+                  child: SubtitleTextWidget(
                     label: "الاعدادت",
                     color: Theme.of(context).primaryColor,
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
                 TextButton(
@@ -62,12 +61,12 @@ class OpenSettingAppDialog {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 25),
+                        vertical: 8, horizontal: 20),
                   ),
-                  child: TitleTextWidget(
+                  child: SubtitleTextWidget(
                     label: "إلغاء",
                     color: Theme.of(context).primaryColor,
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
               ],

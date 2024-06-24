@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:happiness_jar/consts/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
@@ -126,25 +127,21 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> checkNotificationsPermission(BuildContext context) async {
-    var status = await Permission.notification.request();
-    if (status.isPermanentlyDenied) {
-      OpenSettingAppDialog.show(context);
-    } else if (status.isDenied) {
-      print('Permission denied');
+    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      sound: true,
+      alert: true,
+      badge: true,
+    );
+     if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      var status = await Permission.notification.request();
+      if (status.isPermanentlyDenied || status.isDenied) {
+        OpenSettingAppDialog.show(context);
+      } else {
+        if (kDebugMode) {
+          print('Permission denied with another status');
+        }
+      }
     }
-
-    // FirebaseMessaging.instance
-    //     .requestPermission(sound: true, alert: true, badge: true)
-    //     .then((value) {
-    //   if (value.authorizationStatus == AuthorizationStatus.authorized) {
-    //     print('User granted permission');
-    //   } else if (value.authorizationStatus ==
-    //       AuthorizationStatus.provisional) {
-    //     print('User granted provisional permission');
-    //   } else {
-    //     print('User denied permission');
-    //   }
-    // });
   }
 
   @override

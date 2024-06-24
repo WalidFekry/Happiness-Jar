@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/consts/app_colors.dart';
 import 'package:happiness_jar/locator.dart';
@@ -36,7 +37,11 @@ class GetStartedButton extends StatelessWidget {
             if(route == RouteName.GET_NOTIFICATION_SCREEN) {
               locator<NavigationService>().navigateToAndClearStack(route);
             }else {
-              await Permission.notification.request();
+              await FirebaseMessaging.instance.requestPermission(
+                sound: true,
+                alert: true,
+                badge: true,
+              );
               locator<NavigationService>().navigateToAndClearStack(route);
             }
           },
