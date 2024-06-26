@@ -27,9 +27,6 @@ import '../../profile/view/profile_screen.dart';
 import '../widgets/greeting_dialog.dart';
 
 class HomeViewModel extends BaseViewModel {
-  int selectedIndex = 0;
-  PageController? controller;
-  String? appBarTitle = "الرئيسية";
   var prefs = locator<SharedPrefServices>();
   var apiService = locator<ApiService>();
   bool isLogin = false;
@@ -45,46 +42,9 @@ class HomeViewModel extends BaseViewModel {
     const FavoriteScreen(),
   ];
 
-  void setController() {
-    controller = PageController(initialPage: selectedIndex);
-    setState(ViewState.Idle);
-  }
 
-  void jumpToPage(int index) {
-    selectedIndex = index;
-    controller?.jumpToPage(selectedIndex);
-    switch (index) {
-      case 0:
-        appBarTitle = "رسائل البرطمان";
-        break;
-      case 1:
-        appBarTitle = "إشعارات البرطمان";
-        break;
-      case 2:
-        appBarTitle = "الأقسام";
-        break;
-      case 3:
-        appBarTitle = "المفضلة";
-        break;
-      default:
-        appBarTitle = "الرئيسية";
-    }
-    setState(ViewState.Idle);
-  }
 
-  setFirebaseMessaging() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('Message clicked!');
-      jumpToPage(1);
-    });
-  }
+
 
   Future<void> getUserData() async {
     final imagePath = await prefs.getString(SharedPrefsConstants.USER_IMAGE);
@@ -144,9 +104,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
+  void jumpToPage() {}
+
+
 }
