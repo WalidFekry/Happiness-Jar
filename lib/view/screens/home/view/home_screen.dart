@@ -11,6 +11,10 @@ import '../../../../consts/shared_preferences_constants.dart';
 import '../../../../services/assets_manager.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../base_screen.dart';
+import '../../categories/view/categories_screen.dart';
+import '../../favorite/view/favorite_screen.dart';
+import '../../messages/view/messages_screen.dart';
+import '../../notifications/view/notifications_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,6 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController? controller;
   String? appBarTitle = "رسائل البرطمان";
   int selectedIndex = 0;
+
+  List<Widget> screens = [
+    const MessagesScreen(),
+    const NotificationsScreen(),
+    const CategoriesScreen(),
+    const FavoriteScreen(),
+  ];
 
   @override
   void initState() {
@@ -50,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       viewModel.getUserData();
       viewModel.refreshToken();
+      viewModel.showInAppReview();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         viewModel.showGreetingDialog(context);
         viewModel.checkNotificationsPermission(context);
@@ -92,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
           body: PageView(
             controller: controller,
             physics: const NeverScrollableScrollPhysics(),
-            children: viewModel.screens,
+            children: screens,
           ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: selectedIndex,
@@ -125,31 +137,53 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  setFirebaseMessaging() {
-    Future.delayed(const Duration(milliseconds: 50), () {
-      selectedIndex = 2;
-      controller?.jumpToPage(selectedIndex);
-      setAppBarTitle(selectedIndex);
-    });
+  void setFirebaseMessaging() {
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage? message) {
       // The app was closed and opened via notification
+      if (message != null) {
+        checkMessagePayload(message);
+      }
       if (kDebugMode) {
         print('onLaunch: Message clicked!');
       }
-      });
+    });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // The app is in the foreground and you receive a notification
+      checkMessagePayload(message);
       if (kDebugMode) {
         print('onMessage: Message clicked!');
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // The app is in the background and was opened via notification
+      checkMessagePayload(message);
       if (kDebugMode) {
         print('onMessageOpenedApp: Message clicked!');
       }
+    });
+  }
+
+  checkMessagePayload(RemoteMessage message) {
+    if (message.data["click_action"] == "home") {
+      jumpToPage(0);
+    } else if (message.data["click_action"] == "notification") {
+      jumpToPage(1);
+    } else if (message.data["click_action"] == "categories") {
+      jumpToPage(2);
+    } else if (message.data["click_action"] == "favorite") {
+      jumpToPage(3);
+    }
+  }
+
+  void jumpToPage(int selectIndex) {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        selectedIndex = selectIndex;
+      });
+      setAppBarTitle(selectIndex);
+      controller?.jumpToPage(selectIndex);
     });
   }
 
@@ -168,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBarTitle = "المفضلة";
         break;
       default:
-        appBarTitle = "الرئيسية";
+        appBarTitle = "رسائل البرطمان";
     }
   }
 

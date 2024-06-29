@@ -20,9 +20,9 @@ class NotificationsViewModel extends BaseViewModel{
 
 
   Future<void> getContent() async {
-    if(list.isNotEmpty){
-      return;
-    }
+    // if(list.isNotEmpty){
+    //   return;
+    // }
     Resource<NotificationsModel> resource = await apiService.getMessagesNotificationContent();
     if(resource.status == Status.SUCCESS){
       isDone = true;
