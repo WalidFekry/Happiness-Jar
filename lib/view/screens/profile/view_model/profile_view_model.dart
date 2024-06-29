@@ -9,7 +9,7 @@ import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:open_store/open_store.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -55,10 +55,8 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   void rateApp() {
-    OpenStore.instance.open(
-        appStoreId: '284815942',
-        androidAppBundleId: 'com.jar.happiness',
-    );
+    final InAppReview inAppReview = InAppReview.instance;
+    inAppReview.openStoreListing(appStoreId: '284815942');
   }
 
   void openFacebookPage() {
