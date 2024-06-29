@@ -10,6 +10,7 @@ class Styles {
     return ThemeData(
       useMaterial3: true,
       primaryColor: isDarkTheme ? Colors.white : Colors.black,
+      unselectedWidgetColor: isDarkTheme ? AppColors.darkColor3 : AppColors.lightColor3,
       iconTheme: IconThemeData(color: isDarkTheme ? AppColors.darkColor1 : AppColors.lightColor1,),
       navigationBarTheme: NavigationBarThemeData(
         elevation: 0,
