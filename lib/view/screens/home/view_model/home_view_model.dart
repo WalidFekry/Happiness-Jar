@@ -9,6 +9,7 @@ import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
+import 'package:happiness_jar/view/screens/home/model/today_advice.dart';
 import 'package:happiness_jar/view/screens/home/widgets/open_setting_app_dialog.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -25,9 +26,25 @@ class HomeViewModel extends BaseViewModel {
   bool getStarted = false;
   String? lastRefreshTokenTime;
   String? lastTimeToShowInAppReview;
+  String? getTodayAdviceTime;
   File? image;
+  String? giftBoxMessage;
   final GreetingDialog greetingDialog = GreetingDialog();
   final InAppReview inAppReview = InAppReview.instance;
+
+  Future<void> getTodayAdvice() async {
+    getTodayAdviceTime =
+        await prefs.getString(SharedPrefsConstants.GET_TODAY_ADVICE_TIME);
+    if (getTodayAdviceTime == "") {
+      getAdvice();
+    } else {
+      DateTime lastRunTime = DateTime.parse(getTodayAdviceTime!);
+      Duration difference = DateTime.now().difference(lastRunTime);
+      if (difference.inHours >= 24) {
+        getAdvice();
+      }
+    }
+  }
 
   Future<void> showInAppReview() async {
     lastTimeToShowInAppReview = await prefs
@@ -107,6 +124,15 @@ class HomeViewModel extends BaseViewModel {
           print('Permission denied with another status');
         }
       }
+    }
+  }
+
+  Future<void> getAdvice() async {
+    Resource<TodayAdviceModel> resource = await apiService.getAdviceMessage();
+    if (resource.status == Status.SUCCESS) {
+      giftBoxMessage = resource.data!.body;
+      await prefs.saveString(SharedPrefsConstants.GET_TODAY_ADVICE_TIME,
+          DateTime.now().toIso8601String());
     }
   }
 }

@@ -74,10 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
+              child:  viewModel.giftBoxMessage == null ? Image.asset(
                 AssetsManager.iconAppBar,
                 height: 50,
-              ),
+              ) : Image.asset(AssetsManager.giftBox, height: 50),
             ),
             actions: [
               GestureDetector(

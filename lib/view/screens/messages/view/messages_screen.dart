@@ -51,7 +51,7 @@ class MessagesScreen extends StatelessWidget {
                                 label:
                                     "رسالتك اليوم يا ${viewModel.userName} 🦋"),
                             const TitleTextWidget(label: "من البرطمان 💙"),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 20),
                             SizedBox(
                               height: size.height * 0.5,
                               child: PageView(

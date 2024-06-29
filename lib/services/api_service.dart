@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
+import 'package:happiness_jar/view/screens/home/model/today_advice.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../enums/status.dart';
@@ -87,6 +88,17 @@ class ApiService {
       );
       var refreshToken = RefreshTokenModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: refreshToken);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<TodayAdviceModel>> getAdviceMessage() async {
+    try {
+      var response = await dio.get('advice.php');
+      var contentMessage = TodayAdviceModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: contentMessage);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

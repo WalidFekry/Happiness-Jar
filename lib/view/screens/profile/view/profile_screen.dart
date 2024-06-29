@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/consts/app_consts.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
@@ -240,6 +242,21 @@ class ProfileScreen extends StatelessWidget {
                         leading: const Icon(Icons.developer_mode),
                         onTap: () {
                           viewModel.contactWithDeveloper();
+                        },
+                      ),
+                      if(Platform.isAndroid)
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      if(Platform.isAndroid)
+                      ListTile(
+                        title: const ContentTextWidget(
+                          label: 'المزيد من التطبيقات المجانية',
+                        ),
+                        leading: const Icon(Icons.apps),
+                        onTap: () {
+                          viewModel.moreApps();
                         },
                       ),
                       const Divider(

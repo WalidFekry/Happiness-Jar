@@ -91,6 +91,11 @@ class ProfileViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
+  void moreApps() {
+    final Uri url = Uri.parse('https://play.google.com/store/apps/dev?id=6257553101128037563');
+    launchUrl(url,mode: LaunchMode.externalApplication);
+  }
+
 
 
 }

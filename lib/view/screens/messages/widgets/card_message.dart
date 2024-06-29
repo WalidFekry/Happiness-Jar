@@ -26,7 +26,7 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
       alignment: Alignment.topCenter,
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 50), // Space for color options
+          // margin: const EdgeInsets.only(top: 50), // Space for color options
           decoration: BoxDecoration(
               border: Border.all(width: 1, color: Colors.grey),
               image: _showImage
