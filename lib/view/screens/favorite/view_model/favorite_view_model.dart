@@ -10,7 +10,7 @@ import '../../../../services/navigation_service.dart';
 
 class FavoriteViewModel extends BaseViewModel {
 
-  var appDatabase = locator<AppDatabase>();
+  final appDatabase = locator<AppDatabase>();
   List<FavoriteMessagesModel> list = [];
 
   Future<void> getFavoriteMessages() async {

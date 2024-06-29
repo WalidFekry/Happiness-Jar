@@ -18,8 +18,8 @@ class MessagesViewModel extends BaseViewModel {
   List<Messages> list = [];
   String? userName;
   String? lastGetMessagesTime;
-  var apiService = locator<ApiService>();
-  var prefs = locator<SharedPrefServices>();
+  final apiService = locator<ApiService>();
+  final prefs = locator<SharedPrefServices>();
   File? image;
   bool showEmptyJar = false;
   bool showMessages = true;

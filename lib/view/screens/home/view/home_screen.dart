@@ -15,6 +15,7 @@ import '../../categories/view/categories_screen.dart';
 import '../../favorite/view/favorite_screen.dart';
 import '../../messages/view/messages_screen.dart';
 import '../../notifications/view/notifications_screen.dart';
+import '../widgets/today_advice_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -77,7 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
               child:  viewModel.giftBoxMessage == null ? Image.asset(
                 AssetsManager.iconAppBar,
                 height: 50,
-              ) : Image.asset(AssetsManager.giftBox, height: 50),
+              ) : GestureDetector(
+                  onTap: () {
+                    TodayAdviceDialog.show(context, viewModel.giftBoxMessage);
+                    setState(() {
+                      viewModel.giftBoxMessage = null;
+                    });
+                  },
+                      child: Image.asset(AssetsManager.giftBox, height: 50)),
             ),
             actions: [
               GestureDetector(

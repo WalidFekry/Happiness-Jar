@@ -20,8 +20,8 @@ import '../../../../services/api_service.dart';
 import '../widgets/greeting_dialog.dart';
 
 class HomeViewModel extends BaseViewModel {
-  var prefs = locator<SharedPrefServices>();
-  var apiService = locator<ApiService>();
+  final prefs = locator<SharedPrefServices>();
+  final apiService = locator<ApiService>();
   bool isLogin = false;
   bool getStarted = false;
   String? lastRefreshTokenTime;
@@ -131,8 +131,6 @@ class HomeViewModel extends BaseViewModel {
     Resource<TodayAdviceModel> resource = await apiService.getAdviceMessage();
     if (resource.status == Status.SUCCESS) {
       giftBoxMessage = resource.data!.body;
-      await prefs.saveString(SharedPrefsConstants.GET_TODAY_ADVICE_TIME,
-          DateTime.now().toIso8601String());
     }
   }
 }

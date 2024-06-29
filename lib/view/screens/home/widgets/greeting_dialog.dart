@@ -11,7 +11,7 @@ import 'package:happiness_jar/view/widgets/title_text.dart';
 class GreetingDialog {
   Future<void> showGreeting(BuildContext context) async {
     final now = DateTime.now();
-    var prefs = locator<SharedPrefServices>();
+    final prefs = locator<SharedPrefServices>();
     String? lastMorningShownDate;
     String? lastEveningShownDate;
     String? userName;

@@ -14,7 +14,7 @@ import '../../../../services/navigation_service.dart';
 
 class RegisterViewModel extends BaseViewModel {
 
-  var prefs = locator<SharedPrefServices>();
+  final prefs = locator<SharedPrefServices>();
   final TextEditingController nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   File? image;

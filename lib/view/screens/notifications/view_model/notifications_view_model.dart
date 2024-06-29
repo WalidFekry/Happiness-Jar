@@ -14,8 +14,8 @@ import '../model/notification_model.dart';
 
 class NotificationsViewModel extends BaseViewModel{
   List<MessagesNotifications> list = [];
-  var apiService = locator<ApiService>();
-  var appDatabase = locator<AppDatabase>();
+  final apiService = locator<ApiService>();
+  final appDatabase = locator<AppDatabase>();
   bool isDone = true;
 
 

@@ -53,7 +53,7 @@ class OpenSettingAppDialog {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    locator<NavigationService>().goBack();
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).iconTheme.color,

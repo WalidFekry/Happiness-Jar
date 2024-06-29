@@ -16,7 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProfileViewModel extends BaseViewModel {
 
-  var prefs = locator<SharedPrefServices>();
+  final prefs = locator<SharedPrefServices>();
   String? userName;
   File? image;
 

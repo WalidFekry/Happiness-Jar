@@ -17,8 +17,8 @@ class CategoriesViewModel extends BaseViewModel{
 
   List<MessagesCategories> list = [];
   List<MessagesCategories> content = [];
-  var apiService = locator<ApiService>();
-  var appDatabase = locator<AppDatabase>();
+  final apiService = locator<ApiService>();
+  final appDatabase = locator<AppDatabase>();
   bool isDone = true;
   bool isDoneContent = true;
 
