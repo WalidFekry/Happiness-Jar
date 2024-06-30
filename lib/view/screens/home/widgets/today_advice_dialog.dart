@@ -47,7 +47,7 @@ class TodayAdviceDialog {
                         .iconTheme
                         .color,),),
                 ],),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 TextButton(onPressed: () async {
                   await prefs.saveString(
                       SharedPrefsConstants.GET_TODAY_ADVICE_TIME,
