@@ -96,7 +96,7 @@ class ApiService {
 
   Future<Resource<TodayAdviceModel>> getAdviceMessage() async {
     try {
-      var response = await dio.get('advice.php');
+      var response = await dio.get('messages_advice.php');
       var contentMessage = TodayAdviceModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessage);
     } catch (e) {

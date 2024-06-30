@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       viewModel.getUserData();
       viewModel.refreshToken();
+      viewModel.getTodayAdvice();
       viewModel.showInAppReview();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         viewModel.showGreetingDialog(context);

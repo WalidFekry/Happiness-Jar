@@ -130,7 +130,8 @@ class HomeViewModel extends BaseViewModel {
   Future<void> getAdvice() async {
     Resource<TodayAdviceModel> resource = await apiService.getAdviceMessage();
     if (resource.status == Status.SUCCESS) {
-      giftBoxMessage = resource.data!.body;
+      giftBoxMessage = resource.data!.content![0].body;
+      setState(ViewState.Idle);
     }
   }
 }
