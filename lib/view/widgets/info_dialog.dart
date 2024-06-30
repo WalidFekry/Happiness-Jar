@@ -3,10 +3,9 @@ import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
-import 'package:happiness_jar/view/widgets/title_text.dart';
 
 class InfoDialog {
-  static void show(BuildContext context,String content) {
+  static void show(BuildContext context, String content) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -23,7 +22,10 @@ class InfoDialog {
                 color: Theme.of(context).iconTheme.color,
               ),
               const SizedBox(height: 20),
-              ContentTextWidget(label: content)
+              ContentTextWidget(
+                label: content,
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
           actions: [
@@ -31,7 +33,10 @@ class InfoDialog {
               onPressed: () {
                 locator<NavigationService>().goBack();
               },
-              child: SubtitleTextWidget(label: "حسناً",color: Theme.of(context).primaryColor,),
+              child: SubtitleTextWidget(
+                label: "حسناً",
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           ],
         );
