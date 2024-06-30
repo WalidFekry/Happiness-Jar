@@ -27,6 +27,7 @@ class MessagesViewModel extends BaseViewModel {
   int currentPage = 0;
   bool nextMessage = true;
   bool prevMessage = true;
+  bool showJarMessages = true;
   PageController? controller;
 
   Future<void> getUserData() async {
@@ -120,5 +121,10 @@ class MessagesViewModel extends BaseViewModel {
 
   Future<void> saveMessagesTime() async {
     await prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME, DateTime.now().toIso8601String());
+  }
+
+  void setJarMessages() {
+    showJarMessages = !showJarMessages;
+   setState(ViewState.Idle);
   }
 }
