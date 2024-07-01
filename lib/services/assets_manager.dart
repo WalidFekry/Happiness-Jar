@@ -10,5 +10,6 @@ class AssetsManager {
   static const String imageJar30 = "$imagesPath/jar_30.png";
   static const String giftBox = "$iconsPath/giftbox.png";
   static const String openBox = "$animationPath/open_box.json";
+  static const String teacher = "$imagesPath/teacher.png";
 
 }
