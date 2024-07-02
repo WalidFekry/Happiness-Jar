@@ -6,7 +6,7 @@ import 'package:iconly/iconly.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../../services/assets_manager.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';

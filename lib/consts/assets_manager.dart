@@ -3,7 +3,6 @@ class AssetsManager {
   static const String iconsPath = "assets/icons";
   static const String animationPath = "assets/animations";
 
-
   static const String iconAppBar = "$iconsPath/hearts.png";
   static const String darkMode = "$iconsPath/dark_mode.png";
   static const String userProfile = "$iconsPath/user.png";

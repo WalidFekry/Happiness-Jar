@@ -9,7 +9,7 @@ import 'package:happiness_jar/view/screens/get_started/view/get_notification_scr
 import 'package:happiness_jar/view/screens/get_started/view/get_started_screen.dart';
 import 'package:happiness_jar/view/screens/home/view/home_screen.dart';
 import 'package:happiness_jar/view/screens/profile/view/profile_screen.dart';
-import '../view/screens/exit_app/exit_app_screen.dart';
+import '../view/screens/exit_app/view/exit_app_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {

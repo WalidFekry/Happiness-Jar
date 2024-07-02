@@ -8,7 +8,7 @@ import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart'
 import 'package:iconly/iconly.dart';
 
 import '../../../../consts/shared_preferences_constants.dart';
-import '../../../../services/assets_manager.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../base_screen.dart';
 import '../../categories/view/categories_screen.dart';

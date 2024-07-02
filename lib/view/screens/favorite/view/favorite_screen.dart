@@ -10,7 +10,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../locator.dart';
-import '../../../../services/assets_manager.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../../widgets/content_text.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../../services/assets_manager.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../widgets/subtitle_text.dart';
 
 class EmptyMessageWidget extends StatelessWidget {

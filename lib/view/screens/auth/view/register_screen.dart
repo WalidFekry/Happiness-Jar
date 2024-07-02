@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/services/assets_manager.dart';
+import 'package:happiness_jar/consts/assets_manager.dart';
 import 'package:happiness_jar/view/screens/auth/view_model/register_view_model.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';

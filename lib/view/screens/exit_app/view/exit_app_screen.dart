@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:happiness_jar/locator.dart';
-import 'package:happiness_jar/services/assets_manager.dart';
+import 'package:happiness_jar/consts/assets_manager.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 
-import '../../../routs/routs_names.dart';
-import '../../../services/navigation_service.dart';
+import '../../../../routs/routs_names.dart';
+import '../../../../services/navigation_service.dart';
 
 class ExitAppScreen extends StatelessWidget {
   const ExitAppScreen({Key? key}) : super(key: key);

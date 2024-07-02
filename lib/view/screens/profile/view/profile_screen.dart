@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../locator.dart';
 import '../../../../providers/theme_provider.dart';
-import '../../../../services/assets_manager.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../../widgets/subtitle_text.dart';

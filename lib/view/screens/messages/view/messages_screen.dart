@@ -4,7 +4,7 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../services/assets_manager.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
 import '../view_model/messages_view_model.dart';

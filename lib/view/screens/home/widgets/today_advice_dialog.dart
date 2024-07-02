@@ -3,7 +3,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/locator.dart';
-import 'package:happiness_jar/services/assets_manager.dart';
+import 'package:happiness_jar/consts/assets_manager.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../consts/shared_preferences_constants.dart';

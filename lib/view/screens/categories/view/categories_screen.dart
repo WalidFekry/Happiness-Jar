@@ -6,7 +6,7 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import 'package:iconly/iconly.dart';
 
-import '../../../../services/assets_manager.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../../widgets/title_text.dart';
 
