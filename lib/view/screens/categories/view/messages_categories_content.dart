@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:happiness_jar/consts/app_consts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -232,6 +233,23 @@ class MessagesCategoriesContent extends StatelessWidget {
                                                     color: Theme.of(context)
                                                         .iconTheme
                                                         .color),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  viewModel.shareWhatsapp(index);
+                                                },
+                                                icon: SvgPicture.asset(
+                                                  AssetsManager.whatsapp,
+                                                  width: 24,
+                                                  height: 24,
+                                                  colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  viewModel.shareFacebook(index);
+                                                },
+                                                icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
                                               ),
                                             ]),
                                       ],

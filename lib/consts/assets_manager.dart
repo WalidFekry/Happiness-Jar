@@ -2,6 +2,7 @@ class AssetsManager {
   static const String imagesPath = "assets/images";
   static const String iconsPath = "assets/icons";
   static const String animationPath = "assets/animations";
+  static const String svgPath = "assets/svg";
 
   static const String iconAppBar = "$iconsPath/hearts.png";
   static const String darkMode = "$iconsPath/dark_mode.png";
@@ -10,5 +11,5 @@ class AssetsManager {
   static const String giftBox = "$iconsPath/giftbox.png";
   static const String openBox = "$animationPath/open_box.json";
   static const String teacher = "$imagesPath/teacher.png";
-
+  static const String whatsapp = "$svgPath/whatsapp.svg";
 }

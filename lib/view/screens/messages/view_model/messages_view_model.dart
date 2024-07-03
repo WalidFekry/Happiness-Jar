@@ -4,6 +4,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../consts/shared_preferences_constants.dart';
 import '../../../../enums/screen_state.dart';
@@ -126,5 +127,31 @@ class MessagesViewModel extends BaseViewModel {
   void setJarMessages() {
     showJarMessages = !showJarMessages;
    setState(ViewState.Idle);
+  }
+
+  Future<void> shareWhatsapp(int index) async {
+    String message = '${list[index].body} \n\n من تطبيق برطمان السعادة 💙';
+    String encodedMessage = Uri.encodeComponent(message);
+    String whatsappUrl = "whatsapp://send?text=$encodedMessage";
+    Uri uri = Uri.parse(whatsappUrl);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      Share.share(message);
+    }
+  }
+
+  Future<void> shareFacebook(int index) async {
+    String message = '${list[index].body} \n\n من تطبيق برطمان السعادة 💙';
+    String encodedMessage = Uri.encodeComponent(message);
+    String facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
+    Uri uri = Uri.parse(facebookUrl);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      Share.share(message);
+    }
   }
 }

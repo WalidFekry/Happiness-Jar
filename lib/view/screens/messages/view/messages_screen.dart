@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_jar/view/screens/messages/widgets/no_internet.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:iconly/iconly.dart';
@@ -130,6 +131,13 @@ class MessagesScreen extends StatelessWidget {
                                      ),
                                      const SizedBox(width: 10),
                                      IconButton(
+                                       icon: const Icon(Icons.copy, size: 25),
+                                       onPressed: () {
+                                         viewModel
+                                             .copyMessage(viewModel.currentPage);
+                                       },
+                                     ),
+                                     IconButton(
                                        icon: const Icon(Icons.share, size: 25),
                                        onPressed: () {
                                          viewModel
@@ -137,11 +145,21 @@ class MessagesScreen extends StatelessWidget {
                                        },
                                      ),
                                      IconButton(
-                                       icon: const Icon(Icons.copy, size: 25),
                                        onPressed: () {
-                                         viewModel
-                                             .copyMessage(viewModel.currentPage);
+                                         viewModel.shareWhatsapp(viewModel.currentPage);
                                        },
+                                       icon: SvgPicture.asset(
+                                         AssetsManager.whatsapp,
+                                         width: 24,
+                                         height: 24,
+                                         colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                                       ),
+                                     ),
+                                     IconButton(
+                                       onPressed: () {
+                                         viewModel.shareFacebook(viewModel.currentPage);
+                                       },
+                                       icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
                                      ),
                                      const SizedBox(width: 10),
                                      Visibility(

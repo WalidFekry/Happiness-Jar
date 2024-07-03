@@ -7,6 +7,7 @@ import 'package:happiness_jar/services/api_service.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../enums/screen_state.dart';
 import '../../../../routs/routs_names.dart';
@@ -85,6 +86,33 @@ class CategoriesViewModel extends BaseViewModel{
 
   void goBack() {
     locator<NavigationService>().goBack();
+  }
+
+  Future<void> shareWhatsapp(int index) async {
+    String message = '${list[index].title} \n\n من تطبيق برطمان السعادة 💙';
+    String encodedMessage = Uri.encodeComponent(message);
+    String whatsappUrl = "whatsapp://send?text=$encodedMessage";
+
+    Uri uri = Uri.parse(whatsappUrl);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      Share.share(message);
+    }
+  }
+
+  Future<void> shareFacebook(int index) async {
+    String message = '${list[index].title} \n\n من تطبيق برطمان السعادة 💙';
+    String encodedMessage = Uri.encodeComponent(message);
+    String facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
+    Uri uri = Uri.parse(facebookUrl);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      Share.share(message);
+    }
   }
 
 }

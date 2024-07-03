@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_jar/consts/app_consts.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
 import 'package:iconly/iconly.dart';
@@ -54,7 +55,7 @@ class NotificationsScreen extends StatelessWidget {
                                       BorderRadius.circular(18)),
                                   title: Row(
                                     children: [
-                                      const TitleTextWidget(label: "رسالة من البرطمان"),
+                                      const TitleTextWidget(label: "إشعار من البرطمان"),
                                       const Spacer(),
                                       IconButton(
                                         onPressed: () =>
@@ -171,6 +172,23 @@ class NotificationsScreen extends StatelessWidget {
                                         viewModel.shareMessage(index);
                                       },
                                       icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        viewModel.shareWhatsapp(index);
+                                      },
+                                      icon: SvgPicture.asset(
+                                        AssetsManager.whatsapp,
+                                        width: 24,
+                                        height: 24,
+                                        colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        viewModel.shareFacebook(index);
+                                      },
+                                      icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
                                     ),
                                   ]),
                             ],

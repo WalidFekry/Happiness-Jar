@@ -59,6 +59,8 @@ dependencies:
   app_settings: ^5.1.1
   in_app_review: ^2.0.9
   lottie: ^1.2.1
+  flutter_svg: ^2.0.10+1
+  url_launcher: ^6.3.0
 
 
 dev_dependencies:
@@ -89,6 +91,7 @@ flutter:
     - assets/icons/
     - assets/translations/
     - assets/animations/
+    - assets/svg/
 
   fonts:
     - family: bar
