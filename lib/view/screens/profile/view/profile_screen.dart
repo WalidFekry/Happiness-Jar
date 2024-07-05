@@ -160,6 +160,26 @@ class ProfileScreen extends StatelessWidget {
                         },
                       ),
                       const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      if(viewModel.version != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: ListTile(
+                          title: const ContentTextWidget(
+                            label: 'إصدار التطبيق',
+                          ),
+                          leading: Icon(Icons.verified,color:Theme.of(context).iconTheme.color,),
+                          trailing: ContentTextWidget(
+                            label: viewModel.version,
+                          ),
+                          onTap: () {
+                            viewModel.openFacebookPage();
+                          },
+                        ),
+                      ),
+                      const Divider(
                         thickness: 2,
                         color: Colors.grey,
                       ),

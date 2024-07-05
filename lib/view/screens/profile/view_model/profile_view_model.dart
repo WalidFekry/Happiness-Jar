@@ -10,6 +10,7 @@ import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,9 +19,12 @@ class ProfileViewModel extends BaseViewModel {
 
   final prefs = locator<SharedPrefServices>();
   String? userName;
+  String? version;
   File? image;
 
   Future<void> getUserData() async {
+   PackageInfo packageInfo = await PackageInfo.fromPlatform();
+   version = packageInfo.version;
    userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
    final imagePath = await prefs.getString(SharedPrefsConstants.USER_IMAGE);
    if (imagePath.isNotEmpty) {
