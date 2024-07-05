@@ -31,6 +31,7 @@ class MessagesViewModel extends BaseViewModel {
   bool prevMessage = false;
   bool showJarMessages = true;
   PageController? controller;
+  double opacity = 1.0;
   final appDatabase = locator<AppDatabase>();
 
   Future<void> getUserData() async {
@@ -126,9 +127,17 @@ class MessagesViewModel extends BaseViewModel {
     await prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME, DateTime.now().toIso8601String());
   }
 
+  void changeOpacity() {
+    opacity = 0.0;
+    setState(ViewState.Idle);
+  }
+
   void setJarMessages() {
-    showJarMessages = !showJarMessages;
-   setState(ViewState.Idle);
+    Duration duration = const Duration(seconds: 2);
+    Future.delayed(duration, () {
+      showJarMessages = !showJarMessages;
+      setState(ViewState.Idle);
+    });
   }
 
   Future<void> shareWhatsapp(int index) async {

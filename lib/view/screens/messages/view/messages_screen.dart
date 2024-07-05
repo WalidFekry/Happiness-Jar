@@ -52,29 +52,34 @@ class MessagesScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
+                                viewModel.changeOpacity();
                                 viewModel.setJarMessages();
                               },
                               child: Visibility(
                                 visible: viewModel.showJarMessages,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const TitleTextWidget(
-                                        label:
-                                        "إضغط لفتح رسائل البرطمان 💙"),
-                                    TitleTextWidget(label: 'يا ${viewModel.userName} 👇'),
-                                    Center(
-                                      child: Lottie.asset(
-                                        AssetsManager.openBox,
-                                        width: 300,
-                                        height: 300,
-                                        fit: BoxFit.fill,
+                                child: AnimatedOpacity(
+                                  opacity: viewModel.opacity,
+                                  duration: const Duration(seconds: 2),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      const TitleTextWidget(
+                                          label:
+                                          "إضغط لفتح رسائل البرطمان 💙"),
+                                      TitleTextWidget(label: 'يا ${viewModel.userName} 👇'),
+                                      Center(
+                                        child: Lottie.asset(
+                                          AssetsManager.openBox,
+                                          width: 300,
+                                          height: 300,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
