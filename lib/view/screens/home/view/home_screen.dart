@@ -128,11 +128,11 @@ class _HomeScreenState extends State<HomeScreen> {
               NavigationDestination(
                   selectedIcon: Icon(IconlyLight.home),
                   icon: Icon(IconlyBold.home),
-                  label: "الرئيسية"),
+                  label: "الرسائل"),
               NavigationDestination(
                   selectedIcon: Icon(IconlyLight.notification),
                   icon: Icon(IconlyBold.notification),
-                  label: "إشعارات"),
+                  label: "الإشعارات"),
               NavigationDestination(
                   selectedIcon: Icon(IconlyLight.category),
                   icon: Icon(IconlyBold.category),
