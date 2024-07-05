@@ -110,9 +110,8 @@ class MessagesScreen extends StatelessWidget {
                                          imageUrl: viewModel.list[3].imageUrl,
                                        ),
                                        const CardMessageWidget(
-                                         body:
-                                         "البرطمان خلص ⌛ \n لقد انتهت رسائلك اليوم ✅ \n عُد غداً لترى رسائلك الجديدة 💙",
-                                         imageUrl: null,
+                                         body: "لقد وصلت إلى نهاية رسائل البرطمان ⌛ \n عُد بعد 6 ساعات 🕕 \n لإكتشاف رسائل جديدة 💙",
+                                       imageUrl: null,
                                        ),
                                      ],
                                    ),

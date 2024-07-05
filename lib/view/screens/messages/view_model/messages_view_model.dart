@@ -103,7 +103,7 @@ class MessagesViewModel extends BaseViewModel {
     } else if (currentPage == 3) {
       currentPage++;
       nextMessage = false;
-      //saveMessagesTime();
+      saveMessagesTime();
     }
     controller?.jumpToPage(currentPage);
     setState(ViewState.Idle);
