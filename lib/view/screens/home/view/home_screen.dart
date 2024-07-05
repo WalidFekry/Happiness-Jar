@@ -5,6 +5,7 @@ import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
+import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
 import 'package:iconly/iconly.dart';
 import 'package:in_app_review/in_app_review.dart';
 
@@ -78,10 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
               child: viewModel.giftBoxMessage == null
-                  ? Image.asset(
-                      AssetsManager.iconAppBar,
-                      height: 50,
-                    )
+                  ? GestureDetector(
+                   onTap: (){
+                     ShareAPPDialog.show(context);
+                   },
+                    child: Image.asset(
+                        AssetsManager.iconAppBar,
+                        height: 50,
+                      ),
+                  )
                   : GestureDetector(
                       onTap: () {
                         TodayAdviceDialog.show(
