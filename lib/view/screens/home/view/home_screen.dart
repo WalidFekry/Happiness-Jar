@@ -6,9 +6,10 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:iconly/iconly.dart';
+import 'package:in_app_review/in_app_review.dart';
 
-import '../../../../consts/shared_preferences_constants.dart';
 import '../../../../consts/assets_manager.dart';
+import '../../../../consts/shared_preferences_constants.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../base_screen.dart';
 import '../../categories/view/categories_screen.dart';
@@ -76,16 +77,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
-              child:  viewModel.giftBoxMessage == null ? Image.asset(
-                AssetsManager.iconAppBar,
-                height: 50,
-              ) : GestureDetector(
-                  onTap: () {
-                    TodayAdviceDialog.show(context, viewModel.giftBoxMessage);
-                    setState(() {
-                      viewModel.giftBoxMessage = null;
-                    });
-                  },
+              child: viewModel.giftBoxMessage == null
+                  ? Image.asset(
+                      AssetsManager.iconAppBar,
+                      height: 50,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        TodayAdviceDialog.show(
+                            context, viewModel.giftBoxMessage);
+                        setState(() {
+                          viewModel.giftBoxMessage = null;
+                        });
+                      },
                       child: Image.asset(AssetsManager.giftBox, height: 50)),
             ),
             actions: [
@@ -183,6 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
       jumpToPage(2);
     } else if (message.data["click_action"] == "favorite") {
       jumpToPage(3);
+    } else if (message.data["click_action"] == "rate") {
+      rateApp();
     }
   }
 
@@ -213,6 +219,11 @@ class _HomeScreenState extends State<HomeScreen> {
       default:
         appBarTitle = "رسائل البرطمان";
     }
+  }
+
+  void rateApp() {
+    final InAppReview inAppReview = InAppReview.instance;
+    inAppReview.openStoreListing(appStoreId: '284815942');
   }
 
   @override
