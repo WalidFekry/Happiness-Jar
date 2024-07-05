@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../consts/shared_preferences_constants.dart';
+import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';
 import '../../../../locator.dart';
@@ -27,9 +28,10 @@ class MessagesViewModel extends BaseViewModel {
   bool noInternet = false;
   int currentPage = 0;
   bool nextMessage = true;
-  bool prevMessage = true;
+  bool prevMessage = false;
   bool showJarMessages = true;
   PageController? controller;
+  final appDatabase = locator<AppDatabase>();
 
   Future<void> getUserData() async {
     userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
@@ -101,7 +103,7 @@ class MessagesViewModel extends BaseViewModel {
     } else if (currentPage == 3) {
       currentPage++;
       nextMessage = false;
-      saveMessagesTime();
+      //saveMessagesTime();
     }
     controller?.jumpToPage(currentPage);
     setState(ViewState.Idle);
@@ -153,5 +155,13 @@ class MessagesViewModel extends BaseViewModel {
     } else {
       Share.share(message);
     }
+  }
+
+  Future<void> saveFavoriteMessage(int index) async {
+    DateTime now = DateTime.now();
+    String createdAt = "${now.year}-${now.month}-${now.day}";
+    await appDatabase.saveFavoriteMessage(list[index].body,createdAt);
+    list[index].isFavourite = !list[index].isFavourite;
+    setState(ViewState.Idle);
   }
 }

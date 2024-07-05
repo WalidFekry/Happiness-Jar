@@ -4,6 +4,8 @@ import 'package:happiness_jar/view/screens/messages/widgets/no_internet.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../consts/assets_manager.dart';
 import '../../../widgets/title_text.dart';
@@ -116,65 +118,121 @@ class MessagesScreen extends StatelessWidget {
                                    ),
                                  ),
                                  const SizedBox(height: 10),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.center,
-                                   children: [
-                                     Visibility(
-                                       visible: viewModel.prevMessage,
-                                       child: IconButton(
-                                         icon: const Icon(IconlyBold.arrow_right,
-                                             size: 35),
-                                         onPressed: () {
-                                           viewModel.prevMessages();
-                                         },
-                                       ),
-                                     ),
-                                     const SizedBox(width: 10),
-                                     IconButton(
-                                       icon: const Icon(Icons.copy, size: 25),
-                                       onPressed: () {
-                                         viewModel
-                                             .copyMessage(viewModel.currentPage);
-                                       },
-                                     ),
-                                     IconButton(
-                                       icon: const Icon(Icons.share, size: 25),
-                                       onPressed: () {
-                                         viewModel
-                                             .shareMessage(viewModel.currentPage);
-                                       },
-                                     ),
-                                     IconButton(
-                                       onPressed: () {
-                                         viewModel.shareWhatsapp(viewModel.currentPage);
-                                       },
-                                       icon: SvgPicture.asset(
-                                         AssetsManager.whatsapp,
-                                         width: 24,
-                                         height: 24,
-                                         colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
-                                       ),
-                                     ),
-                                     IconButton(
-                                       onPressed: () {
-                                         viewModel.shareFacebook(viewModel.currentPage);
-                                       },
-                                       icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
-                                     ),
-                                     const SizedBox(width: 10),
-                                     Visibility(
-                                       visible: viewModel.nextMessage,
-                                       child: IconButton(
-                                         icon: const Icon(
-                                           IconlyBold.arrow_left,
-                                           size: 35,
+                                 Padding(
+                                   padding: const EdgeInsets.symmetric(horizontal: 20),
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.center,
+                                     children: [
+                                       Visibility(
+                                         visible: viewModel.prevMessage,
+                                         child: Flexible(
+                                           child: IconButton(
+                                             icon: const Icon(IconlyBold.arrow_right, size: 35),
+                                             onPressed: () {
+                                               viewModel.prevMessages();
+                                             },
+                                           ),
                                          ),
-                                         onPressed: () {
-                                           viewModel.nextMessages();
-                                         },
                                        ),
-                                     ),
-                                   ],
+                                       const SizedBox(width: 10),
+                                       if (viewModel.currentPage != 4)
+                                       Flexible(
+                                         child: IconButton(
+                                           icon: const Icon(Icons.copy, size: 25),
+                                           onPressed: () {
+                                             viewModel.copyMessage(viewModel.currentPage);
+                                           },
+                                         ),
+                                       ),
+                                       if (viewModel.currentPage != 4)
+                                       Flexible(
+                                         child: IconButton(
+                                           icon: const Icon(Icons.share, size: 25),
+                                           onPressed: () {
+                                             viewModel.shareMessage(viewModel.currentPage);
+                                           },
+                                         ),
+                                       ),
+                                       if (viewModel.currentPage != 4)
+                                       Flexible(
+                                         child: IconButton(
+                                           icon: viewModel.list[viewModel.currentPage]
+                                               .isFavourite
+                                               ? Icon(IconlyBold.heart,
+                                               color:
+                                               Theme.of(context)
+                                                   .iconTheme
+                                                   .color)
+                                               : Icon(IconlyLight.heart,
+                                               color:
+                                               Theme.of(context)
+                                                   .iconTheme
+                                                   .color),
+                                           onPressed: () {
+                                             viewModel
+                                                 .saveFavoriteMessage(
+                                                 viewModel.currentPage);
+                                             showTopSnackBar(
+                                               Overlay.of(context),
+                                               CustomSnackBar.success(
+                                                 backgroundColor:
+                                                 Theme.of(context)
+                                                     .iconTheme
+                                                     .color!,
+                                                 message:
+                                                 "تمت الإضافة للمفضلة",
+                                                 icon: Icon(
+                                                   IconlyBold.heart,
+                                                   color:
+                                                   Theme.of(context)
+                                                       .cardColor,
+                                                   size: 50,
+                                                 ),
+                                               ),
+                                             );
+                                           },
+                                         ),
+                                       ),
+                                       if (viewModel.currentPage != 4)
+                                       Flexible(
+                                         child: IconButton(
+                                           onPressed: () {
+                                             viewModel.shareWhatsapp(viewModel.currentPage);
+                                           },
+                                           icon: SvgPicture.asset(
+                                             AssetsManager.whatsapp,
+                                             width: 24,
+                                             height: 24,
+                                             colorFilter: ColorFilter.mode(
+                                               Theme.of(context).iconTheme.color!,
+                                               BlendMode.srcIn,
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       if (viewModel.currentPage != 4)
+                                       Flexible(
+                                         child: IconButton(
+                                           onPressed: () {
+                                             viewModel.shareFacebook(viewModel.currentPage);
+                                           },
+                                           icon: Icon(Icons.facebook, color: Theme.of(context).iconTheme.color),
+                                         ),
+                                       ),
+                                       const SizedBox(width: 10),
+                                       Visibility(
+                                         visible: viewModel.nextMessage,
+                                         child: Flexible(
+                                           child: IconButton(
+                                             icon: const Icon(IconlyBold.arrow_left, size: 35),
+                                             onPressed: () {
+                                               viewModel.nextMessages();
+                                             },
+                                           ),
+                                         ),
+                                       ),
+                                     ],
+                                   ),
                                  )
                                ],
                              ),

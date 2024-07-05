@@ -31,6 +31,7 @@ class Messages
   int? id;
   String? body;
   String? imageUrl;
+  bool isFavourite = false;
 
   Messages({this.id, this.body, this.imageUrl});
 
