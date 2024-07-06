@@ -114,10 +114,6 @@ class MessagesScreen extends StatelessWidget {
                                          body: viewModel.list[3].body,
                                          imageUrl: viewModel.list[3].imageUrl,
                                        ),
-                                       const CardMessageWidget(
-                                         body: "لقد وصلت إلى نهاية رسائل البرطمان ⌛ \n عُد بعد 6 ساعات 🕕 \n لإكتشاف رسائل جديدة 💙",
-                                       imageUrl: null,
-                                       ),
                                      ],
                                    ),
                                  ),
@@ -139,7 +135,6 @@ class MessagesScreen extends StatelessWidget {
                                          ),
                                        ),
                                        const SizedBox(width: 10),
-                                       if (viewModel.currentPage != 4)
                                        Flexible(
                                          child: IconButton(
                                            icon: const Icon(Icons.copy, size: 25),
@@ -148,7 +143,6 @@ class MessagesScreen extends StatelessWidget {
                                            },
                                          ),
                                        ),
-                                       if (viewModel.currentPage != 4)
                                        Flexible(
                                          child: IconButton(
                                            icon: const Icon(Icons.share, size: 25),
@@ -157,7 +151,6 @@ class MessagesScreen extends StatelessWidget {
                                            },
                                          ),
                                        ),
-                                       if (viewModel.currentPage != 4)
                                        Flexible(
                                          child: IconButton(
                                            icon: viewModel.list[viewModel.currentPage]
@@ -197,7 +190,6 @@ class MessagesScreen extends StatelessWidget {
                                            },
                                          ),
                                        ),
-                                       if (viewModel.currentPage != 4)
                                        Flexible(
                                          child: IconButton(
                                            onPressed: () {
@@ -214,7 +206,6 @@ class MessagesScreen extends StatelessWidget {
                                            ),
                                          ),
                                        ),
-                                       if (viewModel.currentPage != 4)
                                        Flexible(
                                          child: IconButton(
                                            onPressed: () {

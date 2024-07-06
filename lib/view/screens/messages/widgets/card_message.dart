@@ -32,12 +32,15 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
               image: _showImage
                   ? DecorationImage(
                 image: widget.imageUrl == null
-                    ? const AssetImage(AssetsManager.imageJar30)
+                    ? const AssetImage(AssetsManager.emptyJar,
+                )
                 as ImageProvider<Object>
                     : NetworkImage(widget.imageUrl!)
                 as ImageProvider<Object>,
                 fit: BoxFit.cover,
                 opacity: 0.5,
+                colorFilter: ColorFilter.mode(
+                    _selectedColor, BlendMode.colorBurn),
               )
                   : null,
               color: _selectedColor == Colors.transparent

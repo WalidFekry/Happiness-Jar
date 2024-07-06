@@ -77,15 +77,16 @@ class _HomeScreenState extends State<HomeScreen> {
               title: appBarTitle,
             ),
             leading: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: viewModel.giftBoxMessage == null
                   ? GestureDetector(
                    onTap: (){
                      ShareAPPDialog.show(context);
                    },
                     child: Image.asset(
-                        AssetsManager.iconAppBar,
-                        height: 50,
+                        AssetsManager.appLogo,
+                        height: 100,
+                        width: 100,
                       ),
                   )
                   : GestureDetector(

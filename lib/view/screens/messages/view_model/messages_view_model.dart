@@ -102,7 +102,7 @@ class MessagesViewModel extends BaseViewModel {
       nextMessage = true;
       prevMessage = true;
     } else if (currentPage == 3) {
-      currentPage++;
+      // currentPage++;
       nextMessage = false;
       saveMessagesTime();
     }
@@ -125,6 +125,7 @@ class MessagesViewModel extends BaseViewModel {
 
   Future<void> saveMessagesTime() async {
     await prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME, DateTime.now().toIso8601String());
+    getLastMessagesTime();
   }
 
   void changeOpacity() {
