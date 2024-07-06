@@ -76,29 +76,31 @@ class _HomeScreenState extends State<HomeScreen> {
             title: AppBarTextWidget(
               title: appBarTitle,
             ),
-            leading: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: viewModel.giftBoxMessage == null
-                  ? GestureDetector(
-                   onTap: (){
-                     ShareAPPDialog.show(context);
-                   },
+            leading: viewModel.giftBoxMessage == null
+                ? GestureDetector(
+                 onTap: (){
+                   ShareAPPDialog.show(context);
+                 },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5),
                     child: Image.asset(
-                        AssetsManager.appLogo,
-                        height: 100,
-                        width: 100,
+                        AssetsManager.appLogoNoTitle,
+                        fit:  BoxFit.contain
                       ),
-                  )
-                  : GestureDetector(
-                      onTap: () {
-                        TodayAdviceDialog.show(
-                            context, viewModel.giftBoxMessage);
-                        setState(() {
-                          viewModel.giftBoxMessage = null;
-                        });
-                      },
-                      child: Image.asset(AssetsManager.giftBox, height: 50)),
-            ),
+                  ),
+                )
+                : GestureDetector(
+                    onTap: () {
+                      TodayAdviceDialog.show(
+                          context, viewModel.giftBoxMessage);
+                      setState(() {
+                        viewModel.giftBoxMessage = null;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Image.asset(AssetsManager.giftBox,fit:  BoxFit.cover),
+                    ),),
             actions: [
               GestureDetector(
                 onTap: () {

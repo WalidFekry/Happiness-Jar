@@ -31,8 +31,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset(
-                      AssetsManager.iconAppBar,
+                      AssetsManager.registerJar,
                       height: 150,
+                      width: 150,
+                      fit:  BoxFit.cover,
                     ),
                     const SizedBox(height: 15),
                     const TitleTextWidget(

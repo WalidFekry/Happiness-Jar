@@ -8,10 +8,16 @@ class AssetsManager {
   static const String appLogoNoTitle = "$iconsPath/logo_no_title.png";
   static const String emptyJar = "$iconsPath/empty_jar.png";
   static const String emptyJar2 = "$iconsPath/empty_jar_2.png";
+  static const String welcomeJar = "$iconsPath/welcome.png";
+  static const String notificationAlertJar = "$iconsPath/notification_alert.png";
+  static const String notificationJar = "$iconsPath/notification.png";
+  static const String registerJar = "$iconsPath/register.png";
+  static const String favoriteJar = "$iconsPath/favorite.png";
+  static const String categoriesJar = "$iconsPath/categories.png";
+  static const String giftBox = "$iconsPath/giftbox.png";
   static const String iconAppBar = "$iconsPath/hearts.png";
   static const String darkMode = "$iconsPath/dark_mode.png";
   static const String userProfile = "$iconsPath/user.png";
-  static const String giftBox = "$iconsPath/giftbox.png";
   static const String openBox = "$animationPath/open_box.json";
   static const String teacher = "$imagesPath/teacher.png";
   static const String whatsapp = "$svgPath/whatsapp.svg";

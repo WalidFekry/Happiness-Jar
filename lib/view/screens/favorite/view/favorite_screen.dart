@@ -62,7 +62,7 @@ class FavoriteScreen extends StatelessWidget {
                                       BorderRadius.circular(18)),
                                   title: Row(
                                     children: [
-                                      const TitleTextWidget(label: "رسالة من البرطمان"),
+                                      const TitleTextWidget(label: "من مفضلة البرطمان",fontSize: 18,),
                                       const Spacer(),
                                       IconButton(
                                         onPressed: () =>
@@ -86,8 +86,21 @@ class FavoriteScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  content: ContentTextWidget(
-                                    label: viewModel.list[index].title,textAlign:TextAlign.center,
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        AssetsManager.favoriteJar,
+                                        height: 100,
+                                        width: 100,
+                                        fit:  BoxFit.cover,
+                                      ),
+                                      ContentTextWidget(
+                                        label: viewModel.list[index].title,textAlign:TextAlign.center,
+                                      ),
+                                    ],
                                   ),
                                   actions: [
                                     Center(
@@ -124,8 +137,10 @@ class FavoriteScreen extends StatelessWidget {
                                   children: [
                                     SubtitleTextWidget(label: viewModel.list[index].createdAt,fontSize: 16,),
                                     Image.asset(
-                                      AssetsManager.iconAppBar,
-                                      height: 35,
+                                      AssetsManager.favoriteJar,
+                                      fit:  BoxFit.cover,
+                                      height: 50,
+                                      width: 50,
                                     ),
                                   ],
                                 ),
@@ -220,7 +235,7 @@ class FavoriteScreen extends StatelessWidget {
                   child:  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(AssetsManager.iconAppBar,height: 150),
+                      Image.asset(AssetsManager.favoriteJar,height: 200,width: 200,fit:   BoxFit.cover,),
                       const SizedBox(height: 10),
                       const TitleTextWidget(label: 'لا توجد رسائل مفضلة في البرطمان ',maxLines: 5,fontSize: 18,)
                     ],

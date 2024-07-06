@@ -29,8 +29,10 @@ class GetNotificationScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  AssetsManager.iconAppBar,
+                  AssetsManager.notificationAlertJar,
                   height: 150,
+                  width: 150,
+                  fit:  BoxFit.cover,
                 ),
                 const SizedBox(height: 15,),
                 const TitleTextWidget(

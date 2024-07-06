@@ -33,8 +33,8 @@ class MessagesCategoriesContent extends StatelessWidget {
               title: messagesCategories?.title,
             ),
             leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(AssetsManager.iconAppBar),
+              padding: const EdgeInsets.only(top: 5),
+              child: Image.asset(AssetsManager.appLogoNoTitle,fit:  BoxFit.contain,),
             ),
             actions: [
               IconButton(
@@ -84,7 +84,7 @@ class MessagesCategoriesContent extends StatelessWidget {
                                         title: Row(
                                           children: [
                                             const TitleTextWidget(
-                                                label: "رسالة من البرطمان"),
+                                                label: "من رسائل البرطمان",fontSize: 18,),
                                             const Spacer(),
                                             IconButton(
                                               onPressed: () =>
@@ -111,9 +111,22 @@ class MessagesCategoriesContent extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        content: ContentTextWidget(
-                                          label: viewModel.content[index].title,
-                                          textAlign: TextAlign.center,
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              AssetsManager.categoriesJar,
+                                              height: 100,
+                                              width: 100,
+                                              fit:  BoxFit.cover,
+                                            ),
+                                            ContentTextWidget(
+                                              label: viewModel.content[index].title,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
                                         ),
                                         actions: [
                                           Center(
@@ -157,8 +170,10 @@ class MessagesCategoriesContent extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Image.asset(
-                                          AssetsManager.iconAppBar,
-                                          height: 35,
+                                          AssetsManager.categoriesJar,
+                                          height: 50,
+                                          width: 50,
+                                          fit:  BoxFit.cover,
                                         ),
                                         Row(
                                             mainAxisAlignment:

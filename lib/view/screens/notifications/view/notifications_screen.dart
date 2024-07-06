@@ -55,7 +55,7 @@ class NotificationsScreen extends StatelessWidget {
                                       BorderRadius.circular(18)),
                                   title: Row(
                                     children: [
-                                      const TitleTextWidget(label: "إشعار من البرطمان"),
+                                      const TitleTextWidget(label: "من إشعارات البرطمان", fontSize: 18),
                                       const Spacer(),
                                       IconButton(
                                         onPressed: () =>
@@ -79,8 +79,21 @@ class NotificationsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  content: ContentTextWidget(
-                                    label: viewModel.list[index].text,textAlign:TextAlign.center
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        AssetsManager.notificationJar,
+                                        height: 100,
+                                        width: 100,
+                                        fit:  BoxFit.cover,
+                                      ),
+                                      ContentTextWidget(
+                                        label: viewModel.list[index].text,textAlign:TextAlign.center
+                                      ),
+                                    ],
                                   ),
                                   actions: [
                                     Center(
@@ -117,8 +130,10 @@ class NotificationsScreen extends StatelessWidget {
                                   children: [
                                     SubtitleTextWidget(label: "إشعار رقم : ${viewModel.list[index].id}",fontSize: 16,),
                                     Image.asset(
-                                      AssetsManager.iconAppBar,
-                                      height: 35,
+                                      AssetsManager.notificationJar,
+                                      fit:  BoxFit.cover,
+                                      height: 50,
+                                      width: 50,
                                     ),
                                     SubtitleTextWidget(label: viewModel.list[index].createdAt?.split(" ")[0],fontSize: 16,),
                                   ],
