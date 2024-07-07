@@ -3,6 +3,7 @@ import 'package:happiness_jar/consts/app_consts.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../consts/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
@@ -20,10 +21,19 @@ class ShareAPPDialog {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SubtitleTextWidget(
                 label: "مشاركة التطبيق 📲",
                 textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Image.asset(
+                AssetsManager.messageJar,
+                width: 100,
+                height: 100,
+                fit:  BoxFit.cover,
               ),
               const SizedBox(height: 20),
               const ContentTextWidget(

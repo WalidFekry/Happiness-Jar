@@ -35,6 +35,7 @@ class EmptyMessageWidget extends StatelessWidget {
             Image.asset(
               AssetsManager.emptyJar,
               width: 150,
+              fit:  BoxFit.cover,
             ),
             const SizedBox(height: 10),
             Center(

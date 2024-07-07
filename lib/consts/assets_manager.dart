@@ -14,7 +14,10 @@ class AssetsManager {
   static const String registerJar = "$iconsPath/register.png";
   static const String favoriteJar = "$iconsPath/favorite.png";
   static const String categoriesJar = "$iconsPath/categories.png";
+  static const String noInternetJar = "$iconsPath/no_internet.png";
+  static const String profileJar = "$iconsPath/profile.png";
   static const String giftBox = "$iconsPath/giftbox.png";
+  static const String messageJar = "$iconsPath/message.png";
   static const String iconAppBar = "$iconsPath/hearts.png";
   static const String darkMode = "$iconsPath/dark_mode.png";
   static const String userProfile = "$iconsPath/user.png";

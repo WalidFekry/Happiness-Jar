@@ -2,6 +2,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/locator.dart';
+import '../../../../consts/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
@@ -18,10 +19,19 @@ class OpenSettingAppDialog {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SubtitleTextWidget(
               label: "الاشعارات غير مفعلة !",
               textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Image.asset(
+              AssetsManager.notificationAlertJar,
+              width: 100,
+              height: 100,
+              fit:  BoxFit.cover,
             ),
             const SizedBox(height: 20),
             const ContentTextWidget(

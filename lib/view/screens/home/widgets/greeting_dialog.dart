@@ -8,6 +8,8 @@ import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 
+import '../../../../consts/assets_manager.dart';
+
 class GreetingDialog {
   Future<void> showGreeting(BuildContext context) async {
     final now = DateTime.now();
@@ -64,6 +66,13 @@ class GreetingDialog {
               SubtitleTextWidget(
                 label: title,
                 textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Image.asset(
+                AssetsManager.welcomeJar,
+                width: 100,
+                height: 100,
+                fit:  BoxFit.cover,
               ),
               const SizedBox(height: 20),
               ContentTextWidget(

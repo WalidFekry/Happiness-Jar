@@ -33,8 +33,8 @@ class ProfileScreen extends StatelessWidget {
               title: "حسابي الشخصي",
             ),
             leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(AssetsManager.iconAppBar),
+              padding: const EdgeInsets.only(top: 5),
+              child: Image.asset(AssetsManager.appLogoNoTitle,fit:  BoxFit.contain,),
             ),
             actions: [
               IconButton(

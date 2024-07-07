@@ -28,6 +28,13 @@ class TodayAdviceDialog {
               children: [
                 const SubtitleTextWidget(label: "نصيحة اليوم من البرطمان 🎁",
                   textAlign: TextAlign.center,),
+                const SizedBox(height: 10),
+                Image.asset(
+                  AssetsManager.giftBox,
+                  width: 100,
+                  height: 100,
+                  fit:  BoxFit.cover,
+                ),
                 const SizedBox(height: 20),
                 ContentTextWidget(label: body, textAlign: TextAlign.center,),
                 const SizedBox(height: 10),
