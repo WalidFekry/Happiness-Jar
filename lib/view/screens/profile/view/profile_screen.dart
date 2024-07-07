@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/consts/app_consts.dart';
+import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/info_dialog.dart';
@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../locator.dart';
 import '../../../../providers/theme_provider.dart';
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../../widgets/subtitle_text.dart';

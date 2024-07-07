@@ -6,7 +6,7 @@ import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../consts/shared_preferences_constants.dart';
+import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';

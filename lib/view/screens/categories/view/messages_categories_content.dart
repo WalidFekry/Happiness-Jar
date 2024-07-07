@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:happiness_jar/consts/app_consts.dart';
+import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../locator.dart';
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../../widgets/content_text.dart';

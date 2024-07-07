@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/consts/app_consts.dart';
+import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';

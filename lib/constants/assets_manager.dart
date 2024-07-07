@@ -2,7 +2,7 @@ class AssetsManager {
   static const String imagesPath = "assets/images";
   static const String iconsPath = "assets/icons";
   static const String animationPath = "assets/animations";
-  static const String svgPath = "assets/svg";
+  static const String svgPath = "assets/svgs";
 
   static const String appLogo = "$iconsPath/logo.png";
   static const String appLogoNoTitle = "$iconsPath/logo_no_title.png";

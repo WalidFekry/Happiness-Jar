@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:happiness_jar/consts/shared_preferences_constants.dart';
+import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';

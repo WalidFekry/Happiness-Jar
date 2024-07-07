@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/consts/app_consts.dart';
+import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/view/screens/get_started/widget/get_started_button.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
 import '../view_model/get_started_view_model.dart';

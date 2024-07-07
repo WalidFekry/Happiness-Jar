@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
+
 
 class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget(this.userName, {super.key});

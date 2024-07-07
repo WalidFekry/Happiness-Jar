@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../../locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/subtitle_text.dart';

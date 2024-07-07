@@ -91,7 +91,7 @@ flutter:
     - assets/icons/
     - assets/translations/
     - assets/animations/
-    - assets/svg/
+    - assets/svgs/
 
   fonts:
     - family: bar

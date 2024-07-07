@@ -9,8 +9,8 @@ import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
 import 'package:iconly/iconly.dart';
 import 'package:in_app_review/in_app_review.dart';
 
-import '../../../../consts/assets_manager.dart';
-import '../../../../consts/shared_preferences_constants.dart';
+import '../../../../constants/assets_manager.dart';
+import '../../../../constants/shared_preferences_constants.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../base_screen.dart';
 import '../../categories/view/categories_screen.dart';

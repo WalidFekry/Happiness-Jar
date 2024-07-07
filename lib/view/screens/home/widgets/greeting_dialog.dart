@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/consts/shared_preferences_constants.dart';
+import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 
 class GreetingDialog {
   Future<void> showGreeting(BuildContext context) async {

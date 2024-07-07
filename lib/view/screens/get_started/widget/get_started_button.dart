@@ -1,6 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/consts/app_colors.dart';
+import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';

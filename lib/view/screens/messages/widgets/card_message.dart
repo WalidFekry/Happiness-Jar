@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/consts/app_colors.dart';
-import 'package:happiness_jar/consts/assets_manager.dart';
+import 'package:happiness_jar/constants/app_colors.dart';
+import 'package:happiness_jar/constants/assets_manager.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
+
+import '../../../../constants/app_colors.dart';
 
 class CardMessageWidget extends StatefulWidget {
   const CardMessageWidget(

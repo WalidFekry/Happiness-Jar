@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; // استيراد مكتبة Material لإضافة border
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../widgets/subtitle_text.dart';
 
 class EmptyMessageWidget extends StatelessWidget {

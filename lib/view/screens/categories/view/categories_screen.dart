@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/consts/app_consts.dart';
+import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/view/screens/base_screen.dart';
 import 'package:happiness_jar/view/screens/categories/view_model/categories_view_model.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import 'package:iconly/iconly.dart';
 
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../../widgets/title_text.dart';
 

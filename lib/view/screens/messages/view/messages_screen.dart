@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../../consts/assets_manager.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
 import '../view_model/messages_view_model.dart';
