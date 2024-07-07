@@ -85,7 +85,7 @@ class TodayAdviceDialog {
                   left: 0,
                   bottom: 0,
                   child: Image.asset(
-                    AssetsManager.teacher, // ضع هنا صورة المعلم الذي يشير بالعصا
+                    AssetsManager.teacher,
                     width: 100,
                   ),
                 ),

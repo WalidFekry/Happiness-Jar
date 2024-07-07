@@ -19,8 +19,10 @@ class ExitAppScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              AssetsManager.iconAppBar,
+              AssetsManager.welcomeJar,
               height: 150,
+              width: 150,
+              fit: BoxFit.cover,
             ),
             const SizedBox(height: 20),
             const TitleTextWidget(

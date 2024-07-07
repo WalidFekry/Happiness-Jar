@@ -58,9 +58,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message: ${message.messageId}');
 }
 
-
-
-
 EasyLocalization easyLocalization(Widget child) {
   return EasyLocalization(
     supportedLocales: const [Locale('en'),Locale('ar')],
