@@ -28,20 +28,20 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-   pod 'Firebase/Core'
-   pod 'Firebase/Auth' # For authentication
-   pod 'Firebase/Analytics' # For analytics
-   pod 'Firebase/Messaging' # For FCM
-   pod 'Firebase/Crashlytics' # For Crashlytics
   use_frameworks!
   use_modular_headers!
 
+  # Firebase dependencies
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Crashlytics'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
   target 'RunnerTests' do
     inherit! :search_paths
   end
 end
-
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
