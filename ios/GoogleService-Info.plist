@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBakIsNqSyVpYX_NTd00rKfJ6Nbg2m778k</string>
+	<key>GCM_SENDER_ID</key>
+	<string>606206499108</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.walid.happiness.jar.happinessJar</string>
+	<key>PROJECT_ID</key>
+	<string>happiness-jar-9f725</string>
+	<key>STORAGE_BUCKET</key>
+	<string>happiness-jar-9f725.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:606206499108:ios:91cc277faf89b53bff7bb1</string>
+</dict>
+</plist>
