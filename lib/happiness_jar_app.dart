@@ -17,9 +17,8 @@ Future<void> initServices() async {
   setupLocator();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class HappinessJarApp extends StatelessWidget {
+  const HappinessJarApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
