@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
 import 'package:iconly/iconly.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -204,6 +205,18 @@ class NotificationsScreen extends StatelessWidget {
                                         viewModel.shareFacebook(index);
                                       },
                                       icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        viewModel.sharePhoto(index,context);
+                                      },
+                                      icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        viewModel.saveToGallery(index,context);
+                                      },
+                                      icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
                                     ),
                                   ]),
                             ],
