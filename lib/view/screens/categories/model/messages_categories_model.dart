@@ -30,7 +30,7 @@ class MessagesCategories implements DatabaseModel {
   int? id;
   String? title;
   int? categorie;
-  bool isFavourite = false;
+
 
   MessagesCategories({this.id, this.title, this.categorie});
 

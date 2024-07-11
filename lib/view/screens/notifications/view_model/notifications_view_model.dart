@@ -154,7 +154,7 @@ class NotificationsViewModel extends BaseViewModel {
     });
   }
 
-  void sharePhoto(int index, BuildContext context) {
+  Future<void> sharePhoto(int index, BuildContext context) async {
     screenshotController
         .captureFromWidget(NotificationScreenshot(list[index]))
         .then((image) async {
