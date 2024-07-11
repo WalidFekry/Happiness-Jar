@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
+import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/constants/assets_manager.dart';
+import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
@@ -148,7 +150,7 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
                 right: 0,
                 child: IconButton(
                   onPressed: () async {
-                  sharePhoto();
+                    sharePhoto();
                   },
                   icon: Icon(Icons.photo,
                       size: 25, color: Theme.of(context).iconTheme.color),
@@ -159,8 +161,21 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
             child: Positioned(
                 bottom: 0,
                 left: 0,
-                child: Image.asset(AssetsManager.appLogo,width: 90,height: 90,fit:  BoxFit.contain,)),
-          )
+                child: Image.asset(
+                  AssetsManager.appLogo,
+                  width: 90,
+                  height: 90,
+                  fit: BoxFit.contain,
+                )),
+          ),
+          Visibility(
+            visible: takeScreenshot,
+            child: const Positioned(
+                top: 5,
+                right: 5,
+                child: ContentTextWidget(
+                    label: AppConsts.COPY_MESSAGE_2, color: Colors.black)),
+          ),
         ],
       ),
     );
@@ -195,57 +210,62 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
     setState(() {
       takeScreenshot = true;
     });
-      screenshotController
-          .capture(delay: const Duration(seconds: 1))
-          .then((image) async {
-        if (image != null) {
-          try {
-            final result =
-            await ImageGallerySaver.saveImage(image);
-            if (result['isSuccess']) {
-              showTopSnackBar(
-                Overlay.of(context),
-                CustomSnackBar.success(
-                  backgroundColor: Theme.of(context).iconTheme.color!,
-                  message:
-                  "تم الحفظ كصورة بنجاح",
-                  icon: Icon(Icons.download,color: Theme.of(context).cardColor,
-                    size: 50,),
+    screenshotController
+        .capture(delay: const Duration(seconds: 1))
+        .then((image) async {
+      if (image != null) {
+        try {
+          final result = await ImageGallerySaver.saveImage(image);
+          if (result['isSuccess']) {
+            showTopSnackBar(
+              Overlay.of(context),
+              CustomSnackBar.success(
+                backgroundColor: Theme.of(context).iconTheme.color!,
+                message: "تم الحفظ كصورة بنجاح",
+                icon: Icon(
+                  Icons.download,
+                  color: Theme.of(context).cardColor,
+                  size: 50,
                 ),
-              );
-            } else {
-              showTopSnackBar(
-                Overlay.of(context),
-                CustomSnackBar.error(
-                  backgroundColor: Theme.of(context).cardColor,
-                  message:
-                  "حدث خطأ أثناء حفظ الصورة",
-                  icon: Icon(Icons.download,color: Theme.of(context).iconTheme.color,
-                    size: 50,),
+              ),
+            );
+          } else {
+            showTopSnackBar(
+              Overlay.of(context),
+              CustomSnackBar.error(
+                backgroundColor: Theme.of(context).cardColor,
+                message: "حدث خطأ أثناء حفظ الصورة",
+                icon: Icon(
+                  Icons.download,
+                  color: Theme.of(context).iconTheme.color,
+                  size: 50,
                 ),
-              );
-            }
-          } catch (e) {
-            if (kDebugMode) {
-              print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
-            }
+              ),
+            );
           }
-        }else{
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.error(
-              backgroundColor: Theme.of(context).cardColor,
-              message:
-              "حدث خطأ أثناء حفظ الصورة",
-              icon: Icon(Icons.download,color: Theme.of(context).iconTheme.color,
-                size: 50,),
-            ),
-          );
+        } catch (e) {
+          if (kDebugMode) {
+            print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
+          }
         }
-        setState(() {
-          takeScreenshot = false;
-        });
+      } else {
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.error(
+            backgroundColor: Theme.of(context).cardColor,
+            message: "حدث خطأ أثناء حفظ الصورة",
+            icon: Icon(
+              Icons.download,
+              color: Theme.of(context).iconTheme.color,
+              size: 50,
+            ),
+          ),
+        );
+      }
+      setState(() {
+        takeScreenshot = false;
       });
+    });
   }
 
   Future<void> sharePhoto() async {
@@ -257,10 +277,8 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
         .then((image) async {
       if (image != null) {
         try {
-          final directory =
-          await getApplicationDocumentsDirectory();
-          final imagePath =
-          await File('${directory.path}/image.png').create();
+          final directory = await getApplicationDocumentsDirectory();
+          final imagePath = await File('${directory.path}/image.png').create();
           await imagePath.writeAsBytes(image);
           final xFile = XFile(imagePath.path);
           await Share.shareXFiles(
@@ -273,15 +291,17 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
             print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
           }
         }
-      }else{
+      } else {
         showTopSnackBar(
           Overlay.of(context),
           CustomSnackBar.error(
             backgroundColor: Theme.of(context).cardColor,
-            message:
-            "حدث خطأ أثناء مشاركة الصورة",
-            icon: Icon(Icons.share,color: Theme.of(context).iconTheme.color,
-              size: 50,),
+            message: "حدث خطأ أثناء مشاركة الصورة",
+            icon: Icon(
+              Icons.share,
+              color: Theme.of(context).iconTheme.color,
+              size: 50,
+            ),
           ),
         );
       }
