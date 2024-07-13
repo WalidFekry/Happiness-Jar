@@ -263,6 +263,18 @@ class NotificationsScreen extends StatelessWidget {
                                                 .iconTheme
                                                 .color),
                                       ),
+                                      IconButton(
+                                        onPressed: () {
+                                          viewModel.sharePhoto(index,context);
+                                        },
+                                        icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          viewModel.saveToGallery(index,context);
+                                        },
+                                        icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
+                                      ),
                                     ]),
                               ],
                             ),
