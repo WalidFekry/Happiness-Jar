@@ -160,72 +160,86 @@ class FavoriteScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.deleteFavoriteMessage(index);
-                                        showTopSnackBar(
-                                          Overlay.of(context),
-                                          CustomSnackBar.error(
-                                            backgroundColor: Theme.of(context).cardColor,
-                                            message:
-                                            "تم الحذف",
-                                            icon: Icon(Icons.delete,color: Theme.of(context).iconTheme.color,
-                                              size: 50,),
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(IconlyLight.delete,color:Theme.of(context).cardColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.copyMessage(index);
-                                        showTopSnackBar(
-                                          Overlay.of(context),
-                                          CustomSnackBar.success(
-                                            backgroundColor: Theme.of(context).iconTheme.color!,
-                                            message:
-                                            "تم النسخ",
-                                            icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
-                                              size: 50,),
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.shareMessage(index);
-                                      },
-                                      icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.shareWhatsapp(index);
-                                      },
-                                      icon: SvgPicture.asset(
-                                        AssetsManager.whatsapp,
-                                        width: 24,
-                                        height: 24,
-                                        colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.deleteFavoriteMessage(index);
+                                          showTopSnackBar(
+                                            Overlay.of(context),
+                                            CustomSnackBar.error(
+                                              backgroundColor: Theme.of(context).cardColor,
+                                              message:
+                                              "تم الحذف",
+                                              icon: Icon(Icons.delete,color: Theme.of(context).iconTheme.color,
+                                                size: 50,),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(IconlyLight.delete,color:Theme.of(context).cardColor),
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.shareFacebook(index);
-                                      },
-                                      icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.copyMessage(index);
+                                          showTopSnackBar(
+                                            Overlay.of(context),
+                                            CustomSnackBar.success(
+                                              backgroundColor: Theme.of(context).iconTheme.color!,
+                                              message:
+                                              "تم النسخ",
+                                              icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
+                                                size: 50,),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
+                                      ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.sharePhoto(index,context);
-                                      },
-                                      icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.shareMessage(index);
+                                        },
+                                        icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
+                                      ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.saveToGallery(index,context);
-                                      },
-                                      icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.shareWhatsapp(index);
+                                        },
+                                        icon: SvgPicture.asset(
+                                          AssetsManager.whatsapp,
+                                          width: 24,
+                                          height: 24,
+                                          colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.shareFacebook(index);
+                                        },
+                                        icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.sharePhoto(index,context);
+                                        },
+                                        icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.saveToGallery(index,context);
+                                        },
+                                        icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
+                                      ),
                                     ),
                                   ],
                                 ),

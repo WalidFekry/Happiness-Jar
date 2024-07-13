@@ -57,7 +57,7 @@ class MessagesViewModel extends BaseViewModel {
       } else {
         print('Function has already been run within the last 6 hours.');
         showMessages = false;
-        if(noInternet){
+        if (noInternet) {
           showEmptyJar = false;
           return;
         }
@@ -79,7 +79,7 @@ class MessagesViewModel extends BaseViewModel {
     if (resource.status == Status.SUCCESS) {
       noInternet = false;
       list = resource.data!.content!;
-    }else{
+    } else {
       noInternet = true;
       showMessages = false;
     }
@@ -124,7 +124,8 @@ class MessagesViewModel extends BaseViewModel {
   }
 
   Future<void> saveMessagesTime() async {
-    await prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME, DateTime.now().toIso8601String());
+    await prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME,
+        DateTime.now().toIso8601String());
     getLastMessagesTime();
   }
 
@@ -146,10 +147,9 @@ class MessagesViewModel extends BaseViewModel {
     String encodedMessage = Uri.encodeComponent(message);
     String whatsappUrl = "whatsapp://send?text=$encodedMessage";
     Uri uri = Uri.parse(whatsappUrl);
-
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
+    try {
+      launchUrl(uri);
+    } catch (e) {
       Share.share(message);
     }
   }
@@ -157,12 +157,12 @@ class MessagesViewModel extends BaseViewModel {
   Future<void> shareFacebook(int index) async {
     String message = '${list[index].body} \n\n من تطبيق برطمان السعادة 💙';
     String encodedMessage = Uri.encodeComponent(message);
-    String facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
+    String facebookUrl =
+        "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
     Uri uri = Uri.parse(facebookUrl);
-
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
+    try {
+      launchUrl(uri);
+    } catch (e) {
       Share.share(message);
     }
   }
@@ -170,7 +170,7 @@ class MessagesViewModel extends BaseViewModel {
   Future<void> saveFavoriteMessage(int index) async {
     DateTime now = DateTime.now();
     String createdAt = "${now.year}-${now.month}-${now.day}";
-    await appDatabase.saveFavoriteMessage(list[index].body,createdAt);
+    await appDatabase.saveFavoriteMessage(list[index].body, createdAt);
     list[index].isFavourite = !list[index].isFavourite;
     setState(ViewState.Idle);
   }

@@ -56,12 +56,10 @@ class FavoriteViewModel extends BaseViewModel {
     String message = '${list[index].title} \n\n من تطبيق برطمان السعادة 💙';
     String encodedMessage = Uri.encodeComponent(message);
     String whatsappUrl = "whatsapp://send?text=$encodedMessage";
-
     Uri uri = Uri.parse(whatsappUrl);
-
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
+    try {
+      launchUrl(uri);
+    } catch (e) {
       Share.share(message);
     }
   }
@@ -71,10 +69,9 @@ class FavoriteViewModel extends BaseViewModel {
     String encodedMessage = Uri.encodeComponent(message);
     String facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
     Uri uri = Uri.parse(facebookUrl);
-
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
+    try {
+      launchUrl(uri);
+    } catch (e) {
       Share.share(message);
     }
   }
