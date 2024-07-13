@@ -30,6 +30,7 @@ class MessagesContent implements DatabaseModel {
   int? id;
   String? title;
   int? categorie;
+  bool isFavourite = false;
 
   MessagesContent({this.id, this.title, this.categorie});
 

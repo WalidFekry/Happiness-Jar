@@ -275,6 +275,28 @@ class MessagesCategoriesContent extends StatelessWidget {
                                         child: ContentTextWidget(
                                           label: viewModel.content[index].title,
                                         )),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      child: Divider(color: Colors.grey, thickness: 1),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:  MainAxisAlignment.center,
+                                      crossAxisAlignment:  CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            viewModel.sharePhoto(index,context);
+                                          },
+                                          icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            viewModel.saveToGallery(index,context);
+                                          },
+                                          icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),

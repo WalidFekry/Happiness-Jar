@@ -10,6 +10,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/resources.dart';
+import '../view/screens/categories/model/messages_content_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
 
 
@@ -90,13 +91,13 @@ class AppDatabase {
     return data;
   }
 
-  Future<List<MessagesCategories>> getMessagesContent(int? categorie) async {
+  Future<List<MessagesContent>> getMessagesContent(int? categorie) async {
     final Database db = await mainDatabase();
     final List<Map<String, dynamic>> maps =
     await db.rawQuery('SELECT * FROM messages_content WHERE categorie = $categorie ORDER BY RANDOM()');
-    List<MessagesCategories> data = [];
+    List<MessagesContent> data = [];
     for (var item in maps) {
-      data.add(MessagesCategories.fromJson(item));
+      data.add(MessagesContent.fromJson(item));
     }
     return data;
   }
