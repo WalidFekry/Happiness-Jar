@@ -1,9 +1,12 @@
 class AssetsManager {
+
+  // Paths
   static const String imagesPath = "assets/images";
   static const String iconsPath = "assets/icons";
   static const String animationPath = "assets/animations";
   static const String svgPath = "assets/svgs";
 
+  // Icons
   static const String appLogo = "$iconsPath/logo.png";
   static const String appLogoNoTitle = "$iconsPath/logo_no_title.png";
   static const String emptyJar = "$iconsPath/empty_jar.png";
@@ -20,7 +23,13 @@ class AssetsManager {
   static const String messageJar = "$iconsPath/message.png";
   static const String darkMode = "$iconsPath/dark_mode.png";
   static const String userProfile = "$iconsPath/user.png";
+
+  // Animations
   static const String openBox = "$animationPath/open_box.json";
+
+  // Images
   static const String teacher = "$imagesPath/teacher.png";
+
+  // Svgs
   static const String whatsapp = "$svgPath/whatsapp.svg";
 }

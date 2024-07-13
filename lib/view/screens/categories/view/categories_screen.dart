@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/view/screens/base_screen.dart';
 import 'package:happiness_jar/view/screens/categories/view_model/categories_view_model.dart';
+import 'package:happiness_jar/view/widgets/no_internet.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import 'package:iconly/iconly.dart';
@@ -59,19 +60,7 @@ class CategoriesScreen extends StatelessWidget {
                   ),
                 ),
                 if (!viewModel.isDone)
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SubtitleTextWidget(
-                          label:
-                          AppConsts.NO_INTERNET_MESSAGE,textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
+                  const NoInternetWidget()
               ],
             ),
         );

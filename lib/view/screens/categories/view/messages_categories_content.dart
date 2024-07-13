@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
+import 'package:happiness_jar/view/widgets/no_internet.dart';
 import 'package:iconly/iconly.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -318,19 +319,7 @@ class MessagesCategoriesContent extends StatelessWidget {
                       ),
                   ),
               if (!viewModel.isDoneContent)
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SubtitleTextWidget(
-                        label:
-                            AppConsts.NO_INTERNET_MESSAGE,textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
+               const NoInternetWidget()
             ],
           ));
     });
