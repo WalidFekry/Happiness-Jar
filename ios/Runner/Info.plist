@@ -58,5 +58,16 @@
         <string>The app requires access to the photo library to save captured photos.</string>
         <key>NSPushNotificationsUsageDescription</key>
         <string>The app requires access to push notifications to notify you of important updates.</string>
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <!-- Scheme for Facebook -->
+            <string>https</string>
+            <string>http</string>
+            <string>www.facebook.com</string>
+            <!-- Scheme for WhatsApp -->
+            <string>https</string>
+            <string>http</string>
+            <string>api.whatsapp.com</string>
+        </array>
 	</dict>
 </plist>

@@ -145,11 +145,11 @@ class MessagesViewModel extends BaseViewModel {
   Future<void> shareWhatsapp(int index) async {
     String message = '${list[index].body} \n\n من تطبيق برطمان السعادة 💙';
     String encodedMessage = Uri.encodeComponent(message);
-    String whatsappUrl = "whatsapp://send?text=$encodedMessage";
+    String whatsappUrl = "https://api.whatsapp.com/send?text=$encodedMessage";
     Uri uri = Uri.parse(whatsappUrl);
-    try {
-      launchUrl(uri);
-    } catch (e) {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
       Share.share(message);
     }
   }
@@ -160,9 +160,9 @@ class MessagesViewModel extends BaseViewModel {
     String facebookUrl =
         "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
     Uri uri = Uri.parse(facebookUrl);
-    try {
-      launchUrl(uri);
-    } catch (e) {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
       Share.share(message);
     }
   }

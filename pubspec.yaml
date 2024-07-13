@@ -37,6 +37,7 @@ dependencies:
   in_app_review: ^2.0.9
   lottie: ^1.2.1
   flutter_svg: ^2.0.10+1
+  url_launcher: ^6.3.0
   package_info_plus: ^8.0.0
   screenshot: ^3.0.0
   image_gallery_saver: ^2.0.3
