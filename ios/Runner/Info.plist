@@ -60,13 +60,11 @@
         <string>The app requires access to push notifications to notify you of important updates.</string>
         <key>LSApplicationQueriesSchemes</key>
         <array>
-            <!-- Scheme for Facebook -->
             <string>https</string>
             <string>http</string>
+            <!-- Scheme for Facebook -->
             <string>www.facebook.com</string>
             <!-- Scheme for WhatsApp -->
-            <string>https</string>
-            <string>http</string>
             <string>api.whatsapp.com</string>
         </array>
 	</dict>
