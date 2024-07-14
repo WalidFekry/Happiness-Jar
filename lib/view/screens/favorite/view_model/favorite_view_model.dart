@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/locator.dart';
@@ -18,6 +19,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../constants/ads_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../widgets/favorite_screenshot.dart';
 
@@ -25,6 +27,7 @@ class FavoriteViewModel extends BaseViewModel {
 
   final appDatabase = locator<AppDatabase>();
   List<FavoriteMessagesModel> list = [];
+  InterstitialAd? interstitialAd;
   ScreenshotController screenshotController = ScreenshotController();
 
   Future<void> getFavoriteMessages() async {
@@ -168,6 +171,34 @@ class FavoriteViewModel extends BaseViewModel {
         );
       }
     });
+  }
+
+
+  void showBinyAd() {
+    InterstitialAd.load(
+        adUnitId: AdsManager.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            if(interstitialAd != null){
+              interstitialAd?.show();
+            }
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+            interstitialAd = null;
+          },
+        ));
+  }
+
+
+  @override
+  void dispose() {
+    interstitialAd?.dispose();
+    super.dispose();
   }
 
 }

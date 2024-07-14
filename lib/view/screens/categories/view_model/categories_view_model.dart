@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/enums/status.dart';
 import 'package:happiness_jar/locator.dart';
@@ -20,6 +21,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../constants/ads_manager.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../../services/navigation_service.dart';
@@ -34,6 +36,9 @@ class CategoriesViewModel extends BaseViewModel{
   final appDatabase = locator<AppDatabase>();
   bool isDone = true;
   bool isDoneContent = true;
+  BannerAd? bannerAd;
+  InterstitialAd? interstitialAd;
+  bool isBottomBannerAdLoaded = false;
   ScreenshotController screenshotController = ScreenshotController();
 
 
@@ -217,6 +222,52 @@ class CategoriesViewModel extends BaseViewModel{
         );
       }
     });
+  }
+
+  void showBannerAd() {
+    BannerAd(
+      adUnitId: AdsManager.bannerAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+            bannerAd = ad as BannerAd;
+            isBottomBannerAdLoaded = true;
+        },
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('Failed to load a banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    ).load();
+    setState(ViewState.Idle);
+  }
+
+  @override
+  void dispose() {
+    bannerAd?.dispose();
+    interstitialAd?.dispose();
+    super.dispose();
+  }
+
+  void showBinyAd() {
+    InterstitialAd.load(
+        adUnitId: AdsManager.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            if(interstitialAd != null){
+              interstitialAd?.show();
+            }
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+            interstitialAd = null;
+          },
+        ));
   }
 
 }

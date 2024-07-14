@@ -43,6 +43,7 @@ class NotificationsScreen extends StatelessWidget {
                           ),
                           child: InkWell(
                             onTap: () {
+                              viewModel.showBinyAd();
                               showDialog(
                                 context: context,
                                 builder: (context) {
@@ -211,6 +212,7 @@ class NotificationsScreen extends StatelessWidget {
                                       Flexible(
                                         child: IconButton(
                                           onPressed: () {
+                                            viewModel.showBinyAd();
                                             viewModel.copyMessage(index);
                                             showTopSnackBar(
                                               Overlay.of(context),
@@ -284,6 +286,7 @@ class NotificationsScreen extends StatelessWidget {
                                       Flexible(
                                         child: IconButton(
                                           onPressed: () {
+                                            viewModel.showBinyAd();
                                             viewModel.saveToGallery(index,context);
                                           },
                                           icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),

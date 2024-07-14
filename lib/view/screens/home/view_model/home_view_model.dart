@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/constants/ads_manager.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
@@ -29,6 +31,7 @@ class HomeViewModel extends BaseViewModel {
   String? getTodayAdviceTime;
   File? image;
   String? giftBoxMessage;
+  AppOpenAd? openAd;
   final GreetingDialog greetingDialog = GreetingDialog();
   final InAppReview inAppReview = InAppReview.instance;
 
@@ -133,5 +136,17 @@ class HomeViewModel extends BaseViewModel {
       giftBoxMessage = resource.data!.content![0].body;
       setState(ViewState.Idle);
     }
+  }
+
+  Future<void> showOpenAd() async {
+    await AppOpenAd.load(
+        adUnitId: AdsManager.openAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: AppOpenAdLoadCallback(onAdLoaded: (ad) {
+          openAd = ad;
+          openAd!.show();
+        }, onAdFailedToLoad: (error) {
+          debugPrint('Ad failed to load $error');
+        }));
   }
 }

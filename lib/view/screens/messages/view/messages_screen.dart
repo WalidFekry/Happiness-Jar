@@ -38,7 +38,7 @@ class MessagesScreen extends StatelessWidget {
                     child: NoInternetWidget(viewModel.userName)),
                 Visibility(
                     visible: viewModel.noInternet,
-                    child: SizedBox(
+                    child: const SizedBox(
                       height: 25,
                     )),
                 Visibility(

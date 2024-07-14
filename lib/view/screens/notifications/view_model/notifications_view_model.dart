@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/widgets/notification_screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -13,6 +14,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../constants/ads_manager.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';
@@ -27,6 +29,7 @@ class NotificationsViewModel extends BaseViewModel {
   final apiService = locator<ApiService>();
   final appDatabase = locator<AppDatabase>();
   bool isDone = true;
+  InterstitialAd? interstitialAd;
   ScreenshotController screenshotController = ScreenshotController();
 
   Future<void> getContent() async {
@@ -186,5 +189,31 @@ class NotificationsViewModel extends BaseViewModel {
         );
       }
     });
+  }
+
+  void showBinyAd() {
+    InterstitialAd.load(
+        adUnitId: AdsManager.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            if(interstitialAd != null){
+              interstitialAd?.show();
+            }
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+            interstitialAd = null;
+          },
+        ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    interstitialAd?.dispose();
   }
 }

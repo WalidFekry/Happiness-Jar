@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:happiness_jar/constants/ads_manager.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,6 +32,7 @@ class MessagesViewModel extends BaseViewModel {
   bool nextMessage = true;
   bool prevMessage = false;
   bool showJarMessages = true;
+  InterstitialAd? interstitialAd;
   PageController? controller;
   double opacity = 1.0;
   final appDatabase = locator<AppDatabase>();
@@ -97,6 +100,9 @@ class MessagesViewModel extends BaseViewModel {
   }
 
   nextMessages() {
+    if(currentPage == 1){
+      showBinyAd();
+    }
     if (currentPage >= 0 && currentPage < 3) {
       currentPage++;
       nextMessage = true;
@@ -173,5 +179,31 @@ class MessagesViewModel extends BaseViewModel {
     await appDatabase.saveFavoriteMessage(list[index].body, createdAt);
     list[index].isFavourite = !list[index].isFavourite;
     setState(ViewState.Idle);
+  }
+
+  void showBinyAd() {
+    InterstitialAd.load(
+        adUnitId: AdsManager.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            if(interstitialAd != null){
+              interstitialAd?.show();
+            }
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+            interstitialAd = null;
+          },
+        ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    interstitialAd?.dispose();
   }
 }
