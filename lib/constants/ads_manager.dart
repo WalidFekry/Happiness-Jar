@@ -7,7 +7,7 @@ class AdsManager {
   static String get bannerAdUnitId {
     if (!testAds) {
       if (Platform.isAndroid) {
-        return 'ca-app-pub-3274459976571317/3287724576';
+        return 'ca-app-pub-4380347337966794/3106571416';
       } else if (Platform.isIOS) {
         return 'ca-app-pub-3274459976571317/4943752917';
       } else {
@@ -21,7 +21,7 @@ class AdsManager {
   static String get interstitialAdUnitId {
     if (!testAds) {
       if (Platform.isAndroid) {
-        return "ca-app-pub-3274459976571317/9240845011";
+        return "ca-app-pub-4380347337966794/5169542253";
       } else if (Platform.isIOS) {
         return "ca-app-pub-3274459976571317/1322721032";
       } else {
@@ -35,7 +35,7 @@ class AdsManager {
   static String get rewardedAdUnitId {
     if (!testAds) {
       if (Platform.isAndroid) {
-        return "ca-app-pub-3274459976571317/7976325927";
+        return "ca-app-pub-4380347337966794/6471015639";
       } else if (Platform.isIOS) {
         return "ca-app-pub-3274459976571317/6451758783";
       } else {
@@ -49,7 +49,7 @@ class AdsManager {
   static String get openAdUnitId {
     if (!testAds) {
       if (Platform.isAndroid) {
-        return "ca-app-pub-3274459976571317/8059942551";
+        return "ca-app-pub-4380347337966794/6662587325";
       } else if (Platform.isIOS) {
         return "ca-app-pub-3274459976571317/9538701526";
       } else {

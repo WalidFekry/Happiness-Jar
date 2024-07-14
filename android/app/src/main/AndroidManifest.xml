@@ -39,9 +39,11 @@
 
         <!--    Test Ad-->
         <!--    ca-app-pub-3940256099942544~3347511713-->
+        <!--    Real Ad-->
+        <!--        ca-app-pub-4380347337966794~4755405448-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-4380347337966794~4755405448" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -54,21 +56,18 @@
         <!-- Example for Facebook -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
-
             <data android:scheme="https" />
             <data android:host="www.facebook.com" />
         </intent>
         <!-- Example for WhatsApp -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
-
             <data android:scheme="https" />
             <data android:host="api.whatsapp.com" />
         </intent>
         <!-- Example for Play Store -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
-
             <data android:scheme="https" />
             <data android:host="play.google.com" />
         </intent>
