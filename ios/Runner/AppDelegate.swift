@@ -4,16 +4,13 @@ import FirebaseMessaging
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // تهيئة Firebase
         FirebaseApp.configure()
-
-        // تهيئة Crashlytics
-        Fabric.with([Crashlytics.self])
 
         // تهيئة Messaging
         if #available(iOS 10.0, *) {
@@ -29,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         application.registerForRemoteNotifications()
+
+        Messaging.messaging().delegate = self
 
         return true
     }
@@ -52,8 +51,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         completionHandler()
     }
-}
-
-extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
-    // أي تعاملات إضافية مع الرسائل يمكن إضافتها هنا إذا لزم الأمر
 }
