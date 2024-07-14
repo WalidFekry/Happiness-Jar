@@ -173,7 +173,6 @@ class FavoriteViewModel extends BaseViewModel {
     });
   }
 
-
   void showBinyAd() {
     InterstitialAd.load(
         adUnitId: AdsManager.interstitialAdUnitId,
@@ -193,7 +192,6 @@ class FavoriteViewModel extends BaseViewModel {
           },
         ));
   }
-
 
   @override
   void dispose() {
