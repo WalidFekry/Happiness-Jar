@@ -8,7 +8,7 @@ import UserNotifications
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // تهيئة Firebase
         FirebaseApp.configure()
 
@@ -29,7 +29,9 @@ import UserNotifications
 
         Messaging.messaging().delegate = self
 
-        return true
+        GeneratedPluginRegistrant.register(with: self)
+
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
