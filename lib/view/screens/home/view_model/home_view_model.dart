@@ -18,6 +18,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
+import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
 import '../widgets/greeting_dialog.dart';
 
@@ -31,9 +32,9 @@ class HomeViewModel extends BaseViewModel {
   String? getTodayAdviceTime;
   File? image;
   String? giftBoxMessage;
-  AppOpenAd? openAd;
   final GreetingDialog greetingDialog = GreetingDialog();
   final InAppReview inAppReview = InAppReview.instance;
+  final adsService = locator<AdsService>();
 
   Future<void> getTodayAdvice() async {
     getTodayAdviceTime =
@@ -138,15 +139,9 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> showOpenAd() async {
-    await AppOpenAd.load(
-        adUnitId: AdsManager.openAdUnitId,
-        request: const AdRequest(),
-        adLoadCallback: AppOpenAdLoadCallback(onAdLoaded: (ad) {
-          openAd = ad;
-          openAd!.show();
-        }, onAdFailedToLoad: (error) {
-          debugPrint('Ad failed to load $error');
-        }));
+  void showOpenAd() {
+    adsService.showOpenAd();
   }
+
+
 }

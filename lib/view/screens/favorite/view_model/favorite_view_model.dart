@@ -20,6 +20,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/ads_manager.dart';
+import '../../../../services/ads_service.dart';
 import '../../../../services/navigation_service.dart';
 import '../widgets/favorite_screenshot.dart';
 
@@ -29,6 +30,7 @@ class FavoriteViewModel extends BaseViewModel {
   List<FavoriteMessagesModel> list = [];
   InterstitialAd? interstitialAd;
   ScreenshotController screenshotController = ScreenshotController();
+  final adsService = locator<AdsService>();
 
   Future<void> getFavoriteMessages() async {
     list = await appDatabase.getFavoriteMessages();
@@ -174,23 +176,7 @@ class FavoriteViewModel extends BaseViewModel {
   }
 
   void showBinyAd() {
-    InterstitialAd.load(
-        adUnitId: AdsManager.interstitialAdUnitId,
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          // Called when an ad is successfully received.
-          onAdLoaded: (ad) {
-            interstitialAd = ad;
-            if(interstitialAd != null){
-              interstitialAd?.show();
-            }
-          },
-          // Called when an ad request failed.
-          onAdFailedToLoad: (LoadAdError error) {
-            debugPrint('InterstitialAd failed to load: $error');
-            interstitialAd = null;
-          },
-        ));
+    adsService.showInterstitialAd();
   }
 
   @override

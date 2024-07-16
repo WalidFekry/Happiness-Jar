@@ -20,6 +20,7 @@ import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';
 import '../../../../locator.dart';
 import '../../../../models/resources.dart';
+import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../../services/navigation_service.dart';
 import '../model/notification_model.dart';
@@ -31,6 +32,7 @@ class NotificationsViewModel extends BaseViewModel {
   bool isDone = true;
   InterstitialAd? interstitialAd;
   ScreenshotController screenshotController = ScreenshotController();
+  final adsService = locator<AdsService>();
 
   Future<void> getContent() async {
     // if(list.isNotEmpty){
@@ -192,23 +194,7 @@ class NotificationsViewModel extends BaseViewModel {
   }
 
   void showBinyAd() {
-    InterstitialAd.load(
-        adUnitId: AdsManager.interstitialAdUnitId,
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          // Called when an ad is successfully received.
-          onAdLoaded: (ad) {
-            interstitialAd = ad;
-            if(interstitialAd != null){
-              interstitialAd?.show();
-            }
-          },
-          // Called when an ad request failed.
-          onAdFailedToLoad: (LoadAdError error) {
-            debugPrint('InterstitialAd failed to load: $error');
-            interstitialAd = null;
-          },
-        ));
+  adsService.showInterstitialAd();
   }
 
   @override

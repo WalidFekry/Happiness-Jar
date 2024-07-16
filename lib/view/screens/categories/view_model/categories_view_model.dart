@@ -24,6 +24,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../constants/ads_manager.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../routs/routs_names.dart';
+import '../../../../services/ads_service.dart';
 import '../../../../services/navigation_service.dart';
 import '../model/messages_categories_model.dart';
 import '../widgets/categories_screenshot.dart';
@@ -40,6 +41,7 @@ class CategoriesViewModel extends BaseViewModel{
   InterstitialAd? interstitialAd;
   bool isBottomBannerAdLoaded = false;
   ScreenshotController screenshotController = ScreenshotController();
+  final adsService = locator<AdsService>();
 
 
   Future<void> getCategories() async {
@@ -251,23 +253,7 @@ class CategoriesViewModel extends BaseViewModel{
   }
 
   void showBinyAd() {
-    InterstitialAd.load(
-        adUnitId: AdsManager.interstitialAdUnitId,
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          // Called when an ad is successfully received.
-          onAdLoaded: (ad) {
-            interstitialAd = ad;
-            if(interstitialAd != null){
-              interstitialAd?.show();
-            }
-          },
-          // Called when an ad request failed.
-          onAdFailedToLoad: (LoadAdError error) {
-            debugPrint('InterstitialAd failed to load: $error');
-            interstitialAd = null;
-          },
-        ));
+  adsService.showInterstitialAd();
   }
 
 }
