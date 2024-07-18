@@ -7,6 +7,7 @@ import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/shared_preferences_constants.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
@@ -28,16 +29,16 @@ class TodayAdviceDialog {
               children: [
                 const SubtitleTextWidget(label: "نصيحة اليوم من البرطمان 🎁",
                   textAlign: TextAlign.center,),
-                const SizedBox(height: 10),
+                verticalSpace(10),
                 Image.asset(
                   AssetsManager.giftBox,
                   width: 100,
                   height: 100,
                   fit:  BoxFit.cover,
                 ),
-                const SizedBox(height: 20),
+                verticalSpace(20),
                 ContentTextWidget(label: body, textAlign: TextAlign.center,),
-                const SizedBox(height: 10),
+                verticalSpace(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -57,7 +58,7 @@ class TodayAdviceDialog {
                           .iconTheme
                           .color,),),
                   ],),
-                const SizedBox(height: 20),
+                verticalSpace(20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

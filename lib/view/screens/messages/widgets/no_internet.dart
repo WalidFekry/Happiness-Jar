@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 
 
 class NoInternetWidget extends StatelessWidget {
@@ -34,7 +35,7 @@ class NoInternetWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(AssetsManager.noInternetJar,width: 200,fit: BoxFit.cover,),
-            const SizedBox(height: 10,),
+            verticalSpace(10),
             Center(child: SubtitleTextWidget(label: "لعرض رسائل البرطمان يلزم الاتصال بالانترنت ⚠️ \n يا $userName 💙",textAlign: TextAlign.center,))
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
+import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -28,19 +29,19 @@ class ShareAPPDialog {
                 label: "مشاركة التطبيق 📲",
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 10),
+              verticalSpace(10),
               Image.asset(
                 AssetsManager.messageJar,
                 width: 100,
                 height: 100,
                 fit:  BoxFit.cover,
               ),
-              const SizedBox(height: 20),
+              verticalSpace(20),
               const ContentTextWidget(
                 label: AppConsts.SHARE_APP_MESSAGE,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
+              verticalSpace(20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -63,7 +64,7 @@ class ShareAPPDialog {
                       fontSize: 18,
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  horizontalSpace(20),
                   TextButton(
                     onPressed: () async {
                       locator<NavigationService>().goBack();

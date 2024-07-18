@@ -9,6 +9,7 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 
 class GreetingDialog {
   Future<void> showGreeting(BuildContext context) async {
@@ -67,19 +68,19 @@ class GreetingDialog {
                 label: title,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 10),
+              verticalSpace(10),
               Image.asset(
                 AssetsManager.welcomeJar,
                 width: 100,
                 height: 100,
                 fit:  BoxFit.cover,
               ),
-              const SizedBox(height: 20),
+              verticalSpace(20),
               ContentTextWidget(
                 label: body,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 30),
+              verticalSpace(30),
               Center(
                 child: TextButton(
                   onPressed: () {

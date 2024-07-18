@@ -11,6 +11,7 @@ import 'package:lottie/lottie.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../../helpers/spacing.dart';
 import '../../../../locator.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
@@ -253,9 +254,7 @@ class FavoriteScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 20,
-                  ),
+                  separatorBuilder: (context, index) => verticalSpace(20),
                 ),
               ) : Center(
                 child:  Container(
@@ -265,7 +264,7 @@ class FavoriteScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(AssetsManager.favoriteJar,height: 200,width: 200,fit:   BoxFit.cover,),
-                      const SizedBox(height: 10),
+                      verticalSpace(10),
                       const TitleTextWidget(label: 'لا توجد رسائل مفضلة في البرطمان ',maxLines: 5,fontSize: 18,)
                     ],
                   ),

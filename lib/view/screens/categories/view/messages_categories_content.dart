@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../../locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/app_name_text.dart';
@@ -326,9 +327,7 @@ class MessagesCategoriesContent extends StatelessWidget {
                           ),
                         );
                       },
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 20,
-                      ),
+                      separatorBuilder: (context, index) => verticalSpace(20),
                     ),
                   )
                 : Visibility(

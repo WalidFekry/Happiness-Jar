@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/messages/widgets/no_internet.dart';
 import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
@@ -38,9 +39,7 @@ class MessagesScreen extends StatelessWidget {
                     child: NoInternetWidget(viewModel.userName)),
                 Visibility(
                     visible: viewModel.noInternet,
-                    child: const SizedBox(
-                      height: 25,
-                    )),
+                    child: verticalSpace(25)),
                 Visibility(
                     visible: viewModel.showEmptyJar,
                     child: EmptyMessageWidget(viewModel.userName)),
@@ -97,7 +96,7 @@ class MessagesScreen extends StatelessWidget {
                                                 label: "إضغط لفتح رسائل البرطمان 💙"),
                                             TitleTextWidget(
                                                 label: 'يا ${viewModel.userName} 👇'),
-                                            const SizedBox(height: 15),
+                                            verticalSpace(15),
                                             Center(
                                               child: Image.asset(
                                                 AssetsManager.appLogo,
@@ -132,7 +131,7 @@ class MessagesScreen extends StatelessWidget {
                                           "رسالتك اليوم يا ${viewModel.userName} 🦋"),
                                   const TitleTextWidget(
                                       label: "من البرطمان 💙"),
-                                  const SizedBox(height: 20),
+                                  verticalSpace(20),
                                   SizedBox(
                                     height: size.height * 0.5,
                                     child: PageView(
@@ -159,7 +158,7 @@ class MessagesScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(height: 10),
+                                  verticalSpace(10),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20),
@@ -180,7 +179,7 @@ class MessagesScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(width: 10),
+                                        horizontalSpace(10),
                                         Flexible(
                                           child: IconButton(
                                             icon: const Icon(Icons.copy,
@@ -268,7 +267,7 @@ class MessagesScreen extends StatelessWidget {
                                                     .color),
                                           ),
                                         ),
-                                        const SizedBox(width: 10),
+                                        horizontalSpace(10),
                                         Visibility(
                                           visible: viewModel.nextMessage,
                                           child: Flexible(

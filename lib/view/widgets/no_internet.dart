@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import '../../constants/app_consts.dart';
@@ -18,9 +19,7 @@ class NoInternetWidget extends StatelessWidget {
           width: 200,
           fit: BoxFit.cover,
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        verticalSpace(10),
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: SubtitleTextWidget(

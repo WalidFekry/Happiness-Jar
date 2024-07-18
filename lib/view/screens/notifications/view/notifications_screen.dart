@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
@@ -299,9 +300,7 @@ class NotificationsScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 20,
-                    ),
+                    separatorBuilder: (context, index) => verticalSpace(20),
                   ),
                 )
               : Center(

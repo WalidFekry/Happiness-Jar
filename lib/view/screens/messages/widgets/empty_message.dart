@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; // استيراد مكتبة Material لإضافة border
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../widgets/subtitle_text.dart';
 
 class EmptyMessageWidget extends StatelessWidget {
@@ -38,7 +39,7 @@ class EmptyMessageWidget extends StatelessWidget {
               width: 150,
               fit:  BoxFit.cover,
             ),
-            const SizedBox(height: 10),
+            verticalSpace(10),
             Center(
               child: SubtitleTextWidget(
                 label:
