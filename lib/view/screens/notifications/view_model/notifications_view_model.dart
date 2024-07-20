@@ -30,7 +30,6 @@ class NotificationsViewModel extends BaseViewModel {
   final apiService = locator<ApiService>();
   final appDatabase = locator<AppDatabase>();
   bool isDone = true;
-  InterstitialAd? interstitialAd;
   ScreenshotController screenshotController = ScreenshotController();
   final adsService = locator<AdsService>();
 
@@ -195,11 +194,5 @@ class NotificationsViewModel extends BaseViewModel {
 
   void showBinyAd() {
   adsService.showInterstitialAd();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    interstitialAd?.dispose();
   }
 }

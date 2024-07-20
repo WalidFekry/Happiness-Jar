@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:happiness_jar/constants/ads_manager.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,6 +21,7 @@ import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../../services/shared_pref_services.dart';
 import '../model/messages_model.dart';
+import '../model/wheel_model.dart';
 
 class MessagesViewModel extends BaseViewModel {
   List<Messages> list = [];
@@ -33,9 +37,9 @@ class MessagesViewModel extends BaseViewModel {
   bool nextMessage = true;
   bool prevMessage = false;
   bool showJarMessages = true;
-  InterstitialAd? interstitialAd;
   PageController? controller;
   double opacity = 1.0;
+  List<WheelImage> wheelImagesList = [];
   final appDatabase = locator<AppDatabase>();
   final adsService = locator<AdsService>();
 
@@ -76,6 +80,7 @@ class MessagesViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
+
   Future<void> getMessages() async {
     if (list.isNotEmpty) {
       return;
@@ -102,7 +107,7 @@ class MessagesViewModel extends BaseViewModel {
   }
 
   nextMessages() {
-    if(currentPage == 1){
+    if (currentPage == 1) {
       showBinyAd();
     }
     if (currentPage >= 0 && currentPage < 3) {
@@ -184,12 +189,34 @@ class MessagesViewModel extends BaseViewModel {
   }
 
   void showBinyAd() {
-  adsService.showInterstitialAd();
+    adsService.showInterstitialAd();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    interstitialAd?.dispose();
+  Future<void> getWheelImages() async {
+    wheelImagesList.clear();
+    Resource<WheelModel> resource = await apiService.getAllWheelImages();
+    if (resource.status == Status.SUCCESS) {
+      wheelImagesList = resource.data!.wheel!;
+    }else{
+      wheelImagesList.add(WheelImage(id: 1, url: "null"));
+    }
+    setState(ViewState.Idle);
+  }
+
+  Future<void> saveImage(String? imageUrl) async {
+    try {
+      var response = await Dio()
+          .get(imageUrl!, options: Options(responseType: ResponseType.bytes));
+      final result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.data),
+          quality: 100,
+          name: "hello");
+      // if (result['isSuccess']) {
+      // } else {}
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 }
