@@ -24,12 +24,12 @@ void setupLocator() {
   locator.registerLazySingleton(() => FavoriteViewModel());
   locator.registerLazySingleton(() => NotificationsViewModel());
   locator.registerLazySingleton(() => GetStartedViewModel());
-  locator.registerLazySingleton(() => MessagesViewModel());
   locator.registerLazySingleton(() => AdsService());
 
   initSingleton();
 
   locator.registerFactory(() => RegisterViewModel());
+  locator.registerFactory(() => MessagesViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => ProfileViewModel());
 

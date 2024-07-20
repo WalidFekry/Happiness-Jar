@@ -38,7 +38,6 @@ class CategoriesViewModel extends BaseViewModel{
   bool isDone = true;
   bool isDoneContent = true;
   BannerAd? bannerAd;
-  InterstitialAd? interstitialAd;
   bool isBottomBannerAdLoaded = false;
   ScreenshotController screenshotController = ScreenshotController();
   final adsService = locator<AdsService>();
@@ -248,7 +247,6 @@ class CategoriesViewModel extends BaseViewModel{
   @override
   void dispose() {
     bannerAd?.dispose();
-    interstitialAd?.dispose();
     super.dispose();
   }
 

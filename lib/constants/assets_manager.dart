@@ -23,6 +23,7 @@ class AssetsManager {
   static const String messageJar = "$iconsPath/message.png";
   static const String darkMode = "$iconsPath/dark_mode.png";
   static const String userProfile = "$iconsPath/user.png";
+  static const String socialMedia = "$iconsPath/social_media.png";
 
   // Animations
   static const String openBox = "$animationPath/open_box.json";

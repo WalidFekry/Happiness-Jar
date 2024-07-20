@@ -1,17 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; // استيراد مكتبة Material لإضافة border
-import '../../../../constants/assets_manager.dart';
+import 'package:happiness_jar/view/screens/messages/widgets/show_rewarded_ad_dialog.dart';
+import 'package:happiness_jar/view/screens/messages/widgets/wheel_dialog.dart';
+import 'package:happiness_jar/view/widgets/app_text_button.dart';
+
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
+import '../../../../locator.dart';
+import '../../../../services/ads_service.dart';
 import '../../../widgets/subtitle_text.dart';
 
 class EmptyMessageWidget extends StatelessWidget {
-  const EmptyMessageWidget(this.userName, {super.key});
+  EmptyMessageWidget(this.userName, {super.key});
+
   final String? userName;
+  final adsService = locator<AdsService>();
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
@@ -37,17 +43,46 @@ class EmptyMessageWidget extends StatelessWidget {
             Image.asset(
               AssetsManager.emptyJar,
               width: 150,
-              fit:  BoxFit.cover,
+              fit: BoxFit.cover,
             ),
             verticalSpace(10),
             Center(
               child: SubtitleTextWidget(
                 label:
-                "لقد وصلت إلى نهاية رسائل البرطمان ⌛ \n عُد بعد 6 ساعات 🕕 \n لإكتشاف رسائل جديدة 💙 \n يا $userName 🦋",
+                    "لقد وصلت إلى نهاية رسائل البرطمان ⌛ \n عُد بعد 6 ساعات 🕕 \n لإكتشاف رسائل جديدة 💙 \n يا $userName 🦋",
                 textAlign: TextAlign.center,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            verticalSpace(20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppTextButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return WheelDialog(userName: userName);
+                        },
+                      );
+                    },
+                    label: "عجلة الهدايا"), // AppTextButton(
+                GestureDetector(
+                  onTap: () {
+                        adsService.loadRewardedAd();
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return ShowRewardedAdDialog();
+                            });
+                  },
+                    child: Image.asset(AssetsManager.socialMedia,
+                        width: 100, height: 90, fit: BoxFit.contain)),
+              ],
+            )
           ],
         ),
       ),

@@ -28,7 +28,6 @@ class FavoriteViewModel extends BaseViewModel {
 
   final appDatabase = locator<AppDatabase>();
   List<FavoriteMessagesModel> list = [];
-  InterstitialAd? interstitialAd;
   ScreenshotController screenshotController = ScreenshotController();
   final adsService = locator<AdsService>();
 
@@ -178,11 +177,4 @@ class FavoriteViewModel extends BaseViewModel {
   void showBinyAd() {
     adsService.showInterstitialAd();
   }
-
-  @override
-  void dispose() {
-    interstitialAd?.dispose();
-    super.dispose();
-  }
-
 }
