@@ -4,6 +4,7 @@ import 'package:happiness_jar/constants/assets_manager.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
+import '../../../../helpers/spacing.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
@@ -36,11 +37,11 @@ class GetStartedScreen extends StatelessWidget {
                     width: 150,
                     fit:  BoxFit.cover,
                   ),
-                  const SizedBox(height: 15,),
+                  verticalSpace(15),
                   const TitleTextWidget(
                     label: "برطمان السعادة 🦋",
                   ),
-                  const SizedBox(height: 15,),
+                  verticalSpace(15),
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -51,7 +52,7 @@ class GetStartedScreen extends StatelessWidget {
                     child: const ContentTextWidget(label: AppConsts.GET_STARTED_MESSAGE,textAlign: TextAlign.center,
                        ),
                   ),
-                  const SizedBox(height: 15,),
+                 verticalSpace(15),
                   const GetStartedButton(RouteName.GET_NOTIFICATION_SCREEN,"التالي"),
                 ],
               ),

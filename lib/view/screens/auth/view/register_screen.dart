@@ -5,6 +5,7 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:iconly/iconly.dart';
 
+import '../../../../helpers/spacing.dart';
 import '../../base_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -36,12 +37,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: 150,
                       fit:  BoxFit.cover,
                     ),
-                    const SizedBox(height: 15),
+                    verticalSpace(15),
                     const TitleTextWidget(
                       label: "مرحباً بك في تطبيق برطمان السعادة",
                       fontSize: 18,
                     ),
-                    const SizedBox(height: 30),
+                    verticalSpace(30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -77,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 15),
+                    verticalSpace(15),
                     Form(
                       key: viewModel.formKey,
                       child: TextFormField(
@@ -97,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    verticalSpace(30),
                     ElevatedButton(
                       onPressed: () {
                         if (!viewModel.formKey.currentState!.validate()) {

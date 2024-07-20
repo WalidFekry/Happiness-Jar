@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
+import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/info_dialog.dart';
@@ -89,9 +90,7 @@ class ProfileScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      horizontalSpace(10),
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,13 +136,9 @@ class ProfileScreen extends StatelessWidget {
                         thickness: 2,
                         color: Colors.grey,
                       ),
-                      const SizedBox(
-                        height: 7,
-                      ),
+                      verticalSpace(7),
                       const SubtitleTextWidget(label: "اعدادات التطبيق"),
-                      const SizedBox(
-                        height: 7,
-                      ),
+                      verticalSpace(7),
                       SwitchListTile(
                         secondary: Image.asset(
                           AssetsManager.darkMode,
@@ -183,13 +178,9 @@ class ProfileScreen extends StatelessWidget {
                         thickness: 2,
                         color: Colors.grey,
                       ),
-                      const SizedBox(
-                        height: 7,
-                      ),
+                      verticalSpace(7),
                       const SubtitleTextWidget(label: "المزيد .."),
-                      const SizedBox(
-                        height: 7,
-                      ),
+                      verticalSpace(7),
                       ListTile(
                         title: const ContentTextWidget(
                           label: 'صفحتنا على الفيسبوك',

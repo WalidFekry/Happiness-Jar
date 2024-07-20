@@ -11,6 +11,7 @@ import 'package:lottie/lottie.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../../helpers/spacing.dart';
 import '../../../../locator.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
@@ -52,6 +53,7 @@ class FavoriteScreen extends StatelessWidget {
                         ),
                         child: InkWell(
                           onTap: () {
+                            viewModel.showBinyAd();
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -160,60 +162,88 @@ class FavoriteScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.deleteFavoriteMessage(index);
-                                        showTopSnackBar(
-                                          Overlay.of(context),
-                                          CustomSnackBar.error(
-                                            backgroundColor: Theme.of(context).cardColor,
-                                            message:
-                                            "تم الحذف",
-                                            icon: Icon(Icons.delete,color: Theme.of(context).iconTheme.color,
-                                              size: 50,),
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(IconlyLight.delete,color:Theme.of(context).cardColor),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.copyMessage(index);
-                                        showTopSnackBar(
-                                          Overlay.of(context),
-                                          CustomSnackBar.success(
-                                            backgroundColor: Theme.of(context).iconTheme.color!,
-                                            message:
-                                            "تم النسخ",
-                                            icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
-                                              size: 50,),
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.shareMessage(index);
-                                      },
-                                      icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.shareWhatsapp(index);
-                                      },
-                                      icon: SvgPicture.asset(
-                                        AssetsManager.whatsapp,
-                                        width: 24,
-                                        height: 24,
-                                        colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.deleteFavoriteMessage(index);
+                                          showTopSnackBar(
+                                            Overlay.of(context),
+                                            CustomSnackBar.error(
+                                              backgroundColor: Theme.of(context).cardColor,
+                                              message:
+                                              "تم الحذف",
+                                              icon: Icon(Icons.delete,color: Theme.of(context).iconTheme.color,
+                                                size: 50,),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(IconlyLight.delete,color:Theme.of(context).cardColor),
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        viewModel.shareFacebook(index);
-                                      },
-                                      icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.showBinyAd();
+                                          viewModel.copyMessage(index);
+                                          showTopSnackBar(
+                                            Overlay.of(context),
+                                            CustomSnackBar.success(
+                                              backgroundColor: Theme.of(context).iconTheme.color!,
+                                              message:
+                                              "تم النسخ",
+                                              icon: Icon(Icons.copy,color: Theme.of(context).cardColor,
+                                                size: 50,),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(Icons.copy,color:Theme.of(context).iconTheme.color),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.shareMessage(index);
+                                        },
+                                        icon: Icon(Icons.share,color:Theme.of(context).iconTheme.color),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.shareWhatsapp(index);
+                                        },
+                                        icon: SvgPicture.asset(
+                                          AssetsManager.whatsapp,
+                                          width: 24,
+                                          height: 24,
+                                          colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.shareFacebook(index);
+                                        },
+                                        icon: Icon(Icons.facebook,color:Theme.of(context).iconTheme.color),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.sharePhoto(index,context);
+                                        },
+                                        icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          viewModel.showBinyAd();
+                                          viewModel.saveToGallery(index,context);
+                                        },
+                                        icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -224,9 +254,7 @@ class FavoriteScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 20,
-                  ),
+                  separatorBuilder: (context, index) => verticalSpace(20),
                 ),
               ) : Center(
                 child:  Container(
@@ -236,7 +264,7 @@ class FavoriteScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(AssetsManager.favoriteJar,height: 200,width: 200,fit:   BoxFit.cover,),
-                      const SizedBox(height: 10),
+                      verticalSpace(10),
                       const TitleTextWidget(label: 'لا توجد رسائل مفضلة في البرطمان ',maxLines: 5,fontSize: 18,)
                     ],
                   ),

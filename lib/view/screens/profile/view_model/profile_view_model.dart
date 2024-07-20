@@ -38,14 +38,22 @@ class ProfileViewModel extends BaseViewModel {
     locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
   }
 
-  void openPrivacyPolicy(){
+  Future<void> openPrivacyPolicy() async {
     final Uri url = Uri.parse('https://sites.google.com/view/happinessjar/home');
+    if (await canLaunchUrl(url)) {
     launchUrl(url);
+    }else{
+    launchUrl(url,mode: LaunchMode.externalApplication);
+    }
     }
 
-  void contactWithDeveloper() {
+  Future<void> contactWithDeveloper() async {
     final Uri url = Uri.parse('https://www.facebook.com/Waleed.Fikri');
+    if (await canLaunchUrl(url)) {
+    launchUrl(url);
+    }else{
     launchUrl(url,mode: LaunchMode.externalApplication);
+    }
   }
 
   Future<void> shareApp() async {
@@ -53,9 +61,13 @@ class ProfileViewModel extends BaseViewModel {
         AppConsts.SHARE_APP);
   }
 
-  void contact() {
+  Future<void> contact() async {
     final Uri url = Uri.parse('https://api.whatsapp.com/send/?phone=201094674881&text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D8%A8%D8%B1%D8%B7%D9%85%D8%A7%D9%86%20%D8%A7%D9%84%D8%B3%D8%B9%D8%A7%D8%AF%D8%A9%20..&type=phone_number&app_absent=0');
+    if (await canLaunchUrl(url)) {
+    launchUrl(url);
+    }else{
     launchUrl(url,mode: LaunchMode.externalApplication);
+    }
   }
 
   void rateApp() {
@@ -63,9 +75,13 @@ class ProfileViewModel extends BaseViewModel {
     inAppReview.openStoreListing(appStoreId: '284815942');
   }
 
-  void openFacebookPage() {
+  Future<void> openFacebookPage() async {
     final Uri url = Uri.parse('https://www.facebook.com/App.Happiness');
-    launchUrl(url,mode: LaunchMode.externalApplication);
+    if (await canLaunchUrl(url)) {
+      launchUrl(url);
+    }else{
+      launchUrl(url,mode: LaunchMode.externalApplication);
+    }
   }
 
   Future<void> changeProfileImage() async {
@@ -95,9 +111,13 @@ class ProfileViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
-  void moreApps() {
+  Future<void> moreApps() async {
     final Uri url = Uri.parse('https://play.google.com/store/apps/dev?id=6257553101128037563');
+    if (await canLaunchUrl(url)) {
+    launchUrl(url);
+    }else{
     launchUrl(url,mode: LaunchMode.externalApplication);
+    }
   }
 
 

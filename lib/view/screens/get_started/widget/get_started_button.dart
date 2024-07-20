@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
+import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
@@ -57,7 +58,7 @@ class GetStartedButton extends StatelessWidget {
                 TitleTextWidget(
                   label: text,
                 ),
-                const SizedBox(width: 4),
+                horizontalSpace(4),
                 Icon(IconlyLight.arrow_left_2,
                     size: 20, color: Theme.of(context).iconTheme.color),
               ],

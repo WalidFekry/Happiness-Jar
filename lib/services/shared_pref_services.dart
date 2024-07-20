@@ -36,7 +36,7 @@ class SharedPrefServices {
   }
 
   Future<int> getInteger(String? key) async {
-    int data = await Future.value(_prefs!.getInt(key!) ?? -1);
+    int data = await Future.value(_prefs!.getInt(key!) ?? 0);
     return data;
   }
 

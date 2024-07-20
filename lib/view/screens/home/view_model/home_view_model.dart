@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/constants/ads_manager.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
@@ -16,6 +18,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
+import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
 import '../widgets/greeting_dialog.dart';
 
@@ -31,6 +34,7 @@ class HomeViewModel extends BaseViewModel {
   String? giftBoxMessage;
   final GreetingDialog greetingDialog = GreetingDialog();
   final InAppReview inAppReview = InAppReview.instance;
+  final adsService = locator<AdsService>();
 
   Future<void> getTodayAdvice() async {
     getTodayAdviceTime =
@@ -134,4 +138,10 @@ class HomeViewModel extends BaseViewModel {
       setState(ViewState.Idle);
     }
   }
+
+  void showOpenAd() {
+    adsService.showOpenAd();
+  }
+
+
 }

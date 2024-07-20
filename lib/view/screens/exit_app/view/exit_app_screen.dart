@@ -5,6 +5,7 @@ import 'package:happiness_jar/constants/assets_manager.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 
+import '../../../../helpers/spacing.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../../services/navigation_service.dart';
 
@@ -24,11 +25,11 @@ class ExitAppScreen extends StatelessWidget {
               width: 150,
               fit: BoxFit.cover,
             ),
-            const SizedBox(height: 20),
+            verticalSpace(20),
             const TitleTextWidget(
               label: "هل ترغب في الخروج من التطبيق؟",
             ),
-            const SizedBox(height: 20),
+            verticalSpace(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -49,7 +50,7 @@ class ExitAppScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(width: 20),
+                horizontalSpace(20),
                 ElevatedButton(
                   onPressed: () {
                     SystemNavigator.pop();

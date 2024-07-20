@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             .navigateToAndClearStack(RouteName.REGISTER);
         return;
       }
+      viewModel.showOpenAd();
       viewModel.getUserData();
       viewModel.refreshToken();
       viewModel.getTodayAdvice();

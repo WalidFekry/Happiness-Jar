@@ -9,6 +9,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../enums/status.dart';
 import '../models/resources.dart';
 import '../view/screens/messages/model/messages_model.dart';
+import '../view/screens/messages/model/wheel_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
 
 class ApiService {
@@ -99,6 +100,19 @@ class ApiService {
       var response = await dio.get('messages_advice.php');
       var contentMessage = TodayAdviceModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessage);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<WheelModel>> getAllWheelImages() async {
+    try {
+      var response = await dio.get(
+        'wheel.php',
+      );
+      var wheelResponse = WheelModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: wheelResponse);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
@@ -43,6 +44,7 @@ class NotificationsScreen extends StatelessWidget {
                           ),
                           child: InkWell(
                             onTap: () {
+                              viewModel.showBinyAd();
                               showDialog(
                                 context: context,
                                 builder: (context) {
@@ -175,93 +177,121 @@ class NotificationsScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      IconButton(
+                                      Flexible(
+                                        child: IconButton(
+                                            onPressed: () {
+                                              viewModel
+                                                  .saveFavoriteMessage(index);
+                                              showTopSnackBar(
+                                                Overlay.of(context),
+                                                CustomSnackBar.success(
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .iconTheme
+                                                          .color!,
+                                                  message: "تمت الإضافة للمفضلة",
+                                                  icon: Icon(
+                                                    IconlyBold.heart,
+                                                    color: Theme.of(context)
+                                                        .cardColor,
+                                                    size: 50,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            icon:
+                                                viewModel.list[index].isFavourite
+                                                    ? Icon(IconlyBold.heart,
+                                                        color: Theme.of(context)
+                                                            .iconTheme
+                                                            .color)
+                                                    : Icon(IconlyLight.heart,
+                                                        color: Theme.of(context)
+                                                            .iconTheme
+                                                            .color)),
+                                      ),
+                                      Flexible(
+                                        child: IconButton(
                                           onPressed: () {
-                                            viewModel
-                                                .saveFavoriteMessage(index);
+                                            viewModel.showBinyAd();
+                                            viewModel.copyMessage(index);
                                             showTopSnackBar(
                                               Overlay.of(context),
                                               CustomSnackBar.success(
-                                                backgroundColor:
-                                                    Theme.of(context)
-                                                        .iconTheme
-                                                        .color!,
-                                                message: "تمت الإضافة للمفضلة",
+                                                backgroundColor: Theme.of(context)
+                                                    .iconTheme
+                                                    .color!,
+                                                message: "تم النسخ",
                                                 icon: Icon(
-                                                  IconlyBold.heart,
-                                                  color: Theme.of(context)
-                                                      .cardColor,
+                                                  Icons.copy,
+                                                  color:
+                                                      Theme.of(context).cardColor,
                                                   size: 50,
                                                 ),
                                               ),
                                             );
                                           },
-                                          icon:
-                                              viewModel.list[index].isFavourite
-                                                  ? Icon(IconlyBold.heart,
-                                                      color: Theme.of(context)
-                                                          .iconTheme
-                                                          .color)
-                                                  : Icon(IconlyLight.heart,
-                                                      color: Theme.of(context)
-                                                          .iconTheme
-                                                          .color)),
-                                      IconButton(
-                                        onPressed: () {
-                                          viewModel.copyMessage(index);
-                                          showTopSnackBar(
-                                            Overlay.of(context),
-                                            CustomSnackBar.success(
-                                              backgroundColor: Theme.of(context)
+                                          icon: Icon(Icons.copy,
+                                              color: Theme.of(context)
                                                   .iconTheme
-                                                  .color!,
-                                              message: "تم النسخ",
-                                              icon: Icon(
-                                                Icons.copy,
-                                                color:
-                                                    Theme.of(context).cardColor,
-                                                size: 50,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        icon: Icon(Icons.copy,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          viewModel.shareMessage(index);
-                                        },
-                                        icon: Icon(Icons.share,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          viewModel.shareWhatsapp(index);
-                                        },
-                                        icon: SvgPicture.asset(
-                                          AssetsManager.whatsapp,
-                                          width: 24,
-                                          height: 24,
-                                          colorFilter: ColorFilter.mode(
-                                              Theme.of(context)
-                                                  .iconTheme
-                                                  .color!,
-                                              BlendMode.srcIn),
+                                                  .color),
                                         ),
                                       ),
-                                      IconButton(
-                                        onPressed: () {
-                                          viewModel.shareFacebook(index);
-                                        },
-                                        icon: Icon(Icons.facebook,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color),
+                                      Flexible(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            viewModel.shareMessage(index);
+                                          },
+                                          icon: Icon(Icons.share,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            viewModel.shareWhatsapp(index);
+                                          },
+                                          icon: SvgPicture.asset(
+                                            AssetsManager.whatsapp,
+                                            width: 24,
+                                            height: 24,
+                                            colorFilter: ColorFilter.mode(
+                                                Theme.of(context)
+                                                    .iconTheme
+                                                    .color!,
+                                                BlendMode.srcIn),
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            viewModel.shareFacebook(index);
+                                          },
+                                          icon: Icon(Icons.facebook,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            viewModel.sharePhoto(index,context);
+                                          },
+                                          icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            viewModel.showBinyAd();
+                                            viewModel.saveToGallery(index,context);
+                                          },
+                                          icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
+                                        ),
                                       ),
                                     ]),
                               ],
@@ -270,9 +300,7 @@ class NotificationsScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 20,
-                    ),
+                    separatorBuilder: (context, index) => verticalSpace(20),
                   ),
                 )
               : Center(

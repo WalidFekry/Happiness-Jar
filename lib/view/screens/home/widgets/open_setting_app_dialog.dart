@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/locator.dart';
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
@@ -26,19 +27,19 @@ class OpenSettingAppDialog {
               label: "الاشعارات غير مفعلة !",
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+            verticalSpace(10),
             Image.asset(
               AssetsManager.notificationAlertJar,
               width: 100,
               height: 100,
               fit:  BoxFit.cover,
             ),
-            const SizedBox(height: 20),
+            verticalSpace(20),
             const ContentTextWidget(
               label: "يرجى تفعيل اشعارات البرطمان في الاعدادات",
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
+            verticalSpace(30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

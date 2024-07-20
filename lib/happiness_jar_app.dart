@@ -1,17 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/constants/theme_data.dart';
 import 'package:happiness_jar/providers/theme_provider.dart';
 import 'package:happiness_jar/routs/app_router.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
+import 'package:happiness_jar/services/firebase_options.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'locator.dart';
 
 Future<void> initServices() async {
-  await Firebase.initializeApp();
+  MobileAds.instance.initialize();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupLocator();

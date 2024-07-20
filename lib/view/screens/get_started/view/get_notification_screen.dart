@@ -5,6 +5,7 @@ import 'package:happiness_jar/view/screens/get_started/widget/get_started_button
 import 'package:happiness_jar/view/widgets/content_text.dart';
 
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
 import '../view_model/get_started_view_model.dart';
@@ -34,11 +35,11 @@ class GetNotificationScreen extends StatelessWidget {
                   width: 150,
                   fit:  BoxFit.cover,
                 ),
-                const SizedBox(height: 15,),
+                verticalSpace(15),
                 const TitleTextWidget(
                   label: "تفعيل إشعارات البرطمان 🔔",
                 ),
-                const SizedBox(height: 15,),
+                verticalSpace(15),
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
@@ -49,7 +50,7 @@ class GetNotificationScreen extends StatelessWidget {
                   child: const ContentTextWidget(label: AppConsts.NOFICATION_MESSAGE,textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 15,),
+                verticalSpace(15),
                 const GetStartedButton(RouteName.REGISTER,"تفعيل"),
               ],
             ),

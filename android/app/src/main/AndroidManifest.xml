@@ -4,7 +4,8 @@
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="برطمان السعادة">
+        android:label="برطمان السعادة"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -20,6 +21,7 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,10 +36,41 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!--    Test Ad-->
+        <!--    ca-app-pub-3940256099942544~3347511713-->
+        <!--    Real Ad-->
+        <!--        ca-app-pub-4380347337966794~4755405448-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4380347337966794~4755405448" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <queries>
+        <!-- Example for Facebook -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+            <data android:host="www.facebook.com" />
+        </intent>
+        <!-- Example for WhatsApp -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+            <data android:host="api.whatsapp.com" />
+        </intent>
+        <!-- Example for Play Store -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+            <data android:host="play.google.com" />
+        </intent>
+    </queries>
 
 </manifest>

@@ -9,6 +9,7 @@ class SubtitleTextWidget extends StatelessWidget {
     this.fontWeight = FontWeight.w600,
     this.color,
     this.fontFamily = "avenir_medium",
+    this.maxLines,
   });
 
   final String? label;
@@ -17,9 +18,11 @@ class SubtitleTextWidget extends StatelessWidget {
   final Color? color;
   final String fontFamily;
   final TextAlign textAlign;
+  final int? maxLines;
   @override
   Widget build(BuildContext context) {
     return Text(
+      maxLines: maxLines,
       label!,
       textAlign: textAlign,
       style: TextStyle(
