@@ -22,34 +22,29 @@ Future<void> initServices() async {
 
 class HappinessJarApp extends StatelessWidget {
   const HappinessJarApp({super.key});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    // final themeProvider = Provider.of<ThemeProvider>(context);
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => ThemeProvider(),
-        ),
-      ],
-      child: Consumer<ThemeProvider>(builder: (
-          context,
-          themeProvider,
-          child,
-          ) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          locale: context.locale,
-          supportedLocales: context.supportedLocales,
-          localizationsDelegates: context.localizationDelegates,
-          title: 'برطمان السعادة',
-          theme: Styles.themeData(
-              isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-          initialRoute: RouteName.HOME,
-          navigatorKey: locator<NavigationService>().navigatorKey,
-          onGenerateRoute: AppRouter.generateRoute,
-        );
-      }),
+    return ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            locale: context.locale,
+            supportedLocales: context.supportedLocales,
+            localizationsDelegates: context.localizationDelegates,
+            title: 'برطمان السعادة',
+            theme: Styles.themeData(
+              isDarkTheme: themeProvider.getIsDarkTheme,
+              context: context,
+            ),
+            initialRoute: RouteName.HOME,
+            navigatorKey: locator<NavigationService>().navigatorKey,
+            onGenerateRoute: AppRouter.generateRoute,
+          );
+        },
+      ),
     );
   }
 }
