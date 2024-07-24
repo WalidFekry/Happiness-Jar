@@ -23,7 +23,7 @@ class NoInternetWidget extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: SubtitleTextWidget(
-            label: AppConsts.NO_INTERNET_MESSAGE,
+            label: AppConsts.noInternetMessage,
             textAlign: TextAlign.center,
           ),
         )

@@ -64,7 +64,7 @@ class TodayAdviceDialog {
                   children: [
                     TextButton(onPressed: () async {
                       await prefs.saveString(
-                          SharedPrefsConstants.GET_TODAY_ADVICE_TIME,
+                          SharedPrefsConstants.getTodayAdviceTime,
                           DateTime.now().toIso8601String());
                       locator<NavigationService>().goBack();
                     },

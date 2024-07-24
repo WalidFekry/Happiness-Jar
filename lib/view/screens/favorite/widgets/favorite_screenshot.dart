@@ -54,8 +54,7 @@ class FavoriteScreenshot extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: ContentTextWidget(
                       color: Colors.black,
-                      label: AppConsts.COPY_MESSAGE,
-                      textAlign: TextAlign.center)),
+                      label: AppConsts.copyMessage,                     textAlign: TextAlign.center)),
             ],
           ),
         ),

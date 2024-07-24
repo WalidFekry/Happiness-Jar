@@ -28,15 +28,15 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   Future<void> saveData() async {
-    await prefs.saveString(SharedPrefsConstants.USER_NAME, nameController.text.trim());
+    await prefs.saveString(SharedPrefsConstants.userName, nameController.text.trim());
     if (image != null) {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
       const fileName = 'profile_image.png';
       final File localImage = await image!.copy('$path/$fileName');
-      await prefs.saveString(SharedPrefsConstants.USER_IMAGE, localImage.path);
+      await prefs.saveString(SharedPrefsConstants.userImage, localImage.path);
     }
-    await prefs.saveBoolean(SharedPrefsConstants.IS_LOGIN, true);
+    await prefs.saveBoolean(SharedPrefsConstants.isLogin, true);
     locator<NavigationService>().navigateToAndClearStack(RouteName.HOME);
   }
 

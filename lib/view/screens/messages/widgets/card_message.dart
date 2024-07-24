@@ -174,7 +174,7 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
                 top: 5,
                 right: 5,
                 child: ContentTextWidget(
-                    label: AppConsts.COPY_MESSAGE_2, color: Colors.black)),
+                    label: AppConsts.copyMessage2, color: Colors.black)),
           ),
         ],
       ),

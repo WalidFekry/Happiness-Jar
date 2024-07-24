@@ -20,9 +20,9 @@ class AdsService {
   // Load and show an interstitial ad
   Future<void> showInterstitialAd() async {
     int adDisplayCount = await prefs
-        .getInteger(SharedPrefsConstants.INTERSTITIAL_AD_DISPLAY_COUNT);
+        .getInteger(SharedPrefsConstants.interstitialAdDisplayCount);
     int lastAdDisplayTime = await prefs
-        .getInteger(SharedPrefsConstants.INTERSTITIAL_LAST_AD_DISPLAY_TIME);
+        .getInteger(SharedPrefsConstants.interstitialLastAdDisplayTime);
     int currentTime = DateTime.now().millisecondsSinceEpoch;
     // Reset the ad display count if more than one hour has passed since the last ad display
     if (currentTime - lastAdDisplayTime > oneHourInMillis) {
@@ -42,10 +42,10 @@ class AdsService {
               // Increment the ad display count and update the last ad display time
               adDisplayCount++;
               prefs.saveInteger(
-                  SharedPrefsConstants.INTERSTITIAL_AD_DISPLAY_COUNT,
+                  SharedPrefsConstants.interstitialAdDisplayCount,
                   adDisplayCount);
               prefs.saveInteger(
-                  SharedPrefsConstants.INTERSTITIAL_LAST_AD_DISPLAY_TIME,
+                  SharedPrefsConstants.interstitialLastAdDisplayTime,
                   currentTime);
             }, // Called when an ad request failed.
             onAdFailedToLoad: (LoadAdError error) {
@@ -62,9 +62,9 @@ class AdsService {
   // Load and show an app open ad
   Future<void> showOpenAd() async {
     int adDisplayCount = await prefs
-        .getInteger(SharedPrefsConstants.OPEN_AD_DISPLAY_COUNT);
+        .getInteger(SharedPrefsConstants.openAdDisplayCount);
     int lastAdDisplayTime = await prefs
-        .getInteger(SharedPrefsConstants.OPEN_LAST_AD_DISPLAY_TIME);
+        .getInteger(SharedPrefsConstants.openLastAdDisplayTime);
     int currentTime = DateTime.now().millisecondsSinceEpoch;
     // Reset the ad display count if more than one hour has passed since the last ad display
     if (currentTime - lastAdDisplayTime > oneHourInMillis) {
@@ -82,10 +82,10 @@ class AdsService {
             // Increment the ad display count and update the last ad display time
             adDisplayCount++;
             prefs.saveInteger(
-                SharedPrefsConstants.OPEN_AD_DISPLAY_COUNT,
+                SharedPrefsConstants.openAdDisplayCount,
                 adDisplayCount);
             prefs.saveInteger(
-                SharedPrefsConstants.OPEN_LAST_AD_DISPLAY_TIME,
+                SharedPrefsConstants.openLastAdDisplayTime,
                 currentTime);
           }, onAdFailedToLoad: (error) {
             debugPrint('Ad failed to load $error');
@@ -150,7 +150,7 @@ class AdsService {
 
   // Handle rewarded ad item
   void setRewardedAdItem(BuildContext context) {
-    prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME, "");
+    prefs.saveString(SharedPrefsConstants.lastGetMessagesTime, "");
     locator<NavigationService>().navigateToAndClearStack(RouteName.HOME);
     showTopSnackBar(
       Overlay.of(context),

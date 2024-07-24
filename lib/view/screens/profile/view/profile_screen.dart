@@ -200,7 +200,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         leading: const Icon(Icons.info),
                         onTap: () {
-                          InfoDialog.show(context, AppConsts.APP_INFO);
+                          InfoDialog.show(context, AppConsts.appInfo);
                         },
                       ),
                       const Divider(

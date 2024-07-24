@@ -47,7 +47,7 @@ class GetNotificationScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: Colors.grey, width: 2),
                   ),
-                  child: const ContentTextWidget(label: AppConsts.NOFICATION_MESSAGE,textAlign: TextAlign.center,
+                  child: const ContentTextWidget(label: AppConsts.notificationMessage,textAlign: TextAlign.center,
                   ),
                 ),
                 verticalSpace(15),

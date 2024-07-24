@@ -19,11 +19,11 @@ class GreetingDialog {
     String? lastEveningShownDate;
     String? userName;
 
-    userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
+    userName = await prefs.getString(SharedPrefsConstants.userName);
     lastMorningShownDate =
-        await prefs.getString(SharedPrefsConstants.LAST_MORNING_GREETING_DATE);
+        await prefs.getString(SharedPrefsConstants.lastMorningGreetingDate);
     lastEveningShownDate =
-        await prefs.getString(SharedPrefsConstants.LAST_EVENING_GREETING_DATE);
+        await prefs.getString(SharedPrefsConstants.lastEveningGreetingDate);
 
     if (now.hour < 12) {
       if (lastMorningShownDate != "") {
@@ -34,7 +34,7 @@ class GreetingDialog {
       }
       await showGreetingDialog(context, "صباح الخير \n والمقصود بالخير وجودك",
           "عساك بخير يا $userName 💙");
-      await prefs.saveString(SharedPrefsConstants.LAST_MORNING_GREETING_DATE,
+      await prefs.saveString(SharedPrefsConstants.lastMorningGreetingDate,
           now.toIso8601String());
     } else {
       if (lastEveningShownDate != "") {
@@ -45,7 +45,7 @@ class GreetingDialog {
       }
       await showGreetingDialog(context, "مساء الخير \n والمقصود بالخير وجودك",
           "عساك بخير يا $userName 💙");
-      await prefs.saveString(SharedPrefsConstants.LAST_EVENING_GREETING_DATE,
+      await prefs.saveString(SharedPrefsConstants.lastEveningGreetingDate,
           now.toIso8601String());
     }
   }

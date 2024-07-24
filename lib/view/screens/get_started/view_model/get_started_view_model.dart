@@ -8,7 +8,7 @@ class GetStartedViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
 
   void setDoneGetStarted() {
-    prefs.saveBoolean(SharedPrefsConstants.GET_STARTED, true);
+    prefs.saveBoolean(SharedPrefsConstants.getStarted, true);
   }
 
 }
