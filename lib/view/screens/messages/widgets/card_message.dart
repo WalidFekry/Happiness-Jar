@@ -10,10 +10,12 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:happiness_jar/providers/theme_provider.dart'; // تأكد من تضمين المزود المناسب
 
 class CardMessageWidget extends StatefulWidget {
   const CardMessageWidget(
@@ -36,148 +38,151 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Screenshot(
-      controller: screenshotController,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Container(
-            // margin: const EdgeInsets.only(top: 50), // Space for color options
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey),
-                image: _showImage
-                    ? DecorationImage(
-                        image: widget.imageUrl == null
-                            ? const AssetImage(
-                                AssetsManager.emptyJar,
-                              ) as ImageProvider<Object>
-                            : NetworkImage(widget.imageUrl!)
-                                as ImageProvider<Object>,
-                        fit: BoxFit.cover,
-                        opacity: 0.5,
-                        colorFilter: ColorFilter.mode(
-                            _selectedColor, BlendMode.colorBurn),
-                      )
-                    : null,
-                color: _selectedColor == Colors.transparent
-                    ? Theme.of(context).scaffoldBackgroundColor
-                    : _selectedColor,
-                borderRadius: BorderRadius.circular(15)),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Center(
-                child: SubtitleTextWidget(
-                  label: widget.body,
-                  textAlign: TextAlign.center,
-                  color: Colors.black,
-                  fontSize: _fontSize,
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return Screenshot(
+          controller: screenshotController,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    image: _showImage
+                        ? DecorationImage(
+                      image: widget.imageUrl == null
+                          ? const AssetImage(
+                        AssetsManager.emptyJar,
+                      ) as ImageProvider<Object>
+                          : NetworkImage(widget.imageUrl!)
+                      as ImageProvider<Object>,
+                      fit: BoxFit.cover,
+                      opacity: 0.5,
+                      colorFilter: ColorFilter.mode(
+                          _selectedColor, BlendMode.colorBurn),
+                    )
+                        : null,
+                    color: _selectedColor == Colors.transparent
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : _selectedColor,
+                    borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: SubtitleTextWidget(
+                      label: widget.body,
+                      textAlign: TextAlign.center,
+                      color: themeProvider.getIsDarkTheme ? Colors.white : Colors.black,
+                      fontSize: _fontSize,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Visibility(
-            visible: !takeScreenshot,
-            child: Positioned(
-              bottom: 5,
-              left: 3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildColorOption(Theme.of(context).cardColor),
-                  _buildColorOption(Theme.of(context).iconTheme.color!),
-                  _buildColorOption(Theme.of(context).unselectedWidgetColor),
-                  _buildColorOption(AppColors.lightScaffoldColor),
-                ],
-              ),
-            ),
-          ),
-          Visibility(
-            visible: !takeScreenshot,
-            child: Positioned(
-              bottom: 0,
-              right: 3,
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.text_decrease,
-                      color: _selectedColor == Colors.transparent
-                          ? Theme.of(context).iconTheme.color
-                          : _selectedColor,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        if (_fontSize > 10) _fontSize -= 2;
-                      });
-                    },
+              Visibility(
+                visible: !takeScreenshot,
+                child: Positioned(
+                  bottom: 5,
+                  left: 3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildColorOption(Theme.of(context).cardColor),
+                      _buildColorOption(Theme.of(context).iconTheme.color!),
+                      _buildColorOption(Theme.of(context).unselectedWidgetColor),
+                      _buildColorOption(AppColors.lightScaffoldColor),
+                    ],
                   ),
-                  IconButton(
-                    icon: Icon(Icons.text_increase,
-                        color: _selectedColor == Colors.transparent
-                            ? Theme.of(context).iconTheme.color
-                            : _selectedColor,
-                        size: 20),
-                    onPressed: () {
-                      setState(() {
-                        _fontSize += 2;
-                      });
-                    },
-                  ),
-                ],
+                ),
               ),
-            ),
+              Visibility(
+                visible: !takeScreenshot,
+                child: Positioned(
+                  bottom: 0,
+                  right: 3,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.text_decrease,
+                          color: _selectedColor == Colors.transparent
+                              ? Theme.of(context).iconTheme.color
+                              : _selectedColor,
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (_fontSize > 10) _fontSize -= 2;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.text_increase,
+                            color: _selectedColor == Colors.transparent
+                                ? Theme.of(context).iconTheme.color
+                                : _selectedColor,
+                            size: 20),
+                        onPressed: () {
+                          setState(() {
+                            _fontSize += 2;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: !takeScreenshot,
+                child: Positioned(
+                    top: 0,
+                    left: 0,
+                    child: IconButton(
+                        onPressed: () {
+                          saveToGallery();
+                        },
+                        icon: Icon(
+                          Icons.download,
+                          size: 25,
+                          color: Theme.of(context).iconTheme.color,
+                        ))),
+              ),
+              Visibility(
+                visible: !takeScreenshot,
+                child: Positioned(
+                    top: 0,
+                    right: 0,
+                    child: IconButton(
+                      onPressed: () async {
+                        sharePhoto();
+                      },
+                      icon: Icon(Icons.photo,
+                          size: 25, color: Theme.of(context).iconTheme.color),
+                    )),
+              ),
+              Visibility(
+                visible: takeScreenshot,
+                child: Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: Image.asset(
+                      AssetsManager.appLogo,
+                      width: 90,
+                      height: 90,
+                      fit: BoxFit.contain,
+                    )),
+              ),
+              Visibility(
+                visible: takeScreenshot,
+                child: const Positioned(
+                    top: 5,
+                    right: 5,
+                    child: ContentTextWidget(
+                        label: AppConsts.copyMessage2, color: Colors.black)),
+              ),
+            ],
           ),
-          Visibility(
-            visible: !takeScreenshot,
-            child: Positioned(
-                top: 0,
-                left: 0,
-                child: IconButton(
-                    onPressed: () {
-                      saveToGallery();
-                    },
-                    icon: Icon(
-                      Icons.download,
-                      size: 25,
-                      color: Theme.of(context).iconTheme.color,
-                    ))),
-          ),
-          Visibility(
-            visible: !takeScreenshot,
-            child: Positioned(
-                top: 0,
-                right: 0,
-                child: IconButton(
-                  onPressed: () async {
-                    sharePhoto();
-                  },
-                  icon: Icon(Icons.photo,
-                      size: 25, color: Theme.of(context).iconTheme.color),
-                )),
-          ),
-          Visibility(
-            visible: takeScreenshot,
-            child: Positioned(
-                bottom: 0,
-                left: 0,
-                child: Image.asset(
-                  AssetsManager.appLogo,
-                  width: 90,
-                  height: 90,
-                  fit: BoxFit.contain,
-                )),
-          ),
-          Visibility(
-            visible: takeScreenshot,
-            child: const Positioned(
-                top: 5,
-                right: 5,
-                child: ContentTextWidget(
-                    label: AppConsts.copyMessage2, color: Colors.black)),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
