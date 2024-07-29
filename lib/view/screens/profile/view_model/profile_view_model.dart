@@ -25,8 +25,8 @@ class ProfileViewModel extends BaseViewModel {
   Future<void> getUserData() async {
    PackageInfo packageInfo = await PackageInfo.fromPlatform();
    version = packageInfo.version;
-   userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
-   final imagePath = await prefs.getString(SharedPrefsConstants.USER_IMAGE);
+   userName = await prefs.getString(SharedPrefsConstants.userName);
+   final imagePath = await prefs.getString(SharedPrefsConstants.userImage);
    if (imagePath.isNotEmpty) {
      image = File(imagePath);
    }
@@ -58,7 +58,7 @@ class ProfileViewModel extends BaseViewModel {
 
   Future<void> shareApp() async {
     await Share.share(
-        AppConsts.SHARE_APP);
+        AppConsts.shareApp);
   }
 
   Future<void> contact() async {
@@ -93,21 +93,21 @@ class ProfileViewModel extends BaseViewModel {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
       final File localImage = await image!.copy('$path/$newFileName');
-      await prefs.saveString(SharedPrefsConstants.USER_IMAGE, localImage.path);
+      await prefs.saveString(SharedPrefsConstants.userImage, localImage.path);
     }
     setState(ViewState.Idle);
   }
 
   void clearPrefs() {
-    prefs.saveString(SharedPrefsConstants.USER_NAME, "");
-    prefs.saveString(SharedPrefsConstants.USER_IMAGE, "");
-    prefs.saveBoolean(SharedPrefsConstants.IS_LOGIN, false);
+    prefs.saveString(SharedPrefsConstants.userName, "");
+    prefs.saveString(SharedPrefsConstants.userImage, "");
+    prefs.saveBoolean(SharedPrefsConstants.isLogin, false);
     setState(ViewState.Idle);
   }
 
   void changeUserName(String newUserName) {
     userName = newUserName;
-    prefs.saveString(SharedPrefsConstants.USER_NAME, newUserName);
+    prefs.saveString(SharedPrefsConstants.userName, newUserName);
     setState(ViewState.Idle);
   }
 

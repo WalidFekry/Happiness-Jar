@@ -44,7 +44,7 @@ class MessagesViewModel extends BaseViewModel {
   final adsService = locator<AdsService>();
 
   Future<void> getUserData() async {
-    userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
+    userName = await prefs.getString(SharedPrefsConstants.userName);
     setState(ViewState.Idle);
   }
 
@@ -55,7 +55,7 @@ class MessagesViewModel extends BaseViewModel {
 
   Future<void> getLastMessagesTime() async {
     lastGetMessagesTime =
-        await prefs.getString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME);
+        await prefs.getString(SharedPrefsConstants.lastGetMessagesTime);
     if (lastGetMessagesTime != "") {
       DateTime lastRunTime = DateTime.parse(lastGetMessagesTime!);
       Duration difference = DateTime.now().difference(lastRunTime);
@@ -137,7 +137,7 @@ class MessagesViewModel extends BaseViewModel {
   }
 
   Future<void> saveMessagesTime() async {
-    await prefs.saveString(SharedPrefsConstants.LAST_GET_MESSAGES_TIME,
+    await prefs.saveString(SharedPrefsConstants.lastGetMessagesTime,
         DateTime.now().toIso8601String());
     getLastMessagesTime();
   }

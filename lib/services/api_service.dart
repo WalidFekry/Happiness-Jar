@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:happiness_jar/constants/api_constants.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
@@ -13,14 +14,12 @@ import '../view/screens/messages/model/wheel_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
 
 class ApiService {
-  static const String BASE_URL =
-      "https://post.walid-fekry.com/happiness-jar/api/";
 
   var dio = Dio();
 
   ApiService() {
     var options = BaseOptions(
-      baseUrl: BASE_URL,
+      baseUrl: ApiConstants.baseUrl,
     );
     dio.options = options;
     dio.interceptors.add(PrettyDioLogger(
@@ -31,7 +30,7 @@ class ApiService {
 
   Future<Resource<MessagesCategoriesModel>> getMessagesCategories() async {
     try {
-      var response = await dio.get('messages_categories.php');
+      var response = await dio.get(ApiConstants.messagesCategories);
       var contentMessagesCategories =
           MessagesCategoriesModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessagesCategories);
@@ -43,7 +42,7 @@ class ApiService {
 
   Future<Resource<MessagesContentModel>> getMessagesContent() async {
     try {
-      var response = await dio.get('messages_content.php');
+      var response = await dio.get(ApiConstants.messagesContent);
       var contentMessages = MessagesContentModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessages);
     } catch (e) {
@@ -54,7 +53,7 @@ class ApiService {
 
   Future<Resource<NotificationsModel>> getMessagesNotificationContent() async {
     try {
-      var response = await dio.get('messages_notifications.php');
+      var response = await dio.get(ApiConstants.messagesNotifications);
       var contentMessagesNotification =
           NotificationsModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessagesNotification);
@@ -66,7 +65,7 @@ class ApiService {
 
   Future<Resource<MessagesModel>> getMessages() async {
     try {
-      var response = await dio.get('messages.php');
+      var response = await dio.get(ApiConstants.messages);
       var contentMessages = MessagesModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessages);
     } catch (e) {
@@ -79,7 +78,7 @@ class ApiService {
       String fcmToken, String name) async {
     try {
       var response = await dio.post(
-        'register.php',
+        ApiConstants.register,
         data: {'server': 'Register', 'fcm_token': fcmToken, 'name': name},
         options: Options(
           headers: {
@@ -97,7 +96,7 @@ class ApiService {
 
   Future<Resource<TodayAdviceModel>> getAdviceMessage() async {
     try {
-      var response = await dio.get('messages_advice.php');
+      var response = await dio.get(ApiConstants.messagesAdvice);
       var contentMessage = TodayAdviceModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessage);
     } catch (e) {
@@ -109,7 +108,7 @@ class ApiService {
   Future<Resource<WheelModel>> getAllWheelImages() async {
     try {
       var response = await dio.get(
-        'wheel.php',
+        ApiConstants.wheel,
       );
       var wheelResponse = WheelModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: wheelResponse);

@@ -38,7 +38,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> getTodayAdvice() async {
     getTodayAdviceTime =
-        await prefs.getString(SharedPrefsConstants.GET_TODAY_ADVICE_TIME);
+        await prefs.getString(SharedPrefsConstants.getTodayAdviceTime);
     if (getTodayAdviceTime == "") {
       getAdvice();
     } else {
@@ -52,10 +52,10 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> showInAppReview() async {
     lastTimeToShowInAppReview = await prefs
-        .getString(SharedPrefsConstants.LAST_TIME_TO_SHOW_IN_APP_REVIEW);
+        .getString(SharedPrefsConstants.lastTimeToShowInAppReview);
     if (lastTimeToShowInAppReview == "") {
       await prefs.saveString(
-          SharedPrefsConstants.LAST_TIME_TO_SHOW_IN_APP_REVIEW,
+          SharedPrefsConstants.lastTimeToShowInAppReview,
           DateTime.now().toIso8601String());
     } else {
       DateTime lastRunTime = DateTime.parse(lastTimeToShowInAppReview!);
@@ -65,14 +65,14 @@ class HomeViewModel extends BaseViewModel {
           inAppReview.requestReview();
         }
         await prefs.saveString(
-            SharedPrefsConstants.LAST_TIME_TO_SHOW_IN_APP_REVIEW,
+            SharedPrefsConstants.lastTimeToShowInAppReview,
             DateTime.now().toIso8601String());
       }
     }
   }
 
   Future<void> getUserData() async {
-    final imagePath = await prefs.getString(SharedPrefsConstants.USER_IMAGE);
+    final imagePath = await prefs.getString(SharedPrefsConstants.userImage);
     if (imagePath.isNotEmpty) {
       image = File(imagePath);
     }
@@ -80,7 +80,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> refreshToken() async {
     lastRefreshTokenTime =
-        await prefs.getString(SharedPrefsConstants.LAST_REFRESH_TOKEN_TIME);
+        await prefs.getString(SharedPrefsConstants.lastRefreshTokenTime);
     if (lastRefreshTokenTime != "") {
       DateTime lastRunTime = DateTime.parse(lastRefreshTokenTime!);
       Duration difference = DateTime.now().difference(lastRunTime);
@@ -96,13 +96,13 @@ class HomeViewModel extends BaseViewModel {
   }
 
   sendToken() async {
-    String? userName = await prefs.getString(SharedPrefsConstants.USER_NAME);
+    String? userName = await prefs.getString(SharedPrefsConstants.userName);
     FirebaseMessaging.instance.subscribeToTopic("all");
     FirebaseMessaging.instance.getToken().then((value) async {
       Resource<RefreshTokenModel> resource =
           await apiService.refreshToken(value!, userName);
       if (resource.status == Status.SUCCESS) {
-        await prefs.saveString(SharedPrefsConstants.LAST_REFRESH_TOKEN_TIME,
+        await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
             DateTime.now().toIso8601String());
       }
     });

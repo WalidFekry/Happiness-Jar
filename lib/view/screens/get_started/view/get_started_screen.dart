@@ -49,7 +49,7 @@ class GetStartedScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.grey, width: 2),
                     ),
-                    child: const ContentTextWidget(label: AppConsts.GET_STARTED_MESSAGE,textAlign: TextAlign.center,
+                    child: const ContentTextWidget(label: AppConsts.getStartedMessage,textAlign: TextAlign.center,
                        ),
                   ),
                  verticalSpace(15),

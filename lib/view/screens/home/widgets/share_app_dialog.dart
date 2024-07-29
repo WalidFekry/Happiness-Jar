@@ -38,7 +38,7 @@ class ShareAPPDialog {
               ),
               verticalSpace(20),
               const ContentTextWidget(
-                label: AppConsts.SHARE_APP_MESSAGE,
+                label: AppConsts.shareAppMessage,
                 textAlign: TextAlign.center,
               ),
               verticalSpace(20),
@@ -93,6 +93,6 @@ class ShareAPPDialog {
   }
 
   static Future<void> shareApp() async {
-    await Share.share(AppConsts.SHARE_APP);
+    await Share.share(AppConsts.shareApp);
   }
 }
