@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -265,6 +267,7 @@ class NotificationsScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+                                      if(Platform.isAndroid)
                                       Flexible(
                                         child: IconButton(
                                           onPressed: () {

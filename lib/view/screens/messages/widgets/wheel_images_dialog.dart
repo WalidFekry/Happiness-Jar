@@ -21,7 +21,7 @@ class WheelImagesDialog extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.all(5),
             clipBehavior: Clip.hardEdge,
-            height: 450,
+            height: 480,
             width: 450,
             decoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -35,6 +35,7 @@ class WheelImagesDialog extends StatelessWidget {
                   label: "رسالتك يا $userName 💙",
                   fontSize: 18,
                 ),
+                verticalSpace(5),
                 SizedBox(
                   height: 350,
                   width: 350,
@@ -59,6 +60,7 @@ class WheelImagesDialog extends StatelessWidget {
                     ),
                   ),
                 ),
+                verticalSpace(5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

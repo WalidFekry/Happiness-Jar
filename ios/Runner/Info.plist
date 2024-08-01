@@ -68,7 +68,7 @@
             <string>api.whatsapp.com</string>
         </array>
         <key>GADApplicationIdentifier</key>
-        <string>ca-app-pub-3940256099942544~3347511713</string>
+        <string>ca-app-pub-4380347337966794~5924220720</string>
         <key>NSPhotoLibraryUsageDescription</key>
         <string>We need access to the photo library so that you can select and upload a profile picture within the app.</string>
 	</dict>

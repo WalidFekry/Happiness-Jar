@@ -76,6 +76,7 @@ class HomeViewModel extends BaseViewModel {
     if (imagePath.isNotEmpty) {
       image = File(imagePath);
     }
+    setState(ViewState.Idle);
   }
 
   Future<void> refreshToken() async {

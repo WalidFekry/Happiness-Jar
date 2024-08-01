@@ -32,10 +32,9 @@ void setupLocator() {
   locator.registerFactory(() => MessagesViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => ProfileViewModel());
-
 }
 
 void initSingleton() {
   locator<SharedPrefServices>();
-  // locator<ApiService>();
+  locator<ApiService>();
 }

@@ -16,21 +16,20 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileViewModel extends BaseViewModel {
-
   final prefs = locator<SharedPrefServices>();
   String? userName;
   String? version;
   File? image;
 
   Future<void> getUserData() async {
-   PackageInfo packageInfo = await PackageInfo.fromPlatform();
-   version = packageInfo.version;
-   userName = await prefs.getString(SharedPrefsConstants.userName);
-   final imagePath = await prefs.getString(SharedPrefsConstants.userImage);
-   if (imagePath.isNotEmpty) {
-     image = File(imagePath);
-   }
-   setState(ViewState.Idle);
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = packageInfo.version;
+    userName = await prefs.getString(SharedPrefsConstants.userName);
+    final imagePath = await prefs.getString(SharedPrefsConstants.userImage);
+    if (imagePath.isNotEmpty) {
+      image = File(imagePath);
+    }
+    setState(ViewState.Idle);
   }
 
   void logOut() {
@@ -39,53 +38,55 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   Future<void> openPrivacyPolicy() async {
-    final Uri url = Uri.parse('https://sites.google.com/view/happinessjar/home');
+    final Uri url =
+        Uri.parse('https://sites.google.com/view/happinessjar/home');
     if (await canLaunchUrl(url)) {
-    launchUrl(url);
-    }else{
-    launchUrl(url,mode: LaunchMode.externalApplication);
+      launchUrl(url);
+    } else {
+      launchUrl(url, mode: LaunchMode.externalApplication);
     }
-    }
+  }
 
   Future<void> contactWithDeveloper() async {
     final Uri url = Uri.parse('https://www.facebook.com/Waleed.Fikri');
     if (await canLaunchUrl(url)) {
-    launchUrl(url);
-    }else{
-    launchUrl(url,mode: LaunchMode.externalApplication);
+      launchUrl(url);
+    } else {
+      launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
   Future<void> shareApp() async {
-    await Share.share(
-        AppConsts.shareApp);
+    await Share.share(AppConsts.shareApp);
   }
 
   Future<void> contact() async {
-    final Uri url = Uri.parse('https://api.whatsapp.com/send/?phone=201094674881&text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D8%A8%D8%B1%D8%B7%D9%85%D8%A7%D9%86%20%D8%A7%D9%84%D8%B3%D8%B9%D8%A7%D8%AF%D8%A9%20..&type=phone_number&app_absent=0');
+    final Uri url = Uri.parse(
+        'https://api.whatsapp.com/send/?phone=201094674881&text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D8%A8%D8%B1%D8%B7%D9%85%D8%A7%D9%86%20%D8%A7%D9%84%D8%B3%D8%B9%D8%A7%D8%AF%D8%A9%20..&type=phone_number&app_absent=0');
     if (await canLaunchUrl(url)) {
-    launchUrl(url);
-    }else{
-    launchUrl(url,mode: LaunchMode.externalApplication);
+      launchUrl(url);
+    } else {
+      launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
   void rateApp() {
     final InAppReview inAppReview = InAppReview.instance;
-    inAppReview.openStoreListing(appStoreId: '284815942');
+    inAppReview.openStoreListing(appStoreId: '6565808195');
   }
 
   Future<void> openFacebookPage() async {
     final Uri url = Uri.parse('https://www.facebook.com/App.Happiness');
     if (await canLaunchUrl(url)) {
       launchUrl(url);
-    }else{
-      launchUrl(url,mode: LaunchMode.externalApplication);
+    } else {
+      launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
   Future<void> changeProfileImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       image = File(pickedFile.path);
       DateTime date = DateTime.now();
@@ -112,14 +113,17 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   Future<void> moreApps() async {
-    final Uri url = Uri.parse('https://play.google.com/store/apps/dev?id=6257553101128037563');
+    String link;
+    if (Platform.isAndroid) {
+      link = "https://play.google.com/store/apps/dev?id=6257553101128037563";
+    } else {
+      link = "https://apps.apple.com/app/apple-store/id6450314729";
+    }
+    final Uri url = Uri.parse(link);
     if (await canLaunchUrl(url)) {
-    launchUrl(url);
-    }else{
-    launchUrl(url,mode: LaunchMode.externalApplication);
+      launchUrl(url);
+    } else {
+      launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
-
-
-
 }

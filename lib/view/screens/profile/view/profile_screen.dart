@@ -255,12 +255,10 @@ class ProfileScreen extends StatelessWidget {
                           viewModel.contactWithDeveloper();
                         },
                       ),
-                      if(Platform.isAndroid)
                       const Divider(
                         thickness: 1,
                         color: Colors.grey,
                       ),
-                      if(Platform.isAndroid)
                       ListTile(
                         title: const ContentTextWidget(
                           label: 'المزيد من التطبيقات المجانية',
