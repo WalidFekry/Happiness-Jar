@@ -9,6 +9,7 @@ import 'package:happiness_jar/view/screens/categories/view_model/categories_view
 import 'package:happiness_jar/view/screens/favorite/view_model/favorite_view_model.dart';
 import 'package:happiness_jar/view/screens/get_started/view_model/get_started_view_model.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
+import 'package:happiness_jar/view/screens/home/widgets/greeting_dialog.dart';
 import 'package:happiness_jar/view/screens/messages/view_model/messages_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
@@ -18,14 +19,15 @@ GetIt locator = GetIt.instance;
 void setupLocator() {
   locator.registerSingleton<SharedPrefServices>(SharedPrefServices());
   locator.registerSingleton<ApiService>(ApiService());
-  locator.registerSingleton<AppDatabase>(AppDatabase());
+  locator.registerSingleton<GreetingDialog>(GreetingDialog());
+  locator.registerSingleton<AdsService>(AdsService());
 
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => CategoriesViewModel());
   locator.registerLazySingleton(() => FavoriteViewModel());
   locator.registerLazySingleton(() => NotificationsViewModel());
   locator.registerLazySingleton(() => GetStartedViewModel());
-  locator.registerLazySingleton(() => AdsService());
+  locator.registerLazySingleton(() => AppDatabase());
 
   // initSingleton();
 

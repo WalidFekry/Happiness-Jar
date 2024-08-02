@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/locator.dart';
-import 'package:happiness_jar/constants/ads_manager.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
@@ -25,6 +23,8 @@ import '../widgets/greeting_dialog.dart';
 class HomeViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   final apiService = locator<ApiService>();
+  final greetingDialog = locator<GreetingDialog>();
+  final adsService = locator<AdsService>();
   bool isLogin = false;
   bool getStarted = false;
   String? lastRefreshTokenTime;
@@ -32,9 +32,7 @@ class HomeViewModel extends BaseViewModel {
   String? getTodayAdviceTime;
   File? image;
   String? giftBoxMessage;
-  final GreetingDialog greetingDialog = GreetingDialog();
   final InAppReview inAppReview = InAppReview.instance;
-  final adsService = locator<AdsService>();
 
   Future<void> getTodayAdvice() async {
     getTodayAdviceTime =
@@ -51,11 +49,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> showInAppReview() async {
-    lastTimeToShowInAppReview = await prefs
-        .getString(SharedPrefsConstants.lastTimeToShowInAppReview);
+    lastTimeToShowInAppReview =
+        await prefs.getString(SharedPrefsConstants.lastTimeToShowInAppReview);
     if (lastTimeToShowInAppReview == "") {
-      await prefs.saveString(
-          SharedPrefsConstants.lastTimeToShowInAppReview,
+      await prefs.saveString(SharedPrefsConstants.lastTimeToShowInAppReview,
           DateTime.now().toIso8601String());
     } else {
       DateTime lastRunTime = DateTime.parse(lastTimeToShowInAppReview!);
@@ -64,8 +61,7 @@ class HomeViewModel extends BaseViewModel {
         if (await inAppReview.isAvailable()) {
           inAppReview.requestReview();
         }
-        await prefs.saveString(
-            SharedPrefsConstants.lastTimeToShowInAppReview,
+        await prefs.saveString(SharedPrefsConstants.lastTimeToShowInAppReview,
             DateTime.now().toIso8601String());
       }
     }
@@ -143,6 +139,4 @@ class HomeViewModel extends BaseViewModel {
   void showOpenAd() {
     adsService.showOpenAd();
   }
-
-
 }
