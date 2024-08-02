@@ -8,62 +8,55 @@ class SharedPrefServices {
     init();
   }
 
-  Future init() async {
+  Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
-    return _prefs;
   }
 
-  saveString(String key, String value) async {
-    _prefs!.setString(key, value);
+  Future<void> saveString(String key, String value) async {
+    await _prefs?.setString(key, value);
   }
 
-  saveBoolean(String key, bool value) async {
-    await _prefs!.setBool(key, value);
+  Future<void> saveBoolean(String key, bool value) async {
+    await _prefs?.setBool(key, value);
   }
 
-  saveInLocalStorageAsInt(String key, int value) async {
-    await _prefs!.setInt(key, value);
+  Future<void> saveInLocalStorageAsInt(String key, int value) async {
+    await _prefs?.setInt(key, value);
   }
 
   Future<bool> getBoolean(String? key) async {
-    bool data = await Future.value(_prefs!.getBool(key!) ?? false);
-    return data;
+    return _prefs?.getBool(key!) ?? false;
   }
 
   Future<bool> isContain(String? key) async {
-    bool data = await Future.value(_prefs!.containsKey(key!));
-    return data;
+    return _prefs?.containsKey(key!) ?? false;
   }
 
   Future<int> getInteger(String? key) async {
-    int data = await Future.value(_prefs!.getInt(key!) ?? 0);
-    return data;
+    return _prefs?.getInt(key!) ?? 0;
   }
 
-  saveInteger(String? key, int value) async {
-    _prefs!.setInt(key!, value);
+  Future<void> saveInteger(String? key, int value) async {
+    await _prefs?.setInt(key!, value);
   }
 
-  saveDouble(String? key, double value) async {
-    _prefs!.setDouble(key!, value);
+  Future<void> saveDouble(String? key, double value) async {
+    await _prefs?.setDouble(key!, value);
   }
 
   Future<double> getDouble(String? key) async {
-    double data = await Future.value(_prefs!.getDouble(key!) ?? 0.0);
-    return data;
+    return _prefs?.getDouble(key!) ?? 0.0;
   }
 
-  Future<String> getString(String? key, {String? defaultValue = ""}) async {
-    String data = await Future.value(_prefs!.getString(key!) ?? defaultValue);
-    return data;
+  Future<String> getString(String? key, {String defaultValue = ""}) async {
+    return _prefs?.getString(key!) ?? defaultValue;
   }
 
-  removeFromLocalStorage({@required String? key}) async {
-    var data = _prefs!.remove(key!);
-    return data;
+  Future<void> removeFromLocalStorage({@required String? key}) async {
+    await _prefs?.remove(key!);
   }
 
-  void clearPrefs() {
-    _prefs!.clear();
+  Future<void> clearPrefs() async {
+    await _prefs?.clear();
   }
 }

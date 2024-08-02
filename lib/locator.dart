@@ -16,9 +16,10 @@ import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => SharedPrefServices());
-  locator.registerLazySingleton(() => ApiService());
-  locator.registerLazySingleton(() => AppDatabase());
+  locator.registerSingleton<SharedPrefServices>(SharedPrefServices());
+  locator.registerSingleton<ApiService>(ApiService());
+  locator.registerSingleton<AppDatabase>(AppDatabase());
+
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => CategoriesViewModel());
   locator.registerLazySingleton(() => FavoriteViewModel());
@@ -26,7 +27,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => GetStartedViewModel());
   locator.registerLazySingleton(() => AdsService());
 
-  initSingleton();
+  // initSingleton();
 
   locator.registerFactory(() => RegisterViewModel());
   locator.registerFactory(() => MessagesViewModel());
