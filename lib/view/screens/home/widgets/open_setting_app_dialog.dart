@@ -1,17 +1,19 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/locator.dart';
+
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
+import '../../../../locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
-import '../../../widgets/title_text.dart';
 
-class OpenSettingAppDialog {
-   static void show(BuildContext context) {
-    showDialog(context: context, builder: (context) => Dialog(
+ class OpenSettingAppDialog extends StatelessWidget {
+  const OpenSettingAppDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -85,6 +87,6 @@ class OpenSettingAppDialog {
           ],
         ),
       ),
-    ),);
+    );
   }
 }

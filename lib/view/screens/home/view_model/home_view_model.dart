@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
@@ -119,7 +120,11 @@ class HomeViewModel extends BaseViewModel {
     if (settings.authorizationStatus == AuthorizationStatus.denied) {
       var status = await Permission.notification.request();
       if (status.isPermanentlyDenied || status.isDenied) {
-        OpenSettingAppDialog.show(context);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(context: context, builder: (context){
+            return const OpenSettingAppDialog();
+          });
+        });
       } else {
         if (kDebugMode) {
           print('Permission denied with another status');

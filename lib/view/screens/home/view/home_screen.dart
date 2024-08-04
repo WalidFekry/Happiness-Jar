@@ -67,9 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
       viewModel.refreshToken();
       viewModel.getTodayAdvice();
       viewModel.showInAppReview();
+      viewModel.checkNotificationsPermission(context);
+      viewModel.showGreetingDialog(context);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        viewModel.showGreetingDialog(context);
-        viewModel.checkNotificationsPermission(context);
+
       });
     }, builder: (context, viewModel, child) {
       return Scaffold(
