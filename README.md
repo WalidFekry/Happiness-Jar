@@ -3,6 +3,12 @@
 <img src="assets/icons/logo.png" width = "150" alt='Happiness Jar Logo'/>
 
 # برطمان السعادة - Happiness Jar
+[<img src="assets/screenshots/google_play.png"
+      alt='Get it on Google Play'
+      height="80">](https://play.google.com/store/apps/details?id=com.jar.happiness)
+      [<img src="assets/screenshots/play_store.png"
+      alt='Get it on Play Store'
+      height="80">](https://apps.apple.com/us/app/%D8%A8%D8%B1%D8%B7%D9%85%D8%A7%D9%86-%D8%A7%D9%84%D8%B3%D8%B9%D8%A7%D8%AF%D8%A9-%D8%B1%D9%81%D9%8A%D9%82%D9%83-%D8%A7%D9%84%D9%8A%D9%88%D9%85%D9%8A/id6565808195)
 </div>
 
 ## 🚀 Getting Started
@@ -17,7 +23,7 @@
 - **Favorite Screen:** Access your saved favorite messages.
 
 ## 📁 File Structure
-<img src="https://github.com/Ibrahim-Omran/Route-Task/assets/112516011/84c910e3-a307-469f-a563-55404f9fca95" width="300" >
+<img src="assets/screenshots/file_structure.png" width="500" >
 
 ## 📱 Android Screenshots
 
@@ -113,5 +119,5 @@
 
 ## 🚨 Contributing
 
-- Contributions are welcome 💜
+- Contributions are welcome 💙
 - If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
