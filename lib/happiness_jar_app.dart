@@ -12,7 +12,7 @@ import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'locator.dart';
+import 'services/locator.dart';
 
 Future<void> initServices() async {
   MobileAds.instance.initialize();

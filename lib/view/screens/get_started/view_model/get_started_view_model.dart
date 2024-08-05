@@ -1,6 +1,6 @@
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 
-import '../../../../locator.dart';
+import '../../../../services/locator.dart';
 import '../../../../services/shared_pref_services.dart';
 import '../../base_view_model.dart';
 

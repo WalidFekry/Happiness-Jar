@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import '../../helpers/spacing.dart';
-import '../../locator.dart';
+import '../../services/locator.dart';
 import '../../services/navigation_service.dart';
 import 'content_text.dart';
 

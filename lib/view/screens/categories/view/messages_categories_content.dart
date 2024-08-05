@@ -11,7 +11,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
-import '../../../../locator.dart';
+import '../../../../services/locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/app_name_text.dart';
 import '../../../widgets/content_text.dart';

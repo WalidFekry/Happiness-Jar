@@ -8,7 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
-import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';

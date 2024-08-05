@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/constants/assets_manager.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';

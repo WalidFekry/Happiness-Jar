@@ -5,7 +5,7 @@ import 'package:happiness_jar/view/widgets/app_text_button.dart';
 
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
-import '../../../../locator.dart';
+import '../../../../services/locator.dart';
 import '../../../../services/ads_service.dart';
 import '../../../widgets/subtitle_text.dart';
 

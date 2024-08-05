@@ -15,7 +15,7 @@ import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';
-import '../../../../locator.dart';
+import '../../../../services/locator.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';

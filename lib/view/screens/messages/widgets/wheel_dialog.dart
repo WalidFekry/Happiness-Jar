@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
-import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/messages/view_model/messages_view_model.dart';
 import 'package:path/path.dart';

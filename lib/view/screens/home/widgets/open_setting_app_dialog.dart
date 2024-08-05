@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
-import '../../../../locator.dart';
+import '../../../../services/locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';

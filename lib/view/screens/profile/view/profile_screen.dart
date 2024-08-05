@@ -9,7 +9,7 @@ import 'package:happiness_jar/view/widgets/info_dialog.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../locator.dart';
+import '../../../../services/locator.dart';
 import '../../../../providers/theme_provider.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
-import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/home/widgets/show_greeting_dialog.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
-import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../constants/assets_manager.dart';

@@ -4,7 +4,7 @@ import 'package:happiness_jar/view/widgets/content_text.dart';
 
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/assets_manager.dart';
-import '../../../../locator.dart';
+import '../../../../services/locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/subtitle_text.dart';
 

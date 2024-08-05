@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';

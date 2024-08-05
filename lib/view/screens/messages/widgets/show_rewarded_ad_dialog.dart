@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/locator.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/ads_service.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/app_text_button.dart';
