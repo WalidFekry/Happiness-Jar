@@ -42,6 +42,7 @@ class NotificationsViewModel extends BaseViewModel {
     if (resource.status == Status.SUCCESS) {
       isDone = true;
       list = resource.data!.content!;
+
       await appDatabase.insertData(resource);
     } else {
       list = await appDatabase.getMessagesNotificationContent();

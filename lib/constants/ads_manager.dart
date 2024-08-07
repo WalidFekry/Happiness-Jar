@@ -2,7 +2,7 @@ import 'dart:io';
 
 class AdsManager {
 
-  static bool testAds = false;
+  static bool testAds = true;
 
   static String get bannerAdUnitId {
     if (!testAds) {
