@@ -13,4 +13,6 @@ class SharedPrefsConstants {
   static const String interstitialLastAdDisplayTime = 'INTERSTITIAL_LAST_AD_DISPLAY_TIME';
   static const String openAdDisplayCount = 'OPEN_AD_DISPLAY_COUNT';
   static const String openLastAdDisplayTime = 'OPEN_LAST_AD_DISPLAY_TIME';
+  static const String notificationFavoriteIds = 'NOTIFICATION_FAVORITE_IDS';
+  static const String categoryFavoriteIds = 'CATEGORY_FAVORITE_IDS';
 }

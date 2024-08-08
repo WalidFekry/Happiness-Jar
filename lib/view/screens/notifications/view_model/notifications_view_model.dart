@@ -4,6 +4,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/widgets/notification_screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -23,29 +24,35 @@ import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../../services/navigation_service.dart';
+import '../../../../services/shared_pref_services.dart';
 import '../model/notification_model.dart';
 
 class NotificationsViewModel extends BaseViewModel {
   List<MessagesNotifications> list = [];
+  List<String>? favoriteIds = [];
   final apiService = locator<ApiService>();
   final appDatabase = locator<AppDatabase>();
+  final prefs = locator<SharedPrefServices>();
   bool isDone = true;
   ScreenshotController screenshotController = ScreenshotController();
   final adsService = locator<AdsService>();
 
   Future<void> getContent() async {
-    // if(list.isNotEmpty){
-    //   return;
-    // }
     Resource<NotificationsModel> resource =
         await apiService.getMessagesNotificationContent();
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.notificationFavoriteIds);
     if (resource.status == Status.SUCCESS) {
       isDone = true;
       list = resource.data!.content!;
-
+      for (var message in list){
+        message.isFavourite = favoriteIds!.contains(message.id);
+      }
       await appDatabase.insertData(resource);
     } else {
       list = await appDatabase.getMessagesNotificationContent();
+      for (var message in list){
+        message.isFavourite = favoriteIds!.contains(message.id);
+      }
       if (list.isEmpty) {
         isDone = false;
       }
@@ -67,6 +74,17 @@ class NotificationsViewModel extends BaseViewModel {
     DateTime now = DateTime.now();
     String createdAt = "${now.year}-${now.month}-${now.day}";
     await appDatabase.saveFavoriteMessage(list[index].text, createdAt);
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.notificationFavoriteIds);
+    favoriteIds!.add(list[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.notificationFavoriteIds, favoriteIds!);
+    list[index].isFavourite = !list[index].isFavourite;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> removeFavoriteMessage(int index) async {
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.notificationFavoriteIds);
+    favoriteIds!.remove(list[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.notificationFavoriteIds, favoriteIds!);
     list[index].isFavourite = !list[index].isFavourite;
     setState(ViewState.Idle);
   }
@@ -196,4 +214,6 @@ class NotificationsViewModel extends BaseViewModel {
   void showBinyAd() {
   adsService.showInterstitialAd();
   }
+
+
 }
