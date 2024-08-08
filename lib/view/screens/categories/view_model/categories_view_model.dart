@@ -22,6 +22,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/ads_manager.dart';
+import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../../services/ads_service.dart';
@@ -33,8 +34,10 @@ class CategoriesViewModel extends BaseViewModel{
 
   List<MessagesCategories> list = [];
   List<MessagesContent> content = [];
+  List<String>? favoriteIds = [];
   final apiService = locator<ApiService>();
   final appDatabase = locator<AppDatabase>();
+  final prefs = locator<SharedPrefServices>();
   bool isDone = true;
   bool isDoneContent = true;
   BannerAd? bannerAd;
@@ -81,9 +84,21 @@ class CategoriesViewModel extends BaseViewModel{
     DateTime now = DateTime.now();
     String createdAt = "${now.year}-${now.month}-${now.day}";
     await appDatabase.saveFavoriteMessage(content[index].title,createdAt);
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.categoryFavoriteIds);
+    favoriteIds!.add(content[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.categoryFavoriteIds, favoriteIds!);
     content[index].isFavourite = !content[index].isFavourite;
     setState(ViewState.Idle);
   }
+
+  Future<void> removeFavoriteMessage(int index) async {
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.categoryFavoriteIds);
+    favoriteIds!.remove(content[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.categoryFavoriteIds, favoriteIds!);
+    content[index].isFavourite = !content[index].isFavourite;
+    setState(ViewState.Idle);
+  }
+
 
   void navigateToContent(int index) {
     var navigate = locator<NavigationService>();
