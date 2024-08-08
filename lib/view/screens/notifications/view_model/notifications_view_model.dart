@@ -29,7 +29,7 @@ import '../model/notification_model.dart';
 
 class NotificationsViewModel extends BaseViewModel {
   List<MessagesNotifications> list = [];
-  List<String>? favoriteIds = [];
+  List<String> favoriteIds = [];
   final apiService = locator<ApiService>();
   final appDatabase = locator<AppDatabase>();
   final prefs = locator<SharedPrefServices>();
@@ -45,13 +45,13 @@ class NotificationsViewModel extends BaseViewModel {
       isDone = true;
       list = resource.data!.content!;
       for (var message in list){
-        message.isFavourite = favoriteIds!.contains(message.id);
+        message.isFavourite = favoriteIds.contains(message.id.toString());
       }
       await appDatabase.insertData(resource);
     } else {
       list = await appDatabase.getMessagesNotificationContent();
       for (var message in list){
-        message.isFavourite = favoriteIds!.contains(message.id);
+        message.isFavourite = favoriteIds.contains(message.id.toString());
       }
       if (list.isEmpty) {
         isDone = false;
@@ -75,16 +75,16 @@ class NotificationsViewModel extends BaseViewModel {
     String createdAt = "${now.year}-${now.month}-${now.day}";
     await appDatabase.saveFavoriteMessage(list[index].text, createdAt);
     favoriteIds = await prefs.getStringList(SharedPrefsConstants.notificationFavoriteIds);
-    favoriteIds!.add(list[index].id.toString());
-    await prefs.saveStringList(SharedPrefsConstants.notificationFavoriteIds, favoriteIds!);
+    favoriteIds.add(list[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.notificationFavoriteIds, favoriteIds);
     list[index].isFavourite = !list[index].isFavourite;
     setState(ViewState.Idle);
   }
 
   Future<void> removeFavoriteMessage(int index) async {
     favoriteIds = await prefs.getStringList(SharedPrefsConstants.notificationFavoriteIds);
-    favoriteIds!.remove(list[index].id.toString());
-    await prefs.saveStringList(SharedPrefsConstants.notificationFavoriteIds, favoriteIds!);
+    favoriteIds.remove(list[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.notificationFavoriteIds, favoriteIds);
     list[index].isFavourite = !list[index].isFavourite;
     setState(ViewState.Idle);
   }

@@ -20,8 +20,8 @@ class SharedPrefServices {
     await _prefs?.setStringList(key, value);
   }
 
-  Future<List<String>?> getStringList(String key) async {
-    return _prefs?.getStringList(key);
+  Future<List<String>> getStringList(String key) async {
+    return _prefs?.getStringList(key) ?? [];
   }
 
   Future<void> saveBoolean(String key, bool value) async {

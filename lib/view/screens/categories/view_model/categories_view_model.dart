@@ -27,6 +27,7 @@ import '../../../../enums/screen_state.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/navigation_service.dart';
+import '../../../../services/shared_pref_services.dart';
 import '../model/messages_categories_model.dart';
 import '../widgets/categories_screenshot.dart';
 
@@ -34,7 +35,7 @@ class CategoriesViewModel extends BaseViewModel{
 
   List<MessagesCategories> list = [];
   List<MessagesContent> content = [];
-  List<String>? favoriteIds = [];
+  List<String> favoriteIds = [];
   final apiService = locator<ApiService>();
   final appDatabase = locator<AppDatabase>();
   final prefs = locator<SharedPrefServices>();
@@ -67,6 +68,7 @@ class CategoriesViewModel extends BaseViewModel{
   Future<void> getContent(int? categorie) async {
     content.clear();
     content = await appDatabase.getMessagesContent(categorie);
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.categoryFavoriteIds);
     if(content.isEmpty){
       Resource<MessagesContentModel> resource = await apiService.getMessagesContent();
       if(resource.status == Status.SUCCESS){
@@ -77,6 +79,9 @@ class CategoriesViewModel extends BaseViewModel{
         isDoneContent = false;
       }
     }
+    for (var message in content){
+      message.isFavourite = favoriteIds.contains(message.id.toString());
+    }
     setState(ViewState.Idle);
   }
 
@@ -85,16 +90,16 @@ class CategoriesViewModel extends BaseViewModel{
     String createdAt = "${now.year}-${now.month}-${now.day}";
     await appDatabase.saveFavoriteMessage(content[index].title,createdAt);
     favoriteIds = await prefs.getStringList(SharedPrefsConstants.categoryFavoriteIds);
-    favoriteIds!.add(content[index].id.toString());
-    await prefs.saveStringList(SharedPrefsConstants.categoryFavoriteIds, favoriteIds!);
+    favoriteIds.add(content[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.categoryFavoriteIds, favoriteIds);
     content[index].isFavourite = !content[index].isFavourite;
     setState(ViewState.Idle);
   }
 
   Future<void> removeFavoriteMessage(int index) async {
     favoriteIds = await prefs.getStringList(SharedPrefsConstants.categoryFavoriteIds);
-    favoriteIds!.remove(content[index].id.toString());
-    await prefs.saveStringList(SharedPrefsConstants.categoryFavoriteIds, favoriteIds!);
+    favoriteIds.remove(content[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.categoryFavoriteIds, favoriteIds);
     content[index].isFavourite = !content[index].isFavourite;
     setState(ViewState.Idle);
   }
