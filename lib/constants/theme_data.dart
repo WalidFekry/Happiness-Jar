@@ -20,8 +20,8 @@ class Styles {
             isDarkTheme ? AppColors.darkColor1 : AppColors.lightColor1,
       ),
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.all(AppColors.lightColor2),
-        trackColor: MaterialStateProperty.all(AppColors.darkColor2),
+        thumbColor: WidgetStateProperty.all(AppColors.lightColor2),
+        trackColor: WidgetStateProperty.all(AppColors.darkColor2),
       ),
       scaffoldBackgroundColor: isDarkTheme
           ? AppColors.darkScaffoldColor

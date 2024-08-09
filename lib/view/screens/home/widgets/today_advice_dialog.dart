@@ -1,4 +1,3 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import '../../../../helpers/spacing.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
-import '../../../widgets/title_text.dart';
 
 class TodayAdviceDialog {
   static void show(BuildContext context, String? body) {

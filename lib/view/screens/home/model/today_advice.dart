@@ -1,6 +1,4 @@
-import 'package:sqflite/sqflite.dart';
 
-import '../../../../models/database_model.dart';
 
 class TodayAdviceModel {
   List<TodayAdvice>? content;

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';

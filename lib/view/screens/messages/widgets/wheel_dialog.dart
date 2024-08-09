@@ -7,9 +7,6 @@ import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/messages/view_model/messages_view_model.dart';
-import 'package:path/path.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../base_screen.dart';
 import 'wheel_images_dialog.dart';
