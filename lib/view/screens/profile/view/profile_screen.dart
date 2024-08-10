@@ -222,19 +222,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       ListTile(
                         title: const ContentTextWidget(
-                          label: 'تقديم اقتراح / اتصل بنا',
-                        ),
-                        leading: const Icon(Icons.rate_review),
-                        onTap: () {
-                          viewModel.contact();
-                        },
-                      ),
-                      const Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                      ),
-                      ListTile(
-                        title: const ContentTextWidget(
                           label: 'مشاركة التطبيق',
                         ),
                         leading: const Icon(Icons.share),
@@ -248,11 +235,37 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       ListTile(
                         title: const ContentTextWidget(
+                          label: 'تقديم اقتراح / اتصل بنا',
+                        ),
+                        leading: const Icon(Icons.rate_review),
+                        onTap: () {
+                          viewModel.contact();
+                        },
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      ListTile(
+                        title: const ContentTextWidget(
                           label: 'للتواصل مع المطور',
                         ),
                         leading: const Icon(Icons.developer_mode),
                         onTap: () {
                           viewModel.contactWithDeveloper();
+                        },
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      ListTile(
+                        title: const ContentTextWidget(
+                          label: 'كود التطبيق على GitHub',
+                        ),
+                        leading: const Icon(Icons.code),
+                        onTap: () {
+                          viewModel.openGithub();
                         },
                       ),
                       const Divider(

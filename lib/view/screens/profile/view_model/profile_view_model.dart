@@ -126,4 +126,10 @@ class ProfileViewModel extends BaseViewModel {
       launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
+
+  Future<void> openGithub() async {
+    final Uri url =
+    Uri.parse('https://github.com/WalidFekry/Happiness-Jar');
+    launchUrl(url, mode: LaunchMode.externalApplication);
+  }
 }
