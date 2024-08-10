@@ -72,7 +72,7 @@ class ProfileViewModel extends BaseViewModel {
 
   void rateApp() {
     final InAppReview inAppReview = InAppReview.instance;
-    inAppReview.openStoreListing(appStoreId: '6565808195');
+    inAppReview.openStoreListing(appStoreId: AppConsts.appStoreId);
   }
 
   Future<void> openFacebookPage() async {

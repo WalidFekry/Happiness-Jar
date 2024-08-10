@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> screens = [
     const MessagesScreen(),
     const NotificationsScreen(),
+    const CategoriesScreen(),
     const CategoriesScreen(),
     const FavoriteScreen(),
   ];
@@ -150,6 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(IconlyBold.category),
                   label: "الأقسام"),
               NavigationDestination(
+                  selectedIcon: Icon(IconlyLight.paper),
+                  icon: Icon(IconlyBold.paper),
+                  label: "المنشورات"),
+              NavigationDestination(
                   selectedIcon: Icon(IconlyLight.heart),
                   icon: Icon(IconlyBold.heart),
                   label: "المفضلة"),
@@ -193,9 +199,12 @@ class _HomeScreenState extends State<HomeScreen> {
       jumpToPage(1);
     } else if (message.data["click_action"] == "categories") {
       jumpToPage(2);
-    } else if (message.data["click_action"] == "favorite") {
+    } else if (message.data["click_action"] == "posts") {
       jumpToPage(3);
-    } else if (message.data["click_action"] == "rate") {
+    }
+    else if (message.data["click_action"] == "favorite") {
+      jumpToPage(4);
+    }else if (message.data["click_action"] == "rate") {
       rateApp();
     }
   }
@@ -222,6 +231,9 @@ class _HomeScreenState extends State<HomeScreen> {
         appBarTitle = "الأقسام";
         break;
       case 3:
+        appBarTitle = "المنشورات";
+        break;
+      case 4:
         appBarTitle = "المفضلة";
         break;
       default:
@@ -231,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void rateApp() {
     final InAppReview inAppReview = InAppReview.instance;
-    inAppReview.openStoreListing(appStoreId: '284815942');
+    inAppReview.openStoreListing(appStoreId: AppConsts.appStoreId);
   }
 
   @override

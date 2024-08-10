@@ -182,35 +182,42 @@ class NotificationsScreen extends StatelessWidget {
                                       Flexible(
                                         child: IconButton(
                                             onPressed: () {
-                                              viewModel
-                                                  .saveFavoriteMessage(index);
-                                              showTopSnackBar(
-                                                Overlay.of(context),
-                                                CustomSnackBar.success(
-                                                  backgroundColor:
-                                                      Theme.of(context)
-                                                          .iconTheme
-                                                          .color!,
-                                                  message: "تمت الإضافة للمفضلة",
-                                                  icon: Icon(
-                                                    IconlyBold.heart,
-                                                    color: Theme.of(context)
-                                                        .cardColor,
-                                                    size: 50,
+                                              if (!viewModel
+                                                  .list[index].isFavourite) {
+                                                viewModel
+                                                    .saveFavoriteMessage(index);
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor:
+                                                        Theme.of(context)
+                                                            .iconTheme
+                                                            .color!,
+                                                    message:
+                                                        "تمت الإضافة للمفضلة",
+                                                    icon: Icon(
+                                                      IconlyBold.heart,
+                                                      color: Theme.of(context)
+                                                          .cardColor,
+                                                      size: 50,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              } else {
+                                                viewModel.removeFavoriteMessage(
+                                                    index);
+                                              }
                                             },
-                                            icon:
-                                                viewModel.list[index].isFavourite
-                                                    ? Icon(IconlyBold.heart,
-                                                        color: Theme.of(context)
-                                                            .iconTheme
-                                                            .color)
-                                                    : Icon(IconlyLight.heart,
-                                                        color: Theme.of(context)
-                                                            .iconTheme
-                                                            .color)),
+                                            icon: viewModel
+                                                    .list[index].isFavourite
+                                                ? Icon(IconlyBold.heart,
+                                                    color: Theme.of(context)
+                                                        .iconTheme
+                                                        .color)
+                                                : Icon(IconlyLight.heart,
+                                                    color: Theme.of(context)
+                                                        .iconTheme
+                                                        .color)),
                                       ),
                                       Flexible(
                                         child: IconButton(
@@ -220,14 +227,15 @@ class NotificationsScreen extends StatelessWidget {
                                             showTopSnackBar(
                                               Overlay.of(context),
                                               CustomSnackBar.success(
-                                                backgroundColor: Theme.of(context)
-                                                    .iconTheme
-                                                    .color!,
+                                                backgroundColor:
+                                                    Theme.of(context)
+                                                        .iconTheme
+                                                        .color!,
                                                 message: "تم النسخ",
                                                 icon: Icon(
                                                   Icons.copy,
-                                                  color:
-                                                      Theme.of(context).cardColor,
+                                                  color: Theme.of(context)
+                                                      .cardColor,
                                                   size: 50,
                                                 ),
                                               ),
@@ -267,13 +275,25 @@ class NotificationsScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      if(Platform.isAndroid)
+                                      if (Platform.isAndroid)
+                                        Flexible(
+                                          child: IconButton(
+                                            onPressed: () {
+                                              viewModel.shareFacebook(index);
+                                            },
+                                            icon: Icon(Icons.facebook,
+                                                color: Theme.of(context)
+                                                    .iconTheme
+                                                    .color),
+                                          ),
+                                        ),
                                       Flexible(
                                         child: IconButton(
                                           onPressed: () {
-                                            viewModel.shareFacebook(index);
+                                            viewModel.sharePhoto(
+                                                index, context);
                                           },
-                                          icon: Icon(Icons.facebook,
+                                          icon: Icon(Icons.photo,
                                               color: Theme.of(context)
                                                   .iconTheme
                                                   .color),
@@ -282,18 +302,14 @@ class NotificationsScreen extends StatelessWidget {
                                       Flexible(
                                         child: IconButton(
                                           onPressed: () {
-                                            viewModel.sharePhoto(index,context);
-                                          },
-                                          icon: Icon(Icons.photo,color:Theme.of(context).iconTheme.color),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        child: IconButton(
-                                          onPressed: () {
                                             viewModel.showBinyAd();
-                                            viewModel.saveToGallery(index,context);
+                                            viewModel.saveToGallery(
+                                                index, context);
                                           },
-                                          icon: Icon(Icons.download,color:Theme.of(context).iconTheme.color),
+                                          icon: Icon(Icons.download,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color),
                                         ),
                                       ),
                                     ]),
@@ -320,6 +336,5 @@ class NotificationsScreen extends StatelessWidget {
         ],
       ));
     });
-
   }
 }

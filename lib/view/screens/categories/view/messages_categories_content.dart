@@ -193,25 +193,34 @@ class MessagesCategoriesContent extends StatelessWidget {
                                           children: [
                                             IconButton(
                                                 onPressed: () {
-                                                  viewModel.saveFavoriteMessage(
-                                                      index);
-                                                  showTopSnackBar(
-                                                    Overlay.of(context),
-                                                    CustomSnackBar.success(
-                                                      backgroundColor:
-                                                          Theme.of(context)
-                                                              .iconTheme
-                                                              .color!,
-                                                      message:
-                                                          "تمت الإضافة للمفضلة",
-                                                      icon: Icon(
-                                                        IconlyBold.heart,
-                                                        color: Theme.of(context)
-                                                            .cardColor,
-                                                        size: 50,
+                                                  if (!viewModel.content[index]
+                                                      .isFavourite) {
+                                                    viewModel
+                                                        .saveFavoriteMessage(
+                                                            index);
+                                                    showTopSnackBar(
+                                                      Overlay.of(context),
+                                                      CustomSnackBar.success(
+                                                        backgroundColor:
+                                                            Theme.of(context)
+                                                                .iconTheme
+                                                                .color!,
+                                                        message:
+                                                            "تمت الإضافة للمفضلة",
+                                                        icon: Icon(
+                                                          IconlyBold.heart,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .cardColor,
+                                                          size: 50,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  } else {
+                                                    viewModel
+                                                        .removeFavoriteMessage(
+                                                            index);
+                                                  }
                                                 },
                                                 icon: viewModel.content[index]
                                                         .isFavourite
@@ -273,16 +282,17 @@ class MessagesCategoriesContent extends StatelessWidget {
                                                     BlendMode.srcIn),
                                               ),
                                             ),
-                                            if(Platform.isAndroid)
-                                            IconButton(
-                                              onPressed: () {
-                                                viewModel.shareFacebook(index);
-                                              },
-                                              icon: Icon(Icons.facebook,
-                                                  color: Theme.of(context)
-                                                      .iconTheme
-                                                      .color),
-                                            ),
+                                            if (Platform.isAndroid)
+                                              IconButton(
+                                                onPressed: () {
+                                                  viewModel
+                                                      .shareFacebook(index);
+                                                },
+                                                icon: Icon(Icons.facebook,
+                                                    color: Theme.of(context)
+                                                        .iconTheme
+                                                        .color),
+                                              ),
                                           ]),
                                     ],
                                   ),
