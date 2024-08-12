@@ -7,6 +7,7 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
+import 'package:happiness_jar/view/screens/posts/view/posts_screen.dart';
 import 'package:iconly/iconly.dart';
 import 'package:in_app_review/in_app_review.dart';
 
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const MessagesScreen(),
     const NotificationsScreen(),
     const CategoriesScreen(),
-    const CategoriesScreen(),
+    const PostsScreen(),
     const FavoriteScreen(),
   ];
 

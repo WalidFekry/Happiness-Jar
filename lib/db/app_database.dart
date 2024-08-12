@@ -54,6 +54,7 @@ class AppDatabase {
       );
     }
     await batch?.commit(noResult: true);
+    db?.close();
   }
 
   Future<void> saveFavoriteMessage(String? title, String createdAt) async {
@@ -66,6 +67,7 @@ class AppDatabase {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    db?.close();
   }
 
   Future<int?> deleteFavoriteMessage(int? id) async {
@@ -75,9 +77,9 @@ class AppDatabase {
       where: 'id = ?',
       whereArgs: [id],
     );
+    db?.close();
     return null;
   }
-
 
     Future<List<MessagesCategories>> getMessagesCategories() async {
     final Database db = await mainDatabase();
@@ -87,6 +89,7 @@ class AppDatabase {
     for (var item in maps) {
       data.add(MessagesCategories.fromJson(item));
     }
+    db.close();
     return data;
   }
 
@@ -98,6 +101,7 @@ class AppDatabase {
     for (var item in maps) {
       data.add(MessagesContent.fromJson(item));
     }
+    db.close();
     return data;
   }
 
@@ -109,6 +113,7 @@ class AppDatabase {
     for (var item in maps) {
       data.add(MessagesNotifications.fromJson(item));
     }
+    db.close();
     return data;
   }
 
@@ -120,8 +125,44 @@ class AppDatabase {
     for (var item in maps) {
       data.add(FavoriteMessagesModel.fromJson(item));
     }
+    db.close();
     return data;
   }
 
+// Future<void> insert(DatabaseModel model) async {
+//   final Database? db = await getDatabase(model);
+//   await db?.insert(
+//     model.table()!,
+//     model.toMap()!,
+//     conflictAlgorithm: ConflictAlgorithm.replace,
+//   );
+//   // debugPrint('${model.table()} add successful');
+//   // db?.close();
+// }
+
+// Future<void> update(DatabaseModel model) async {
+//   final Database? db = await getDatabase(model);
+//   await db!.update(
+//     model.table()!,
+//     model.toMap()!,
+//     where: 'id = ?',
+//     whereArgs: [model.getId()!],
+//     conflictAlgorithm: ConflictAlgorithm.replace,
+//   );
+//   debugPrint('model with id :  ${model.getId()} updated ');
+//   // db?.close();
+// }
+
+// Future<void> delete(DatabaseModel model) async {
+//   final Database? db = await getDatabase(model);
+//   db?.delete(
+//     model.table()!,
+//     where: 'id = ?',
+//     whereArgs: [
+//       model.getId(),
+//     ],
+//   );
+//   // db?.close();
+// }
 
 }

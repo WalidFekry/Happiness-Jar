@@ -5,6 +5,7 @@ import 'package:happiness_jar/view/screens/categories/model/messages_categories_
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
 import 'package:happiness_jar/view/screens/home/model/today_advice.dart';
+import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../enums/status.dart';
@@ -57,6 +58,18 @@ class ApiService {
       var contentMessagesNotification =
           NotificationsModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessagesNotification);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<PostsModel>> getPosts() async {
+    try {
+      var response = await dio.get(ApiConstants.posts);
+      var postsContent =
+      PostsModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: postsContent);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());
