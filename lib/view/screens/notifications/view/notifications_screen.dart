@@ -23,6 +23,8 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<NotificationsViewModel>(onModelReady: (viewModel) {
       viewModel.getContent();
+    }, onFinish: (viewModel) {
+      viewModel.destroy();
     }, builder: (context, viewModel, child) {
       return Scaffold(
           body: Stack(

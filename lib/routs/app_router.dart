@@ -8,6 +8,7 @@ import 'package:happiness_jar/view/screens/categories/view/messages_categories_c
 import 'package:happiness_jar/view/screens/get_started/view/get_notification_screen.dart';
 import 'package:happiness_jar/view/screens/get_started/view/get_started_screen.dart';
 import 'package:happiness_jar/view/screens/home/view/home_screen.dart';
+import 'package:happiness_jar/view/screens/posts/view/posts_user_screen.dart';
 import 'package:happiness_jar/view/screens/profile/view/profile_screen.dart';
 import '../view/screens/exit_app/view/exit_app_screen.dart';
 
@@ -32,6 +33,8 @@ class AppRouter {
         return _getPageRoute(const RegisterScreen(), settings);
       case RouteName.PROFILE:
         return _getPageRoute(const ProfileScreen(), settings);
+      case RouteName.POSTS_USER_SCREEN:
+        return _getPageRoute(const PostsUserScreen(), settings);
       case RouteName.MESSAGES_CATEGORIES_CONTENT:
         var messagesCategoriesArguments =
             settings.arguments as MessagesCategories;

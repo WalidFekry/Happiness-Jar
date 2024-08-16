@@ -31,7 +31,7 @@ class PostItem implements DatabaseModel {
   String? createdAt;
   bool isFavourite = false;
 
-  PostItem(this.id, this.userName, this.text, this.createdAt, this.isFavourite);
+  PostItem({required this.userName, required this.text, required this.createdAt});
 
   PostItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -61,7 +61,7 @@ class PostItem implements DatabaseModel {
 
   @override
   String? table() {
-    return 'messages_notifications';
+    return 'user_posts';
   }
 
   @override

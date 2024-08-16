@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_jar/view/screens/posts/view_model/posts_view_model.dart';
 import 'package:happiness_jar/view/screens/posts/widgets/add_post.dart';
+import 'package:happiness_jar/view/screens/posts/widgets/empty_posts.dart';
 import 'package:happiness_jar/view/screens/posts/widgets/posts_list_view.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:iconly/iconly.dart';
@@ -22,6 +23,8 @@ class PostsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<PostsViewModel>(onModelReady: (viewModel) {
        viewModel.getPosts();
+    }, onFinish: (viewModel) {
+      viewModel.destroyAds();
     }, builder: (context, viewModel, child) {
       return Scaffold(
           body: Stack(
@@ -31,7 +34,8 @@ class PostsScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
                 child: Column(
                   children: [
-                    const AddPost(),
+                    if(!viewModel.isLocalDatebase)
+                    AddPost(viewModel),
                     verticalSpace(10),
                     PostsListView(viewModel)
                   ],
@@ -47,7 +51,7 @@ class PostsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              if (!viewModel.isDone) const NoInternetWidget()
+              if (!viewModel.isDone) const EmptyPosts()
             ],
           ));
     });

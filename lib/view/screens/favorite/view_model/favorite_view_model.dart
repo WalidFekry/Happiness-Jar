@@ -140,6 +140,10 @@ class FavoriteViewModel extends BaseViewModel {
         });
   }
 
+  void destroy() {
+    adsService.dispose();
+  }
+
   void showBinyAd() {
     adsService.showInterstitialAd();
   }

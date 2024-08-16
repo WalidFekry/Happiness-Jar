@@ -2,8 +2,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
-import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
@@ -13,7 +13,7 @@ import 'package:in_app_review/in_app_review.dart';
 
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/shared_preferences_constants.dart';
-import '../../../widgets/app_name_text.dart';
+import '../../../widgets/app_bar_text.dart';
 import '../../base_screen.dart';
 import '../../categories/view/categories_screen.dart';
 import '../../favorite/view/favorite_screen.dart';
@@ -72,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
       viewModel.showInAppReview();
       viewModel.checkNotificationsPermission(context);
       viewModel.showGreetingDialog(context);
+    }, onFinish: (viewModel) {
+      viewModel.destroy();
     }, builder: (context, viewModel, child) {
       return Scaffold(
           appBar: AppBar(
@@ -80,29 +82,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             leading: viewModel.giftBoxMessage == null
                 ? GestureDetector(
-                 onTap: (){
-                   ShareAPPDialog.show(context);
-                 },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Image.asset(
-                        AssetsManager.appLogoNoTitle,
-                        fit:  BoxFit.contain
-                      ),
-                  ),
-                )
+                    onTap: () {
+                      ShareAPPDialog.show(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Image.asset(AssetsManager.appLogoNoTitle,
+                          fit: BoxFit.contain),
+                    ),
+                  )
                 : GestureDetector(
                     onTap: () {
-                      TodayAdviceDialog.show(
-                          context, viewModel.giftBoxMessage);
+                      TodayAdviceDialog.show(context, viewModel.giftBoxMessage);
                       setState(() {
                         viewModel.giftBoxMessage = null;
                       });
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
-                      child: Image.asset(AssetsManager.giftBox,fit:  BoxFit.cover),
-                    ),),
+                      child:
+                          Image.asset(AssetsManager.giftBox, fit: BoxFit.cover),
+                    ),
+                  ),
             actions: [
               GestureDetector(
                 onTap: () {
@@ -155,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
               NavigationDestination(
                   selectedIcon: Icon(IconlyLight.paper),
                   icon: Icon(IconlyBold.paper),
-                  label: "المنشورات"),
+                  label: "الإقتباسات"),
               NavigationDestination(
                   selectedIcon: Icon(IconlyLight.heart),
                   icon: Icon(IconlyBold.heart),
@@ -202,10 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
       jumpToPage(2);
     } else if (message.data["click_action"] == "posts") {
       jumpToPage(3);
-    }
-    else if (message.data["click_action"] == "favorite") {
+    } else if (message.data["click_action"] == "favorite") {
       jumpToPage(4);
-    }else if (message.data["click_action"] == "rate") {
+    } else if (message.data["click_action"] == "rate") {
       rateApp();
     }
   }
@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBarTitle = "الأقسام";
         break;
       case 3:
-        appBarTitle = "المنشورات";
+        appBarTitle = "الإقتباسات";
         break;
       case 4:
         appBarTitle = "المفضلة";

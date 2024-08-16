@@ -5,6 +5,7 @@ import 'package:happiness_jar/view/screens/categories/model/messages_categories_
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
 import 'package:happiness_jar/view/screens/home/model/today_advice.dart';
+import 'package:happiness_jar/view/screens/posts/model/add_post_response_model.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -21,6 +22,9 @@ class ApiService {
   ApiService() {
     var options = BaseOptions(
       baseUrl: ApiConstants.baseUrl,
+      headers: {
+        "Content-Type": "application/json",
+      }
     );
     dio.options = options;
     dio.interceptors.add(PrettyDioLogger(
@@ -93,11 +97,6 @@ class ApiService {
       var response = await dio.post(
         ApiConstants.register,
         data: {'server': 'Register', 'fcm_token': fcmToken, 'name': name},
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
       );
       var refreshToken = RefreshTokenModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: refreshToken);
@@ -125,6 +124,21 @@ class ApiService {
       );
       var wheelResponse = WheelModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: wheelResponse);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<AddPostResponseModel>> addPost(
+      String? fcmToken, String text, String userName) async {
+    try {
+      var response = await dio.post(
+        ApiConstants.addPost,
+        data: {'server': 'AddPost', 'fcm_token': fcmToken, 'text': text, 'user_name': userName},
+      );
+      var responseModel = AddPostResponseModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: responseModel);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

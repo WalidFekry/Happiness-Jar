@@ -191,6 +191,10 @@ class MessagesViewModel extends BaseViewModel {
     adsService.showInterstitialAd();
   }
 
+  void destroy() {
+    adsService.dispose();
+  }
+
   Future<void> getWheelImages() async {
     wheelImagesList.clear();
     Resource<WheelModel> resource = await apiService.getAllWheelImages();

@@ -41,6 +41,9 @@ class _BaseScreenState<T extends BaseViewModel> extends State<BaseView<T>>
 
   @override
   void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
     widget.onFinish?.call(model);
     super.dispose();
   }

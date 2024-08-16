@@ -183,5 +183,9 @@ class NotificationsViewModel extends BaseViewModel {
   adsService.showInterstitialAd();
   }
 
+  void destroy() {
+    adsService.dispose();
+  }
+
 
 }

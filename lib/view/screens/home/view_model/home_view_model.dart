@@ -143,4 +143,8 @@ class HomeViewModel extends BaseViewModel {
   void showOpenAd() {
     adsService.showOpenAd();
   }
+
+  void destroy() {
+    adsService.dispose();
+  }
 }

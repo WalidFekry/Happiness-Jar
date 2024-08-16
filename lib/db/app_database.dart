@@ -2,11 +2,14 @@
 
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
+import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/database_model.dart';
 import '../models/resources.dart';
 import '../view/screens/categories/model/messages_content_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
@@ -17,7 +20,7 @@ class AppDatabase {
     return openDatabase(
       join(await getDatabasesPath(), 'database.db'),
       onCreate: (db, version) => createTables(db),
-      version: 1,
+      version: 2,
       onUpgrade: (db, oldVersion, newVersion) => updateTables(db),
     );
   }
@@ -34,9 +37,15 @@ class AppDatabase {
     db.execute(
       'CREATE TABLE messages_notifications(id INTEGER UNIQUE, text TEXT, created_at TEXT)',
     );
+    db.execute(
+      'CREATE TABLE user_posts(id INTEGER PRIMARY KEY AUTOINCREMENT,user_name TEXT, text TEXT, created_at TEXT)',
+    );
   }
 
   updateTables(Database db) {
+    db.execute(
+      'CREATE TABLE IF NOT EXISTS user_posts(id INTEGER PRIMARY KEY AUTOINCREMENT,user_name TEXT, text TEXT, created_at TEXT)',
+    );
   }
 
   Future<Database?> getDb() async {
@@ -57,6 +66,16 @@ class AppDatabase {
     db?.close();
   }
 
+  Future<void> insert(DatabaseModel model) async {
+  final Database? db = await getDb();
+  await db?.insert(
+    model.table()!,
+    model.toMap()!,
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+  db?.close();
+}
+
   Future<void> saveFavoriteMessage(String? title, String createdAt) async {
     final Database? db = await getDb();
     await db?.insert(
@@ -74,6 +93,17 @@ class AppDatabase {
     final Database? db = await getDb();
     await db?.delete(
       'favorite_messages',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    db?.close();
+    return null;
+  }
+
+  Future<int?> deleteLocalPost(int? id) async {
+    final Database? db = await getDb();
+    await db?.delete(
+      'user_posts',
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -129,17 +159,17 @@ class AppDatabase {
     return data;
   }
 
-// Future<void> insert(DatabaseModel model) async {
-//   final Database? db = await getDatabase(model);
-//   await db?.insert(
-//     model.table()!,
-//     model.toMap()!,
-//     conflictAlgorithm: ConflictAlgorithm.replace,
-//   );
-//   // debugPrint('${model.table()} add successful');
-//   // db?.close();
-// }
-
+  Future<List<PostItem>> getUserPosts() async {
+    final Database db = await mainDatabase();
+    final List<Map<String, dynamic>> maps =
+    await db.rawQuery('SELECT * FROM user_posts ORDER BY id DESC');
+    List<PostItem> data = [];
+    for (var item in maps) {
+      data.add(PostItem.fromJson(item));
+    }
+    db.close();
+    return data;
+  }
 // Future<void> update(DatabaseModel model) async {
 //   final Database? db = await getDatabase(model);
 //   await db!.update(

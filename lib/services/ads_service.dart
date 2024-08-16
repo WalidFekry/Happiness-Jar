@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -19,8 +19,8 @@ class AdsService {
 
   // Load and show an interstitial ad
   Future<void> showInterstitialAd() async {
-    int adDisplayCount = await prefs
-        .getInteger(SharedPrefsConstants.interstitialAdDisplayCount);
+    int adDisplayCount =
+        await prefs.getInteger(SharedPrefsConstants.interstitialAdDisplayCount);
     int lastAdDisplayTime = await prefs
         .getInteger(SharedPrefsConstants.interstitialLastAdDisplayTime);
     int currentTime = DateTime.now().millisecondsSinceEpoch;
@@ -41,8 +41,7 @@ class AdsService {
               }
               // Increment the ad display count and update the last ad display time
               adDisplayCount++;
-              prefs.saveInteger(
-                  SharedPrefsConstants.interstitialAdDisplayCount,
+              prefs.saveInteger(SharedPrefsConstants.interstitialAdDisplayCount,
                   adDisplayCount);
               prefs.saveInteger(
                   SharedPrefsConstants.interstitialLastAdDisplayTime,
@@ -61,10 +60,10 @@ class AdsService {
 
   // Load and show an app open ad
   Future<void> showOpenAd() async {
-    int adDisplayCount = await prefs
-        .getInteger(SharedPrefsConstants.openAdDisplayCount);
-    int lastAdDisplayTime = await prefs
-        .getInteger(SharedPrefsConstants.openLastAdDisplayTime);
+    int adDisplayCount =
+        await prefs.getInteger(SharedPrefsConstants.openAdDisplayCount);
+    int lastAdDisplayTime =
+        await prefs.getInteger(SharedPrefsConstants.openLastAdDisplayTime);
     int currentTime = DateTime.now().millisecondsSinceEpoch;
     // Reset the ad display count if more than one hour has passed since the last ad display
     if (currentTime - lastAdDisplayTime > oneHourInMillis) {
@@ -82,11 +81,9 @@ class AdsService {
             // Increment the ad display count and update the last ad display time
             adDisplayCount++;
             prefs.saveInteger(
-                SharedPrefsConstants.openAdDisplayCount,
-                adDisplayCount);
+                SharedPrefsConstants.openAdDisplayCount, adDisplayCount);
             prefs.saveInteger(
-                SharedPrefsConstants.openLastAdDisplayTime,
-                currentTime);
+                SharedPrefsConstants.openLastAdDisplayTime, currentTime);
           }, onAdFailedToLoad: (error) {
             debugPrint('Ad failed to load $error');
           }));
@@ -163,8 +160,17 @@ class AdsService {
 
   // Dispose ads
   void dispose() {
-    interstitialAd?.dispose();
-    openAd?.dispose();
-    rewardedAd?.dispose();
+    if (interstitialAd != null) {
+      interstitialAd?.dispose();
+      interstitialAd = null;
+    }
+    if (openAd != null) {
+      openAd?.dispose();
+      openAd = null;
+    }
+    if (rewardedAd != null) {
+      rewardedAd?.dispose();
+      rewardedAd = null;
+    }
   }
 }

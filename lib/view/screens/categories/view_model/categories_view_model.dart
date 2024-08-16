@@ -222,6 +222,7 @@ class CategoriesViewModel extends BaseViewModel{
         onAdLoaded: (ad) {
             bannerAd = ad as BannerAd;
             isBottomBannerAdLoaded = true;
+            setState(ViewState.Idle);
         },
         onAdFailedToLoad: (ad, err) {
           debugPrint('Failed to load a banner ad: ${err.message}');
@@ -229,13 +230,15 @@ class CategoriesViewModel extends BaseViewModel{
         },
       ),
     ).load();
-    setState(ViewState.Idle);
   }
 
-  @override
-  void dispose() {
-    bannerAd?.dispose();
-    super.dispose();
+  void destroy() {
+    if(bannerAd != null) {
+      bannerAd?.dispose();
+      bannerAd = null;
+      isBottomBannerAdLoaded = false;
+    }
+    adsService.dispose();
   }
 
   void showBinyAd() {

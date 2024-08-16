@@ -29,7 +29,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => NotificationsViewModel());
   locator.registerLazySingleton(() => GetStartedViewModel());
   locator.registerLazySingleton(() => AppDatabase());
-  locator.registerLazySingleton(() => PostsViewModel());
 
   // initSingleton();
 
@@ -37,6 +36,7 @@ void setupLocator() {
   locator.registerFactory(() => MessagesViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => ProfileViewModel());
+  locator.registerFactory(() => PostsViewModel());
 }
 
 void initSingleton() {
