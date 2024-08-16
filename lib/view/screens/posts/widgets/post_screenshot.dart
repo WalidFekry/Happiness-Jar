@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 
 import '../../../../constants/app_colors.dart';
+import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/spacing.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 
@@ -29,29 +32,43 @@ class PostScreenshot extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: SubtitleTextWidget(
-                  color:  Colors.black,
-                  label: "بقلم : ${postsItem.userName}",
-                  fontSize: 16,
-                  maxLines: 1,
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: SubtitleTextWidget(
-                  color:  Colors.black,
-                  label: postsItem.createdAt,
-                  fontSize: 14,
-                  maxLines: 1,
-                ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    AssetsManager.quote,
+                    width: 30,
+                    height: 30,
+                    colorFilter: const ColorFilter.mode(
+                        AppColors.lightColor2,
+                        BlendMode.srcIn),
+                  ),
+                  horizontalSpace(10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SubtitleTextWidget(
+                        label: "بقلم : ${postsItem.userName}",
+                        color: Colors.black,
+                        fontSize: 16,
+                        maxLines: 1,
+                      ),
+                      verticalSpace(2.5),
+                      SubtitleTextWidget(
+                        label: postsItem.createdAt,
+                        color: Colors.black,
+                        fontSize: 14,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
+                ],
               ),
               Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ContentTextWidget(
                     color: Colors.black,
                     label: postsItem.text,
+                    textAlign:  TextAlign.center,
                   )),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),

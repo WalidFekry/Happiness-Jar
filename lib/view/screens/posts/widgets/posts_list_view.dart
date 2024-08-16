@@ -35,7 +35,7 @@ class PostsListView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.grey, width: 2),
               ),
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   viewModel.showBinyAd();
                   showDialog(
@@ -67,7 +67,7 @@ class PostsListView extends StatelessWidget {
                               fontSize: 16,
                               maxLines: 1,
                             ),
-                            verticalSpace(5),
+                            verticalSpace(2.5),
                             SubtitleTextWidget(
                               label: viewModel.list[index].createdAt,
                               fontSize: 14,
