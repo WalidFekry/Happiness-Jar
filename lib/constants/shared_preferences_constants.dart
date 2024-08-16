@@ -15,5 +15,6 @@ class SharedPrefsConstants {
   static const String openLastAdDisplayTime = 'OPEN_LAST_AD_DISPLAY_TIME';
   static const String notificationFavoriteIds = 'NOTIFICATION_FAVORITE_IDS';
   static const String categoryFavoriteIds = 'CATEGORY_FAVORITE_IDS';
+  static const String messageFavoriteIds = 'MESSAGE_FAVORITE_IDS';
   static const String postsFavoriteIds = 'POSTS_FAVORITE_IDS';
 }

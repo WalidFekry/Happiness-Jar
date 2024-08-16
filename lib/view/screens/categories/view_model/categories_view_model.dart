@@ -95,6 +95,7 @@ class CategoriesViewModel extends BaseViewModel{
   }
 
   Future<void> removeFavoriteMessage(int index) async {
+    await appDatabase.deleteFavoriteMessageByText(content[index].title!);
     favoriteIds = await prefs.getStringList(SharedPrefsConstants.categoryFavoriteIds);
     favoriteIds.remove(content[index].id.toString());
     await prefs.saveStringList(SharedPrefsConstants.categoryFavoriteIds, favoriteIds);

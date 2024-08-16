@@ -89,7 +89,17 @@ class AppDatabase {
     db?.close();
   }
 
-  Future<int?> deleteFavoriteMessage(int? id) async {
+  Future<void> deleteFavoriteMessageByText(String text) async {
+    final Database? db = await getDb();
+    await db?.delete(
+      'favorite_messages',
+      where: 'title = ?',
+      whereArgs: [text],
+    );
+    db?.close();
+  }
+
+  Future<void> deleteFavoriteMessage(int? id) async {
     final Database? db = await getDb();
     await db?.delete(
       'favorite_messages',
@@ -97,7 +107,6 @@ class AppDatabase {
       whereArgs: [id],
     );
     db?.close();
-    return null;
   }
 
   Future<int?> deleteLocalPost(int? id) async {

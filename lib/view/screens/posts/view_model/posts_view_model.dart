@@ -115,6 +115,7 @@ class PostsViewModel extends BaseViewModel {
   }
 
   Future<void> removeFavoriteMessage(int index) async {
+    await appDatabase.deleteFavoriteMessageByText(list[index].text!);
     favoriteIds =
         await prefs.getStringList(SharedPrefsConstants.postsFavoriteIds);
     favoriteIds.remove(list[index].id.toString());
