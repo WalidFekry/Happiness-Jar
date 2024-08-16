@@ -12,6 +12,7 @@ import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart'
 import 'package:happiness_jar/view/screens/home/widgets/greeting_dialog.dart';
 import 'package:happiness_jar/view/screens/messages/view_model/messages_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
+import 'package:happiness_jar/view/screens/posts/view_model/posts_view_model.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 
 GetIt locator = GetIt.instance;
@@ -35,6 +36,7 @@ void setupLocator() {
   locator.registerFactory(() => MessagesViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => ProfileViewModel());
+  locator.registerFactory(() => PostsViewModel());
 }
 
 void initSingleton() {

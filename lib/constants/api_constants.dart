@@ -7,4 +7,6 @@ class ApiConstants {
   static const String wheel = "wheel.php";
   static const String register = "register.php";
   static const String messagesAdvice = "messages_advice.php";
+  static const String posts = "posts.php";
+  static const String addPost = "add_post.php";
 }

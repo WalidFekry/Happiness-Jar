@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/services/locator.dart';
@@ -143,5 +142,9 @@ class HomeViewModel extends BaseViewModel {
 
   void showOpenAd() {
     adsService.showOpenAd();
+  }
+
+  void destroy() {
+    adsService.dispose();
   }
 }

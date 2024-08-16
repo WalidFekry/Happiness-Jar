@@ -1,4 +1,3 @@
-import '../../../../models/database_model.dart';
 
 class FavoriteMessagesModel{
   int? id;

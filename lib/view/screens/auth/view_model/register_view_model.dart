@@ -40,4 +40,9 @@ class RegisterViewModel extends BaseViewModel {
     locator<NavigationService>().navigateToAndClearStack(RouteName.HOME);
   }
 
+  void destroy() {
+    image = null;
+    nameController.dispose();
+  }
+
 }

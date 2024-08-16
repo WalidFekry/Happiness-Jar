@@ -4,7 +4,6 @@ import 'package:happiness_jar/services/ads_service.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/app_text_button.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
-import 'package:path/path.dart';
 
 class ShowRewardedAdDialog extends StatelessWidget {
   ShowRewardedAdDialog({super.key});

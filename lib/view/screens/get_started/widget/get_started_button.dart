@@ -6,7 +6,6 @@ import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:iconly/iconly.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../routs/routs_names.dart';
 

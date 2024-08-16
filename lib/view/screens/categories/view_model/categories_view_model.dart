@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/enums/status.dart';
@@ -156,93 +154,63 @@ class CategoriesViewModel extends BaseViewModel{
     screenshotController
         .captureFromWidget(CategoriesScreenshot(content[index],list[index].title))
         .then((image) async {
-      if (image != null) {
-        try {
-          final result = await ImageGallerySaver.saveImage(image);
-          if (result['isSuccess']) {
-            showTopSnackBar(
-              Overlay.of(context),
-              CustomSnackBar.success(
-                backgroundColor: Theme.of(context).iconTheme.color!,
-                message: "تم الحفظ كصورة بنجاح",
-                icon: Icon(
-                  Icons.download,
-                  color: Theme.of(context).cardColor,
-                  size: 50,
-                ),
+      try {
+        final result = await ImageGallerySaver.saveImage(image);
+        if (result['isSuccess']) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: Theme.of(context).iconTheme.color!,
+              message: "تم الحفظ كصورة بنجاح",
+              icon: Icon(
+                Icons.download,
+                color: Theme.of(context).cardColor,
+                size: 50,
               ),
-            );
-          } else {
-            showTopSnackBar(
-              Overlay.of(context),
-              CustomSnackBar.error(
-                backgroundColor: Theme.of(context).cardColor,
-                message: "حدث خطأ أثناء حفظ الصورة",
-                icon: Icon(
-                  Icons.download,
-                  color: Theme.of(context).iconTheme.color,
-                  size: 50,
-                ),
-              ),
-            );
-          }
-        } catch (e) {
-          if (kDebugMode) {
-            print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
-          }
-        }
-      } else {
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.error(
-            backgroundColor: Theme.of(context).cardColor,
-            message: "حدث خطأ أثناء حفظ الصورة",
-            icon: Icon(
-              Icons.download,
-              color: Theme.of(context).iconTheme.color,
-              size: 50,
             ),
-          ),
-        );
+          );
+        } else {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(
+              backgroundColor: Theme.of(context).cardColor,
+              message: "حدث خطأ أثناء حفظ الصورة",
+              icon: Icon(
+                Icons.download,
+                color: Theme.of(context).iconTheme.color,
+                size: 50,
+              ),
+            ),
+          );
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
+        }
       }
-    });
+        });
   }
 
   Future<void> sharePhoto(int index, BuildContext context) async {
     screenshotController
         .captureFromWidget(CategoriesScreenshot(content[index],list[index].title))
         .then((image) async {
-      if (image != null) {
-        try {
-          final directory = await getApplicationDocumentsDirectory();
-          final imagePath = await File('${directory.path}/image.png').create();
-          await imagePath.writeAsBytes(image);
-          final xFile = XFile(imagePath.path);
-          await Share.shareXFiles(
-            [xFile],
-            subject: 'من تطبيق برطمان السعادة 💙',
-            text: content[index].title,
-          );
-        } catch (e) {
-          if (kDebugMode) {
-            print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
-          }
-        }
-      } else {
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.error(
-            backgroundColor: Theme.of(context).cardColor,
-            message: "حدث خطأ أثناء مشاركة الصورة",
-            icon: Icon(
-              Icons.share,
-              color: Theme.of(context).iconTheme.color,
-              size: 50,
-            ),
-          ),
+      try {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = await File('${directory.path}/image.png').create();
+        await imagePath.writeAsBytes(image);
+        final xFile = XFile(imagePath.path);
+        await Share.shareXFiles(
+          [xFile],
+          subject: 'من تطبيق برطمان السعادة 💙',
+          text: content[index].title,
         );
+      } catch (e) {
+        if (kDebugMode) {
+          print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
+        }
       }
-    });
+        });
   }
 
   void showBannerAd() {
@@ -254,6 +222,7 @@ class CategoriesViewModel extends BaseViewModel{
         onAdLoaded: (ad) {
             bannerAd = ad as BannerAd;
             isBottomBannerAdLoaded = true;
+            setState(ViewState.Idle);
         },
         onAdFailedToLoad: (ad, err) {
           debugPrint('Failed to load a banner ad: ${err.message}');
@@ -261,13 +230,15 @@ class CategoriesViewModel extends BaseViewModel{
         },
       ),
     ).load();
-    setState(ViewState.Idle);
   }
 
-  @override
-  void dispose() {
-    bannerAd?.dispose();
-    super.dispose();
+  void destroy() {
+    if(bannerAd != null) {
+      bannerAd?.dispose();
+      bannerAd = null;
+      isBottomBannerAdLoaded = false;
+    }
+    adsService.dispose();
   }
 
   void showBinyAd() {

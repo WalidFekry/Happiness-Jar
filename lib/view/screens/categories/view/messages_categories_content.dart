@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/no_internet.dart';
 import 'package:iconly/iconly.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -13,7 +14,7 @@ import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../../services/locator.dart';
 import '../../../../services/navigation_service.dart';
-import '../../../widgets/app_name_text.dart';
+import '../../../widgets/app_bar_text.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
@@ -32,31 +33,11 @@ class MessagesCategoriesContent extends StatelessWidget {
     return BaseView<CategoriesViewModel>(onModelReady: (viewModel) {
       viewModel.getContent(messagesCategories?.categorie);
       viewModel.showBannerAd();
+    }, onFinish: (viewModel) {
+      viewModel.destroy();
     }, builder: (context, viewModel, child) {
       return Scaffold(
-        appBar: AppBar(
-          title: AppBarTextWidget(
-            title: messagesCategories?.title,
-          ),
-          leading: Padding(
-            padding: const EdgeInsets.only(top: 5),
-            child: Image.asset(
-              AssetsManager.appLogoNoTitle,
-              fit: BoxFit.contain,
-            ),
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  locator<NavigationService>().goBack();
-                },
-                icon: Icon(
-                  IconlyLight.arrow_left_2,
-                  size: 35,
-                  color: Theme.of(context).iconTheme.color,
-                ))
-          ],
-        ),
+        appBar: CustomAppBar(title: messagesCategories?.title),
         body: Stack(
           children: [
             viewModel.content.isNotEmpty

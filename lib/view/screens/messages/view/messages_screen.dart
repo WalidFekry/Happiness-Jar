@@ -28,6 +28,9 @@ class MessagesScreen extends StatelessWidget {
         viewModel.setController();
         viewModel.getLastMessagesTime();
       },
+      onFinish: (viewModel) {
+        viewModel.destroy();
+      },
       builder: (context, viewModel, child) {
         return Scaffold(
           body: Padding(

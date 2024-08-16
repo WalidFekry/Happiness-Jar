@@ -7,4 +7,5 @@ class RouteName {
   static const String MESSAGES_CATEGORIES_CONTENT = '/messages_categories_content';
   static const String GET_STARTED = '/get_started';
   static const String GET_NOTIFICATION_SCREEN = '/GET_NOTIFICATION_SCREEN';
+  static const String POSTS_USER_SCREEN = '/POSTS_USER_SCREEN';
 }

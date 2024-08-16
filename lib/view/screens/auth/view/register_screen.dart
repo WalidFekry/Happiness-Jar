@@ -6,6 +6,7 @@ import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../helpers/spacing.dart';
+import '../../../widgets/custom_elevated_button.dart';
 import '../../base_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -20,6 +21,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return BaseView<RegisterViewModel>(
       onModelReady: (viewModel) {
+      },
+      onFinish:(viewModel) {
+        viewModel.destroy();
       },
       builder: (context, viewModel, child) {
         return Scaffold(
@@ -82,40 +86,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Form(
                       key: viewModel.formKey,
                       child: TextFormField(
+                        maxLength: 20,
                         controller: viewModel.nameController,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.done,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'من فضلك قم بكتابة اسمك ⚠️';
+                          if (value == null || value.trim().isEmpty) {
+                            return 'من فضلك قم بكتابة إسمك ⚠️';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
                           labelText: 'واكتب اسمك هنا ..',
-                          suffixIcon: Icon(IconlyLight.add_user,
-                              color: Theme.of(context).iconTheme.color),
+                          prefixIcon: Icon(IconlyLight.add_user,color: Theme.of(context).iconTheme.color),
                         ),
                       ),
                     ),
                     verticalSpace(30),
-                    ElevatedButton(
+                    CustomElevatedButton(
+                      label: "تسجيل الدخول",
                       onPressed: () {
                         if (!viewModel.formKey.currentState!.validate()) {
                           return;
                         }
                         viewModel.saveData();
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).iconTheme.color,
-                        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 5,
-                        shadowColor: Theme.of(context).cardColor,
-                      ),
-                      child: SubtitleTextWidget(label: 'تسجيل الدخول',color: Theme.of(context).primaryColor,),
+                      backgroundColor: Theme.of(context).iconTheme.color,
+                      textColor: Theme.of(context).primaryColor,
+                      shadowColor: Theme.of(context).cardColor,
                     ),
                   ],
                 ),

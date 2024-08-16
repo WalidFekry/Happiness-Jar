@@ -1,10 +1,10 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
+import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/info_dialog.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ import '../../../../services/locator.dart';
 import '../../../../providers/theme_provider.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
-import '../../../widgets/app_name_text.dart';
+import '../../../widgets/app_bar_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
@@ -29,26 +29,7 @@ class ProfileScreen extends StatelessWidget {
       viewModel.getUserData();
     }, builder: (context, viewModel, child) {
       return Scaffold(
-          appBar: AppBar(
-            title: const AppBarTextWidget(
-              title: "حسابي الشخصي",
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Image.asset(AssetsManager.appLogoNoTitle,fit:  BoxFit.contain,),
-            ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    locator<NavigationService>().goBack();
-                  },
-                  icon: Icon(
-                    IconlyLight.arrow_left_2,
-                    size: 35,
-                    color: Theme.of(context).iconTheme.color,
-                  ))
-            ],
-          ),
+          appBar: const CustomAppBar(title: 'حسابي الشخصي',),
           body: SingleChildScrollView(
             padding: const EdgeInsets.only(top: 20),
             child: Column(
