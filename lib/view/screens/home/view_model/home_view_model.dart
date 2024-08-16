@@ -95,14 +95,13 @@ class HomeViewModel extends BaseViewModel {
   sendToken() async {
     String? userName = await prefs.getString(SharedPrefsConstants.userName);
     FirebaseMessaging.instance.subscribeToTopic("all");
-    FirebaseMessaging.instance.getToken().then((value) async {
+    final fcmToken = await getFcmToken();
       Resource<RefreshTokenModel> resource =
-          await apiService.refreshToken(value!, userName);
+          await apiService.refreshToken(fcmToken, userName);
       if (resource.status == Status.SUCCESS) {
         await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
             DateTime.now().toIso8601String());
       }
-    });
   }
 
   void showGreetingDialog(BuildContext context) {
@@ -146,5 +145,9 @@ class HomeViewModel extends BaseViewModel {
 
   void destroy() {
     adsService.dispose();
+  }
+
+  Future<String?> getFcmToken() {
+    return FirebaseMessaging.instance.getToken();
   }
 }

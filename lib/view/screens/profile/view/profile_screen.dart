@@ -84,7 +84,9 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 IconButton(
                                   onPressed: () async {
-                                    final newUserName = await ChangeNameDialog.show(context, viewModel.userName);
+                                    final newUserName = await showDialog(context: context, builder: (context) {
+                                      return ChangeNameDialog(userName: viewModel.userName);
+                                    });
                                     if (newUserName != null) {
                                       viewModel.changeUserName(newUserName);
                                     }

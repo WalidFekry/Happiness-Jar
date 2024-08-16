@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
@@ -15,8 +16,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../enums/status.dart';
+import '../../../../models/resources.dart';
+import '../../../../services/api_service.dart';
+import '../../home/model/refresh_token.dart';
+
 class ProfileViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
+  final apiService = locator<ApiService>();
   String? userName;
   String? version;
   File? image;
@@ -106,9 +113,11 @@ class ProfileViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
-  void changeUserName(String newUserName) {
+  Future<void> changeUserName(String newUserName) async {
     userName = newUserName;
-    prefs.saveString(SharedPrefsConstants.userName, newUserName);
+    await prefs.saveString(SharedPrefsConstants.userName, newUserName);
+    final fcmToken = await getFcmToken();
+    await apiService.refreshToken(fcmToken, newUserName);
     setState(ViewState.Idle);
   }
 
@@ -131,5 +140,9 @@ class ProfileViewModel extends BaseViewModel {
     final Uri url =
     Uri.parse('https://github.com/WalidFekry/Happiness-Jar');
     launchUrl(url, mode: LaunchMode.externalApplication);
+  }
+
+  Future<String?> getFcmToken() {
+    return FirebaseMessaging.instance.getToken();
   }
 }

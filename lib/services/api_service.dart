@@ -92,7 +92,7 @@ class ApiService {
   }
 
   Future<Resource<RefreshTokenModel>> refreshToken(
-      String fcmToken, String name) async {
+      String? fcmToken, String? name) async {
     try {
       var response = await dio.post(
         ApiConstants.register,

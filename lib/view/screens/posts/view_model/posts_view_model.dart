@@ -246,7 +246,7 @@ class PostsViewModel extends BaseViewModel {
   }
 
   Future<bool> addPost() async {
-    String? fcmToken = await getFcmToken();
+    final fcmToken = await getFcmToken();
     Resource<AddPostResponseModel> resource = await apiService.addPost(
         fcmToken, postController.text, userNameController.text);
     if (resource.status == Status.SUCCESS && resource.data?.success != null) {
