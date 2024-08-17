@@ -28,6 +28,7 @@ import '../../../../services/navigation_service.dart';
 import '../../../../services/shared_pref_services.dart';
 import '../../base_view_model.dart';
 import '../model/add_post_response_model.dart';
+import '../model/like_post_response_model.dart';
 import '../model/posts_model.dart';
 
 class PostsViewModel extends BaseViewModel {
@@ -37,6 +38,7 @@ class PostsViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   List<PostItem> list = [];
   List<String> favoriteIds = [];
+  List<String> likeIds = [];
   bool isDone = true;
   bool isLocalDatebase = false;
   String? userName;
@@ -45,16 +47,18 @@ class PostsViewModel extends BaseViewModel {
   TextEditingController postController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isBottomBannerAdLoaded = false;
+  bool isLoadingAddPost = false;
+  bool isLoadingLikePost = false;
   BannerAd? bannerAd;
 
   Future<void> getPosts() async {
     Resource<PostsModel> resource = await apiService.getPosts();
-    favoriteIds =
-        await prefs.getStringList(SharedPrefsConstants.postsFavoriteIds);
+    await getFavoriteIdsAndLikeIds();
     if (resource.status == Status.SUCCESS) {
       list = resource.data!.content!;
       for (var message in list) {
         message.isFavourite = favoriteIds.contains(message.id.toString());
+        message.isLike = likeIds.contains(message.id.toString());
       }
       isDone = true;
       isLocalDatebase = false;
@@ -246,6 +250,8 @@ class PostsViewModel extends BaseViewModel {
   }
 
   Future<bool> addPost() async {
+    isLoadingAddPost = true;
+    setState(ViewState.Idle);
     final fcmToken = await getFcmToken();
     Resource<AddPostResponseModel> resource = await apiService.addPost(
         fcmToken, postController.text, userNameController.text);
@@ -254,6 +260,8 @@ class PostsViewModel extends BaseViewModel {
       await checkUserName();
       return true;
     } else {
+      isLoadingAddPost = false;
+      setState(ViewState.Idle);
       return false;
     }
   }
@@ -299,14 +307,13 @@ class PostsViewModel extends BaseViewModel {
   }
 
   void destroyAds() {
-    if(bannerAd != null){
+    if (bannerAd != null) {
       bannerAd?.dispose();
       bannerAd = null;
       isBottomBannerAdLoaded = false;
     }
     adsService.dispose();
   }
-
 
   Future<void> checkUserName() async {
     if (userName == userNameController.text) {
@@ -319,5 +326,43 @@ class PostsViewModel extends BaseViewModel {
   Future<void> deleteLocalPost(int index) async {
     await appDatabase.deleteLocalPost(list[index].id);
     getLocalPost();
+  }
+
+  Future<void> likePost(int index) async {
+    isLoadingLikePost = true;
+    setState(ViewState.Idle);
+    Resource<LikePostResponseModel> resource =
+        await apiService.likePost("Like", list[index].id);
+    if (resource.status == Status.SUCCESS && resource.data?.success != null) {
+      likeIds = await prefs.getStringList(SharedPrefsConstants.postsLikeIds);
+      likeIds.add(list[index].id.toString());
+      await prefs.saveStringList(SharedPrefsConstants.postsLikeIds, likeIds);
+      list[index].isLike = !list[index].isLike;
+      list[index].likes = list[index].likes! + 1;
+    }
+    isLoadingLikePost = false;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> unLikePost(int index) async {
+    isLoadingLikePost = true;
+    setState(ViewState.Idle);
+    Resource<LikePostResponseModel> resource =
+        await apiService.likePost("UnLike", list[index].id);
+    if (resource.status == Status.SUCCESS && resource.data?.success != null) {
+      likeIds = await prefs.getStringList(SharedPrefsConstants.postsLikeIds);
+      likeIds.remove(list[index].id.toString());
+      await prefs.saveStringList(SharedPrefsConstants.postsLikeIds, likeIds);
+      list[index].isLike = !list[index].isLike;
+      list[index].likes = list[index].likes! - 1;
+    }
+    isLoadingLikePost = false;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> getFavoriteIdsAndLikeIds() async {
+    favoriteIds =
+        await prefs.getStringList(SharedPrefsConstants.postsFavoriteIds);
+    likeIds = await prefs.getStringList(SharedPrefsConstants.postsLikeIds);
   }
 }

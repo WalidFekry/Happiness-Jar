@@ -9,4 +9,5 @@ class ApiConstants {
   static const String messagesAdvice = "messages_advice.php";
   static const String posts = "posts.php";
   static const String addPost = "add_post.php";
+  static const String likePost = "set_like.php";
 }
