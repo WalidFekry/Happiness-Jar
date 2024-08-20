@@ -20,6 +20,7 @@
 - **Messages Screen:** Find daily uplifting messages.
 - **Notifications Screen:** Get notifications for new messages.
 - **Categories Screen:** Explore messages categorized by themes and interests.
+- **Quotes Screen:** Users can post and interact with their quote.
 - **Favorite Screen:** Access your saved favorite messages.
 
 ## 📁 File Structure
