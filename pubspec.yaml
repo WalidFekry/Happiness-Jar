@@ -31,7 +31,7 @@ dependencies:
   firebase_core: ^3.1.0
   firebase_crashlytics: ^4.0.1
   firebase_analytics: ^11.0.1
-  firebase_messaging: ^15.0.1
+  firebase_messaging: ^15.0.4
   permission_handler: ^11.3.1
   app_settings: ^5.1.1
   in_app_review: ^2.0.9
@@ -51,16 +51,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-#  flutter_launcher_icons: ^0.9.2
-#
-#flutter_icons:
-#  android: true
-#  ios: true
-#  image_path: "assets/icons/logo.png"
-#  remove_alpha_ios: false
-
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/logo.png"
+  remove_alpha_ios: true
 
 flutter:
 
