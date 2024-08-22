@@ -51,16 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(onModelReady: (viewModel) async {
-      viewModel.getStarted =
-          await viewModel.prefs.getBoolean(SharedPrefsConstants.getStarted);
-      viewModel.isLogin =
+      final bool isLogin =
           await viewModel.prefs.getBoolean(SharedPrefsConstants.isLogin);
-      if (!viewModel.getStarted) {
-        locator<NavigationService>()
-            .navigateToAndClearStack(RouteName.GET_STARTED);
-        return;
-      }
-      if (!viewModel.isLogin) {
+      if (!isLogin) {
         locator<NavigationService>()
             .navigateToAndClearStack(RouteName.REGISTER);
         return;

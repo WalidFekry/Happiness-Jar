@@ -25,8 +25,8 @@ class HomeViewModel extends BaseViewModel {
   final apiService = locator<ApiService>();
   final greetingDialog = locator<GreetingDialog>();
   final adsService = locator<AdsService>();
-  bool isLogin = false;
-  bool getStarted = false;
+
+
   String? lastRefreshTokenTime;
   String? lastTimeToShowInAppReview;
   String? getTodayAdviceTime;
@@ -95,13 +95,14 @@ class HomeViewModel extends BaseViewModel {
   sendToken() async {
     String? userName = await prefs.getString(SharedPrefsConstants.userName);
     FirebaseMessaging.instance.subscribeToTopic("all");
-    final fcmToken = await getFcmToken();
+    FirebaseMessaging.instance.getToken().then((value) async {
       Resource<RefreshTokenModel> resource =
-          await apiService.refreshToken(fcmToken, userName);
+      await apiService.refreshToken(value, userName);
       if (resource.status == Status.SUCCESS) {
         await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
             DateTime.now().toIso8601String());
       }
+    });
   }
 
   void showGreetingDialog(BuildContext context) {
@@ -145,9 +146,5 @@ class HomeViewModel extends BaseViewModel {
 
   void destroy() {
     adsService.dispose();
-  }
-
-  Future<String?> getFcmToken() {
-    return FirebaseMessaging.instance.getToken();
   }
 }

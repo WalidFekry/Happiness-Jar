@@ -116,8 +116,9 @@ class ProfileViewModel extends BaseViewModel {
   Future<void> changeUserName(String newUserName) async {
     userName = newUserName;
     await prefs.saveString(SharedPrefsConstants.userName, newUserName);
-    final fcmToken = await getFcmToken();
-    await apiService.refreshToken(fcmToken, newUserName);
+    FirebaseMessaging.instance.getToken().then((value) async {
+      await apiService.refreshToken(value, newUserName);
+    });
     setState(ViewState.Idle);
   }
 
@@ -140,9 +141,5 @@ class ProfileViewModel extends BaseViewModel {
     final Uri url =
     Uri.parse('https://github.com/WalidFekry/Happiness-Jar');
     launchUrl(url, mode: LaunchMode.externalApplication);
-  }
-
-  Future<String?> getFcmToken() {
-    return FirebaseMessaging.instance.getToken();
   }
 }

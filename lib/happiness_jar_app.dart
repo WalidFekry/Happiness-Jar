@@ -10,8 +10,10 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/firebase_options.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'constants/shared_preferences_constants.dart';
 import 'services/locator.dart';
 
 Future<void> initServices() async {
@@ -24,9 +26,15 @@ Future<void> initServices() async {
   setupLocator();
 }
 
-class HappinessJarApp extends StatelessWidget {
-  const HappinessJarApp({super.key});
+ Future<bool> checkFirstOpen() async {
+  final prefs = locator<SharedPrefServices>();
+  await prefs.init();
+  return await prefs.getBoolean(SharedPrefsConstants.getStarted);
+}
 
+class HappinessJarApp extends StatelessWidget {
+  const HappinessJarApp(this.getStarted,{super.key});
+  final bool getStarted;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -43,7 +51,7 @@ class HappinessJarApp extends StatelessWidget {
               isDarkTheme: themeProvider.getIsDarkTheme,
               context: context,
             ),
-            initialRoute: RouteName.HOME,
+            initialRoute: getStarted ? RouteName.HOME : RouteName.GET_STARTED,
             navigatorKey: locator<NavigationService>().navigatorKey,
             onGenerateRoute: AppRouter.generateRoute,
           );
