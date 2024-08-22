@@ -4,7 +4,7 @@ import Firebase
 import FirebaseMessaging
 import UserNotifications
 
-@main
+@UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate, MessagingDelegate{
 
 
