@@ -113,9 +113,12 @@ class ProfileViewModel extends BaseViewModel {
   Future<void> changeUserName(String newUserName) async {
     userName = newUserName;
     await prefs.saveString(SharedPrefsConstants.userName, newUserName);
-    FirebaseMessaging.instance.getToken().then((value) async {
-      await apiService.refreshToken(value, newUserName);
-    });
+    String? token = await FirebaseMessaging.instance.getToken();
+    if(token == null || token.isEmpty) {
+      setState(ViewState.Idle);
+      return;
+    }
+    await apiService.refreshToken(token, newUserName);
     setState(ViewState.Idle);
   }
 

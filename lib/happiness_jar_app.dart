@@ -21,7 +21,6 @@ Future<void> initServices() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupLocator();
 }

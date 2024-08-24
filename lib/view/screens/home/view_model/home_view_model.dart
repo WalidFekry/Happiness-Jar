@@ -81,10 +81,12 @@ class HomeViewModel extends BaseViewModel {
     if (lastRefreshTokenTime != "") {
       DateTime lastRunTime = DateTime.parse(lastRefreshTokenTime!);
       Duration difference = DateTime.now().difference(lastRunTime);
-      if (difference.inHours >= 48) {
+      if (difference.inHours >= 24) {
         await sendToken();
       } else {
-        print('Function has already been run within the last 48 hours.');
+        if (kDebugMode) {
+          print('Function has already been run within the last 24 hours.');
+        }
       }
     } else {
       await sendToken();
@@ -93,15 +95,17 @@ class HomeViewModel extends BaseViewModel {
 
   sendToken() async {
     String? userName = await prefs.getString(SharedPrefsConstants.userName);
-    FirebaseMessaging.instance.subscribeToTopic("all");
-    FirebaseMessaging.instance.getToken().then((value) async {
+    await FirebaseMessaging.instance.subscribeToTopic("all");
+    String? token = await FirebaseMessaging.instance.getToken();
+      if(token == null || token.isEmpty) {
+        return;
+      }
       Resource<RefreshTokenModel> resource =
-      await apiService.refreshToken(value, userName);
+      await apiService.refreshToken(token, userName);
       if (resource.status == Status.SUCCESS) {
         await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
             DateTime.now().toIso8601String());
       }
-    });
   }
 
   void showGreetingDialog(BuildContext context) {

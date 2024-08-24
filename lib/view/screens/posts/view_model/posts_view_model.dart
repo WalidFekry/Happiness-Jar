@@ -249,37 +249,23 @@ class PostsViewModel extends BaseViewModel {
     isLoadingAddPost = true;
     setState(ViewState.Idle);
 
-    try {
-      String? token = await FirebaseMessaging.instance.getToken();
-      if (token != null) {
-        Resource<AddPostResponseModel> resource = await apiService.addPost(
-          token,
-          postController.text,
-          userNameController.text,
-        );
-        if (resource.status == Status.SUCCESS &&
-            resource.data?.success != null) {
-          await addPostToDatabase();
-          await checkUserName();
-          return true;
-        } else {
-          isLoadingAddPost = false;
-          setState(ViewState.Idle);
-          return false;
-        }
+      String? token =
+          await FirebaseMessaging.instance.getToken() ?? "no fcm token";
+
+      Resource<AddPostResponseModel> resource = await apiService.addPost(
+        token,
+        postController.text,
+        userNameController.text,
+      );
+      if (resource.status == Status.SUCCESS && resource.data?.success != null) {
+        await addPostToDatabase();
+        await checkUserName();
+        return true;
       } else {
         isLoadingAddPost = false;
         setState(ViewState.Idle);
         return false;
       }
-    } catch (e) {
-      isLoadingAddPost = false;
-      setState(ViewState.Idle);
-      if (kDebugMode) {
-        print("Error: $e");
-      }
-      return false;
-    }
   }
 
   Future<void> addPostToDatabase() async {
