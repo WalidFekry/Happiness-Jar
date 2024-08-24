@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 
 import '../../../../constants/app_colors.dart';
+import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../widgets/content_text.dart';
@@ -78,7 +78,7 @@ class PostScreenshot extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: ContentTextWidget(
                       color: Colors.black,
-                      label: AppConsts.copyMessage,
+                      label: AppConstants.copyMessage,
                       textAlign: TextAlign.center)),
             ],
           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
@@ -38,7 +38,7 @@ class ShareAPPDialog {
               ),
               verticalSpace(20),
               const ContentTextWidget(
-                label: AppConsts.shareAppMessage,
+                label: AppConstants.shareAppMessage,
                 textAlign: TextAlign.center,
               ),
               verticalSpace(20),
@@ -93,6 +93,6 @@ class ShareAPPDialog {
   }
 
   static Future<void> shareApp() async {
-    await Share.share(AppConsts.shareApp);
+    await Share.share(AppConstants.shareApp);
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/services/locator.dart';
@@ -16,10 +15,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../enums/status.dart';
-import '../../../../models/resources.dart';
+import '../../../../constants/app_constants.dart';
 import '../../../../services/api_service.dart';
-import '../../home/model/refresh_token.dart';
 
 class ProfileViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
@@ -64,7 +61,7 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   Future<void> shareApp() async {
-    await Share.share(AppConsts.shareApp);
+    await Share.share(AppConstants.shareApp);
   }
 
   Future<void> contact() async {
@@ -79,7 +76,7 @@ class ProfileViewModel extends BaseViewModel {
 
   void rateApp() {
     final InAppReview inAppReview = InAppReview.instance;
-    inAppReview.openStoreListing(appStoreId: AppConsts.appStoreId);
+    inAppReview.openStoreListing(appStoreId: AppConstants.appStoreId);
   }
 
   Future<void> openFacebookPage() async {

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/view/screens/posts/view_model/posts_view_model.dart';
-import 'package:iconly/iconly.dart';
 
-import '../../../../constants/assets_manager.dart';
-import '../../../../services/locator.dart';
-import '../../../../services/navigation_service.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../base_screen.dart';
 import '../widgets/empty_posts_user.dart';

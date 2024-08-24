@@ -89,7 +89,6 @@ class HomeViewModel extends BaseViewModel {
     } else {
       await sendToken();
     }
-    setState(ViewState.Idle);
   }
 
   sendToken() async {

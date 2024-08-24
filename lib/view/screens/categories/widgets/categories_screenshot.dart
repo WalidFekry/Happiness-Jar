@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 
+import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
@@ -64,7 +64,7 @@ class CategoriesScreenshot extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: ContentTextWidget(
                       color: Colors.black,
-                      label: AppConsts.copyMessage,                    textAlign: TextAlign.center)),
+                      label: AppConstants.copyMessage,textAlign: TextAlign.center)),
             ],
           ),
         ),

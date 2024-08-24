@@ -30,16 +30,9 @@ void setupLocator() {
   locator.registerLazySingleton(() => GetStartedViewModel());
   locator.registerLazySingleton(() => AppDatabase());
 
-  // initSingleton();
-
   locator.registerFactory(() => RegisterViewModel());
   locator.registerFactory(() => MessagesViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => ProfileViewModel());
   locator.registerFactory(() => PostsViewModel());
-}
-
-void initSingleton() {
-  locator<SharedPrefServices>();
-  locator<ApiService>();
 }

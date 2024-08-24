@@ -16,7 +16,8 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     var uriData = Uri.parse(settings.name!);
 
-    // debugPrint('settings.name ${settings.name}');
+     debugPrint('settings.name ${settings.name}');
+
     var routingData = RoutingData(
       queryParameters: uriData.queryParameters,
       route: uriData.path,

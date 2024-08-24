@@ -1,19 +1,15 @@
 
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/info_dialog.dart';
-import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../services/locator.dart';
+import '../../../../constants/app_constants.dart';
 import '../../../../providers/theme_provider.dart';
 import '../../../../constants/assets_manager.dart';
-import '../../../../services/navigation_service.dart';
-import '../../../widgets/app_bar_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
@@ -183,7 +179,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         leading: const Icon(Icons.info),
                         onTap: () {
-                          showDialog(context: context, builder: (context) => const InfoDialog(content: AppConsts.appInfo,));
+                          showDialog(context: context, builder: (context) => const InfoDialog(content: AppConstants.appInfo,));
                         },
                       ),
                       const Divider(

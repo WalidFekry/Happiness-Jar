@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
@@ -11,6 +10,7 @@ import 'package:happiness_jar/view/screens/posts/view/posts_screen.dart';
 import 'package:iconly/iconly.dart';
 import 'package:in_app_review/in_app_review.dart';
 
+import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/shared_preferences_constants.dart';
 import '../../../widgets/app_bar_text.dart';
@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void rateApp() {
     final InAppReview inAppReview = InAppReview.instance;
-    inAppReview.openStoreListing(appStoreId: AppConsts.appStoreId);
+    inAppReview.openStoreListing(appStoreId: AppConstants.appStoreId);
   }
 
   @override

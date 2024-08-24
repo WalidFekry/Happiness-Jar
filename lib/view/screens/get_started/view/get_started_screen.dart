@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/constants/assets_manager.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 
+import '../../../../constants/app_constants.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../widgets/title_text.dart';
@@ -49,7 +49,7 @@ class GetStartedScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.grey, width: 2),
                       ),
-                      child: const ContentTextWidget(label: AppConsts.getStartedMessage,textAlign: TextAlign.center,
+                      child: const ContentTextWidget(label: AppConstants.getStartedMessage,textAlign: TextAlign.center,
                          ),
                     ),
                    verticalSpace(15),

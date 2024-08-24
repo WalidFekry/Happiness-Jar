@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/view/screens/get_started/widget/get_started_button.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 
+import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../widgets/title_text.dart';
@@ -48,7 +48,7 @@ class GetNotificationScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.grey, width: 2),
                     ),
-                    child: const ContentTextWidget(label: AppConsts.notificationMessage,textAlign: TextAlign.center,
+                    child: const ContentTextWidget(label: AppConstants.notificationMessage,textAlign: TextAlign.center,
                     ),
                   ),
                   verticalSpace(15),
