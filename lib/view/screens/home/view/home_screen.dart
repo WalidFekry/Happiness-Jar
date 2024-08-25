@@ -1,3 +1,4 @@
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
       viewModel.getTodayAdvice();
       viewModel.showInAppReview();
       viewModel.checkNotificationsPermission(context);
-      viewModel.showGreetingDialog(context);
+      Future.delayed(const Duration(seconds: 5), () {
+        viewModel.showGreetingDialog(context);
+      });
     }, onFinish: (viewModel) {
       viewModel.destroy();
     }, builder: (context, viewModel, child) {
