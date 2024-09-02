@@ -2,7 +2,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/constants/local_notification_constants.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
+import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
@@ -46,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     controller = PageController(initialPage: selectedIndex);
     setFirebaseMessaging();
+    setLocalNotification();
     super.initState();
   }
 
@@ -247,5 +250,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  void setLocalNotification() {
+    streamController.stream.listen((notificationResponse) {
+      if(notificationResponse?.payload == LocalNotificationConstants.notificationPayload){
+        jumpToPage(1);
+      }
+    });
   }
 }
