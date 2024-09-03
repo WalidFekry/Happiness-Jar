@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
@@ -35,7 +37,11 @@ class GetStartedButton extends StatelessWidget {
         child: InkWell(
           onTap: () async {
             if(route == RouteName.GET_NOTIFICATION_SCREEN) {
-              locator<NavigationService>().navigateToAndClearStack(route);
+              if(Platform.isAndroid){
+                locator<NavigationService>().navigateToAndClearStack(route);
+              }else{
+                locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
+              }
             }else {
               await FirebaseMessaging.instance.requestPermission(
                 sound: true,

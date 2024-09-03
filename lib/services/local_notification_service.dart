@@ -20,7 +20,7 @@ class LocalNotificationService {
   }
 
   // Show repeated notification.
-  void showRepeatedNotification() async {
+  Future<void> showRepeatedNotification() async {
     const AndroidNotificationDetails android = AndroidNotificationDetails(
       LocalNotificationConstants.channelId,
       LocalNotificationConstants.channelName,
@@ -47,13 +47,13 @@ class LocalNotificationService {
       LocalNotificationConstants.notificationId,
       LocalNotificationConstants.notificationTitle,
       LocalNotificationConstants.notificationBody,
-      RepeatInterval.everyMinute,
+      RepeatInterval.daily,
       details,
       payload: LocalNotificationConstants.notificationPayload,
     );
   }
 
-  void cancelNotification(int id) async {
+  Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

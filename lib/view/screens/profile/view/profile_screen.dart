@@ -195,6 +195,7 @@ class ProfileScreen extends StatelessWidget {
                             leading: Icon(
                               Icons.verified,
                               color: Theme.of(context).iconTheme.color,
+                              size: 30,
                             ),
                             trailing: ContentTextWidget(
                               label: viewModel.version,
