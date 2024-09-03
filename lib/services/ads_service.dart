@@ -69,7 +69,7 @@ class AdsService {
     if (currentTime - lastAdDisplayTime > oneHourInMillis) {
       adDisplayCount = 0;
     }
-    if (adDisplayCount < 2) {
+    if (adDisplayCount < 1) {
       await AppOpenAd.load(
           adUnitId: AdsManager.openAdUnitId,
           request: const AdRequest(),
@@ -88,7 +88,7 @@ class AdsService {
             debugPrint('Ad failed to load $error');
           }));
     } else {
-      debugPrint('OpenAd limit reached: only 2 ads per hour are allowed.');
+      debugPrint('OpenAd limit reached: only 1 ads per hour are allowed.');
     }
   }
 
