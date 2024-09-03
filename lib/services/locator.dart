@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/services/ads_service.dart';
 import 'package:happiness_jar/services/api_service.dart';
+import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/auth/view_model/register_view_model.dart';
@@ -22,6 +23,7 @@ void setupLocator() {
   locator.registerSingleton<ApiService>(ApiService());
   locator.registerSingleton<GreetingDialog>(GreetingDialog());
   locator.registerSingleton<AdsService>(AdsService());
+  locator.registerSingleton<LocalNotificationService>(LocalNotificationService());
 
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => CategoriesViewModel());

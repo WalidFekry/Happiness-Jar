@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
+import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
@@ -12,18 +16,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/app_constants.dart';
+import '../../../../constants/local_notification_constants.dart';
 import '../../../../services/api_service.dart';
 
 class ProfileViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   final apiService = locator<ApiService>();
+  final localNotificationService = locator<LocalNotificationService>();
   String? userName;
   String? version;
   File? image;
+  bool isNotificationOn = true;
+  static const platform = MethodChannel('battery_optimization_channel');
 
   Future<void> getUserData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -33,6 +42,7 @@ class ProfileViewModel extends BaseViewModel {
     if (imagePath.isNotEmpty) {
       image = File(imagePath);
     }
+    isNotificationOn = await prefs.getBoolean(SharedPrefsConstants.isNotificationOn);
     setState(ViewState.Idle);
   }
 
@@ -141,5 +151,31 @@ class ProfileViewModel extends BaseViewModel {
     final Uri url =
     Uri.parse('https://github.com/WalidFekry/Happiness-Jar');
     launchUrl(url, mode: LaunchMode.externalApplication);
+  }
+
+
+  Future<void> requestBatteryOptimization() async {
+    try {
+      await platform.invokeMethod('battery_optimization_channel');
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
+
+  Future<void> enableNotification(bool value) async {
+    if (value) {
+      if(Platform.isAndroid) {
+        requestBatteryOptimization();
+      }
+      localNotificationService.showRepeatedNotification();
+      await prefs.saveBoolean(SharedPrefsConstants.isNotificationOn, true);
+    }else{
+      localNotificationService.cancelNotification(LocalNotificationConstants.notificationId);
+      await prefs.saveBoolean(SharedPrefsConstants.isNotificationOn, false);
+    }
+    isNotificationOn = value;
+    setState(ViewState.Idle);
   }
 }

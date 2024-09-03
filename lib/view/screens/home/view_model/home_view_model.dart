@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/constants/local_notification_constants.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/services/locator.dart';
@@ -18,6 +19,7 @@ import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
+import '../../../../services/local_notification_service.dart';
 import '../widgets/greeting_dialog.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -61,6 +63,7 @@ class HomeViewModel extends BaseViewModel {
         if (await inAppReview.isAvailable()) {
           inAppReview.requestReview();
         }
+        setupLocalNotification();
         await prefs.saveString(SharedPrefsConstants.lastTimeToShowInAppReview,
             DateTime.now().toIso8601String());
       }
@@ -149,5 +152,15 @@ class HomeViewModel extends BaseViewModel {
 
   void destroy() {
     adsService.dispose();
+  }
+
+  Future<void> setupLocalNotification() async {
+    final localNotificationService = locator<LocalNotificationService>();
+    final bool isNotificationOn = await prefs.getBoolean(SharedPrefsConstants.isNotificationOn);
+    if(!isNotificationOn) {
+      return;
+    }
+    await localNotificationService.cancelNotification(LocalNotificationConstants.notificationId);
+    await localNotificationService.showRepeatedNotification();
   }
 }
