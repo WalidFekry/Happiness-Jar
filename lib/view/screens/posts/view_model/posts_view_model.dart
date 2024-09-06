@@ -4,7 +4,6 @@ import 'package:clipboard/clipboard.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/view/screens/posts/widgets/post_screenshot.dart';
@@ -16,7 +15,6 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../constants/ads_manager.dart';
 import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/status.dart';
@@ -46,10 +44,8 @@ class PostsViewModel extends BaseViewModel {
   TextEditingController userNameController = TextEditingController();
   TextEditingController postController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  bool isBottomBannerAdLoaded = false;
   bool isLoadingAddPost = false;
   bool isLoadingLikePost = false;
-  BannerAd? bannerAd;
 
   Future<void> getPosts() async {
     Resource<PostsModel> resource = await apiService.getPosts();
@@ -249,23 +245,23 @@ class PostsViewModel extends BaseViewModel {
     isLoadingAddPost = true;
     setState(ViewState.Idle);
 
-      String? token =
-          await FirebaseMessaging.instance.getToken() ?? "no fcm token";
+    String? token =
+        await FirebaseMessaging.instance.getToken() ?? "no fcm token";
 
-      Resource<AddPostResponseModel> resource = await apiService.addPost(
-        token,
-        postController.text,
-        userNameController.text,
-      );
-      if (resource.status == Status.SUCCESS && resource.data?.success != null) {
-        await addPostToDatabase();
-        await checkUserName();
-        return true;
-      } else {
-        isLoadingAddPost = false;
-        setState(ViewState.Idle);
-        return false;
-      }
+    Resource<AddPostResponseModel> resource = await apiService.addPost(
+      token,
+      postController.text,
+      userNameController.text,
+    );
+    if (resource.status == Status.SUCCESS && resource.data?.success != null) {
+      await addPostToDatabase();
+      await checkUserName();
+      return true;
+    } else {
+      isLoadingAddPost = false;
+      setState(ViewState.Idle);
+      return false;
+    }
   }
 
   Future<void> addPostToDatabase() async {
@@ -289,31 +285,7 @@ class PostsViewModel extends BaseViewModel {
     }
   }
 
-  void showBannerAd() {
-    BannerAd(
-      adUnitId: AdsManager.bannerAdUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        onAdLoaded: (ad) {
-          bannerAd = ad as BannerAd;
-          isBottomBannerAdLoaded = true;
-          setState(ViewState.Idle);
-        },
-        onAdFailedToLoad: (ad, err) {
-          debugPrint('Failed to load a banner ad: ${err.message}');
-          ad.dispose();
-        },
-      ),
-    ).load();
-  }
-
   void destroyAds() {
-    if (bannerAd != null) {
-      bannerAd?.dispose();
-      bannerAd = null;
-      isBottomBannerAdLoaded = false;
-    }
     adsService.dispose();
   }
 

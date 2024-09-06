@@ -62,15 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
             .navigateToAndClearStack(RouteName.REGISTER);
         return;
       }
-      viewModel.showOpenAd();
+      viewModel.showOpenAd(context);
       viewModel.getUserData();
       viewModel.refreshToken();
       viewModel.getTodayAdvice();
       viewModel.showInAppReview();
       viewModel.checkNotificationsPermission(context);
-      Future.delayed(const Duration(seconds: 5), () {
-        viewModel.showGreetingDialog(context);
-      });
     }, onFinish: (viewModel) {
       viewModel.destroy();
     }, builder: (context, viewModel, child) {

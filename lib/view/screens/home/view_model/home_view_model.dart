@@ -20,14 +20,11 @@ import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../../services/local_notification_service.dart';
-import '../widgets/greeting_dialog.dart';
 
 class HomeViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   final apiService = locator<ApiService>();
-  final greetingDialog = locator<GreetingDialog>();
   final adsService = locator<AdsService>();
-
 
   String? lastRefreshTokenTime;
   String? lastTimeToShowInAppReview;
@@ -100,19 +97,15 @@ class HomeViewModel extends BaseViewModel {
     String? userName = await prefs.getString(SharedPrefsConstants.userName);
     await FirebaseMessaging.instance.subscribeToTopic("all");
     String? token = await FirebaseMessaging.instance.getToken();
-      if(token == null || token.isEmpty) {
-        return;
-      }
-      Resource<RefreshTokenModel> resource =
-      await apiService.refreshToken(token, userName);
-      if (resource.status == Status.SUCCESS) {
-        await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
-            DateTime.now().toIso8601String());
-      }
-  }
-
-  void showGreetingDialog(BuildContext context) {
-    greetingDialog.showGreeting(context);
+    if (token == null || token.isEmpty) {
+      return;
+    }
+    Resource<RefreshTokenModel> resource =
+        await apiService.refreshToken(token, userName);
+    if (resource.status == Status.SUCCESS) {
+      await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
+          DateTime.now().toIso8601String());
+    }
   }
 
   Future<void> checkNotificationsPermission(BuildContext context) async {
@@ -126,9 +119,11 @@ class HomeViewModel extends BaseViewModel {
       var status = await Permission.notification.request();
       if (status.isPermanentlyDenied || status.isDenied) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          showDialog(context: context, builder: (context){
-            return const OpenSettingAppDialog();
-          });
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const OpenSettingAppDialog();
+              });
         });
       } else {
         if (kDebugMode) {
@@ -146,8 +141,8 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  void showOpenAd() {
-    adsService.showOpenAd();
+  void showOpenAd(BuildContext context) {
+    adsService.showOpenAd(context);
   }
 
   void destroy() {
@@ -156,11 +151,13 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> setupLocalNotification() async {
     final localNotificationService = locator<LocalNotificationService>();
-    final bool isNotificationOn = await prefs.getBoolean(SharedPrefsConstants.isNotificationOn);
-    if(!isNotificationOn) {
+    final bool isNotificationOn =
+        await prefs.getBoolean(SharedPrefsConstants.isNotificationOn);
+    if (!isNotificationOn) {
       return;
     }
-    await localNotificationService.cancelNotification(LocalNotificationConstants.notificationId);
+    await localNotificationService
+        .cancelNotification(LocalNotificationConstants.notificationId);
     await localNotificationService.showRepeatedNotification();
   }
 }
