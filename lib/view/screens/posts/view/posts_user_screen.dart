@@ -14,7 +14,6 @@ class PostsUserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<PostsViewModel>(onModelReady: (viewModel) {
       viewModel.getLocalPost();
-      viewModel.showBannerAd();
     }, onFinish: (viewModel) {
       viewModel.destroyAds();
     }, builder: (context, viewModel, child) {
@@ -45,13 +44,6 @@ class PostsUserScreen extends StatelessWidget {
             if (!viewModel.isDone) const EmptyPostsUser()
           ],
         ),
-        bottomNavigationBar: viewModel.isBottomBannerAdLoaded
-            ? SizedBox(
-                height: viewModel.bannerAd?.size.height.toDouble(),
-                width: viewModel.bannerAd?.size.width.toDouble(),
-                child: AdWidget(ad: viewModel.bannerAd!),
-              )
-            : const SizedBox(),
       );
     });
   }

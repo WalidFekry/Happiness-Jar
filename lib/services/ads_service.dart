@@ -3,11 +3,13 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
+import 'package:path/path.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../constants/ads_manager.dart';
 import '../constants/shared_preferences_constants.dart';
+import '../view/screens/home/widgets/greeting_dialog.dart';
 import 'navigation_service.dart';
 
 class AdsService {
@@ -15,6 +17,7 @@ class AdsService {
   AppOpenAd? openAd;
   RewardedAd? rewardedAd;
   final prefs = locator<SharedPrefServices>();
+  final greetingDialog = locator<GreetingDialog>();
   final int oneHourInMillis = 3600000;
 
   // Load and show an interstitial ad
@@ -59,7 +62,7 @@ class AdsService {
   }
 
   // Load and show an app open ad
-  Future<void> showOpenAd() async {
+  Future<void> showOpenAd(BuildContext context) async {
     int adDisplayCount =
         await prefs.getInteger(SharedPrefsConstants.openAdDisplayCount);
     int lastAdDisplayTime =
@@ -69,7 +72,7 @@ class AdsService {
     if (currentTime - lastAdDisplayTime > oneHourInMillis) {
       adDisplayCount = 0;
     }
-    if (adDisplayCount < 2) {
+    if (adDisplayCount < 1) {
       await AppOpenAd.load(
           adUnitId: AdsManager.openAdUnitId,
           request: const AdRequest(),
@@ -85,10 +88,12 @@ class AdsService {
             prefs.saveInteger(
                 SharedPrefsConstants.openLastAdDisplayTime, currentTime);
           }, onAdFailedToLoad: (error) {
+            greetingDialog.showGreeting(context);
             debugPrint('Ad failed to load $error');
           }));
     } else {
-      debugPrint('OpenAd limit reached: only 2 ads per hour are allowed.');
+      greetingDialog.showGreeting(context);
+      debugPrint('OpenAd limit reached: only 1 ads per hour are allowed.');
     }
   }
 

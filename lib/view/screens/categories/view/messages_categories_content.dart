@@ -29,7 +29,6 @@ class MessagesCategoriesContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<CategoriesViewModel>(onModelReady: (viewModel) {
       viewModel.getContent(messagesCategories?.categorie);
-      viewModel.showBannerAd();
     }, onFinish: (viewModel) {
       viewModel.destroy();
     }, builder: (context, viewModel, child) {
@@ -334,13 +333,6 @@ class MessagesCategoriesContent extends StatelessWidget {
             if (!viewModel.isDoneContent) const NoInternetWidget()
           ],
         ),
-        bottomNavigationBar: viewModel.isBottomBannerAdLoaded
-            ? SizedBox(
-                height: viewModel.bannerAd?.size.height.toDouble(),
-                width: viewModel.bannerAd?.size.width.toDouble(),
-                child: AdWidget(ad: viewModel.bannerAd!),
-              )
-            : const SizedBox(),
       );
     });
   }
