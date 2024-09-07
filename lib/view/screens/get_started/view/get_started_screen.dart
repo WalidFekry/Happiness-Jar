@@ -6,19 +6,13 @@ import '../../../../constants/app_constants.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../widgets/title_text.dart';
-import '../../base_screen.dart';
-import '../view_model/get_started_view_model.dart';
-import '../widget/get_started_button.dart';
+import '../widgets/get_started_button.dart';
 
 class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<GetStartedViewModel>(
-      onModelReady: (viewModel) {
-      },
-      builder: (context, getStartedViewModel, child) {
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: SafeArea(
@@ -60,7 +54,5 @@ class GetStartedScreen extends StatelessWidget {
             ),
           ),
         );
-      },
-    );
   }
 }

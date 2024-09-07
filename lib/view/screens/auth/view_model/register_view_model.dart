@@ -13,22 +13,23 @@ import '../../../../routs/routs_names.dart';
 import '../../../../services/navigation_service.dart';
 
 class RegisterViewModel extends BaseViewModel {
-
   final prefs = locator<SharedPrefServices>();
   final TextEditingController nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   File? image;
 
   Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-        image = File(pickedFile.path);
+      image = File(pickedFile.path);
     }
     setState(ViewState.Idle);
   }
 
   Future<void> saveData() async {
-    await prefs.saveString(SharedPrefsConstants.userName, nameController.text.trim());
+    await prefs.saveString(
+        SharedPrefsConstants.userName, nameController.text.trim());
     if (image != null) {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
@@ -40,9 +41,12 @@ class RegisterViewModel extends BaseViewModel {
     locator<NavigationService>().navigateToAndClearStack(RouteName.HOME);
   }
 
+  void setDoneGetStarted() {
+    prefs.saveBoolean(SharedPrefsConstants.getStarted, true);
+  }
+
   void destroy() {
     image = null;
     nameController.dispose();
   }
-
 }
