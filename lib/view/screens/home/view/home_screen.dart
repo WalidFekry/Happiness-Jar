@@ -46,10 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    super.initState();
     controller = PageController(initialPage: selectedIndex);
     setFirebaseMessaging();
     setLocalNotification();
-    super.initState();
   }
 
   @override
@@ -245,8 +245,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    controller?.dispose();
     super.dispose();
+    controller?.dispose();
+    streamController.close();
   }
 
   void setLocalNotification() {

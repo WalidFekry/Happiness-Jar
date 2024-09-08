@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:happiness_jar/constants/local_notification_constants.dart';
+import 'package:happiness_jar/services/locator.dart';
+import 'package:happiness_jar/services/navigation_service.dart';
+
+import '../routs/routs_names.dart';
 
 class LocalNotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -58,7 +62,7 @@ class LocalNotificationService {
   }
 }
 
-final StreamController<NotificationResponse?> streamController = StreamController();
+final StreamController<NotificationResponse?> streamController = StreamController<NotificationResponse?>.broadcast();
 
 void onTap(NotificationResponse notificationResponse) {
   streamController.add(notificationResponse);

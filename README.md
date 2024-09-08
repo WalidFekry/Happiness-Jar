@@ -99,6 +99,8 @@
   google_mobile_ads: ^5.1.0
   flutter_fortune_wheel: ^1.3.1
   cached_network_image: ^3.3.1
+  flutter_local_notifications: ^17.2.2
+  flutter_native_splash: ^2.4.1
 ```
 
 ## ☢️ Usage
