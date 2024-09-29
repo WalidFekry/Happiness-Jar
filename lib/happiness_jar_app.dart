@@ -9,6 +9,7 @@ import 'package:happiness_jar/providers/theme_provider.dart';
 import 'package:happiness_jar/routs/app_router.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/firebase_options.dart';
+import 'package:happiness_jar/services/firebase_service.dart';
 import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -23,7 +24,7 @@ Future<void> initServices() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseService.init();
   setupLocator();
   await locator<LocalNotificationService>().init();
 }
@@ -60,13 +61,6 @@ class HappinessJarApp extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  if (kDebugMode) {
-    print('Handling a background message: ${message.messageId}');
   }
 }
 
