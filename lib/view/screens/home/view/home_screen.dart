@@ -176,7 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // The app is in the foreground and you receive a notification
-      checkMessagePayload(message);
+      final localNotificationService = locator<LocalNotificationService>();
+      localNotificationService.showNotificationFromFCM(message);
       if (kDebugMode) {
         print('onMessage: Message clicked!');
       }
@@ -252,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void setLocalNotification() {
     streamController.stream.listen((notificationResponse) {
-      if(notificationResponse?.payload == LocalNotificationConstants.notificationPayload){
+      if(notificationResponse?.payload == LocalNotificationConstants.notificationPayload || notificationResponse?.payload == LocalNotificationConstants.notificationPayload_2) {
         jumpToPage(1);
       }
     });

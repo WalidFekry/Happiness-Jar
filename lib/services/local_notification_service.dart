@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:happiness_jar/constants/local_notification_constants.dart';
 import 'package:happiness_jar/services/locator.dart';
@@ -20,6 +21,39 @@ class LocalNotificationService {
       settings,
       onDidReceiveNotificationResponse: onTap,
       onDidReceiveBackgroundNotificationResponse: onTap,
+    );
+  }
+
+  // Show notification from FCM.
+  Future<void> showNotificationFromFCM(RemoteMessage message) async {
+    const AndroidNotificationDetails android = AndroidNotificationDetails(
+      LocalNotificationConstants.channelId_2,
+      LocalNotificationConstants.channelName_2,
+      channelDescription: LocalNotificationConstants.channelDescription,
+      importance: Importance.max,
+      priority: Priority.max,
+      autoCancel: false,
+      sound: RawResourceAndroidNotificationSound('notification_sound'),
+    );
+
+    const DarwinNotificationDetails ios = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+      interruptionLevel: InterruptionLevel.active,
+    );
+
+    NotificationDetails details = const NotificationDetails(
+      android: android,
+      iOS: ios,
+    );
+
+    await flutterLocalNotificationsPlugin.show(
+      LocalNotificationConstants.notificationId_2,
+      message.notification?.title,
+      message.notification?.body,
+      details,
+      payload: LocalNotificationConstants.notificationPayload_2,
     );
   }
 
