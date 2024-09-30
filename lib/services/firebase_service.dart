@@ -4,12 +4,14 @@ import 'package:flutter/foundation.dart';
 
 class FirebaseService {
 
+  static FirebaseMessaging messaging = FirebaseMessaging.instance;
+
   static Future<void> init() async {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   }
 
   static Future<void> requestPermission() async {
-    await FirebaseMessaging.instance.requestPermission(
+    await messaging.requestPermission(
       sound: true,
       alert: true,
       badge: true,
