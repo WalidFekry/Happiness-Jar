@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/no_internet.dart';
 import 'package:iconly/iconly.dart';

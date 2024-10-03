@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
