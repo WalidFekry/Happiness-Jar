@@ -12,15 +12,11 @@ import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'constants/shared_preferences_constants.dart';
 import 'services/locator.dart';
 
 Future<void> initServices() async {
   MobileAds.instance.initialize();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // Pass all uncaught "fatal" errors from the framework to Crashlytics
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   FirebaseService.init();
   setupLocator();
   await locator<LocalNotificationService>().init();

@@ -95,7 +95,6 @@ class HomeViewModel extends BaseViewModel {
 
   sendToken() async {
     String? userName = await prefs.getString(SharedPrefsConstants.userName);
-    await FirebaseMessaging.instance.subscribeToTopic("all");
     String? token = await FirebaseMessaging.instance.getToken();
     if (token == null || token.isEmpty) {
       return;
