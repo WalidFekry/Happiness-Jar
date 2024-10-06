@@ -8,6 +8,7 @@ import 'package:happiness_jar/constants/local_notification_constants.dart';
 class LocalNotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
   // Init the plugin.
   Future init() async {
     InitializationSettings settings = const InitializationSettings(
