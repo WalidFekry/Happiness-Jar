@@ -6,5 +6,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();
   Provider.debugCheckInvalidValueType = null;
-  runApp(easyLocalization(const HappinessJarApp()));
+  final getStarted = await checkFirstOpen();
+  runApp(easyLocalization(HappinessJarApp(getStarted)));
   }

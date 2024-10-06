@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/constants/local_notification_constants.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/services/locator.dart';
@@ -18,15 +19,13 @@ import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
-import '../widgets/greeting_dialog.dart';
+import '../../../../services/local_notification_service.dart';
 
 class HomeViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   final apiService = locator<ApiService>();
-  final greetingDialog = locator<GreetingDialog>();
   final adsService = locator<AdsService>();
-  bool isLogin = false;
-  bool getStarted = false;
+
   String? lastRefreshTokenTime;
   String? lastTimeToShowInAppReview;
   String? getTodayAdviceTime;
@@ -61,6 +60,7 @@ class HomeViewModel extends BaseViewModel {
         if (await inAppReview.isAvailable()) {
           inAppReview.requestReview();
         }
+        setupLocalNotification();
         await prefs.saveString(SharedPrefsConstants.lastTimeToShowInAppReview,
             DateTime.now().toIso8601String());
       }
@@ -81,32 +81,31 @@ class HomeViewModel extends BaseViewModel {
     if (lastRefreshTokenTime != "") {
       DateTime lastRunTime = DateTime.parse(lastRefreshTokenTime!);
       Duration difference = DateTime.now().difference(lastRunTime);
-      if (difference.inHours >= 48) {
+      if (difference.inHours >= 24) {
         await sendToken();
       } else {
-        print('Function has already been run within the last 48 hours.');
+        if (kDebugMode) {
+          print('Function has already been run within the last 24 hours.');
+        }
       }
     } else {
       await sendToken();
     }
-    setState(ViewState.Idle);
   }
 
   sendToken() async {
     String? userName = await prefs.getString(SharedPrefsConstants.userName);
-    FirebaseMessaging.instance.subscribeToTopic("all");
-    FirebaseMessaging.instance.getToken().then((value) async {
-      Resource<RefreshTokenModel> resource =
-          await apiService.refreshToken(value!, userName);
-      if (resource.status == Status.SUCCESS) {
-        await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
-            DateTime.now().toIso8601String());
-      }
-    });
-  }
-
-  void showGreetingDialog(BuildContext context) {
-    greetingDialog.showGreeting(context);
+    await FirebaseMessaging.instance.subscribeToTopic("all");
+    String? token = await FirebaseMessaging.instance.getToken();
+    if (token == null || token.isEmpty) {
+      return;
+    }
+    Resource<RefreshTokenModel> resource =
+        await apiService.refreshToken(token, userName);
+    if (resource.status == Status.SUCCESS) {
+      await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
+          DateTime.now().toIso8601String());
+    }
   }
 
   Future<void> checkNotificationsPermission(BuildContext context) async {
@@ -120,9 +119,11 @@ class HomeViewModel extends BaseViewModel {
       var status = await Permission.notification.request();
       if (status.isPermanentlyDenied || status.isDenied) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          showDialog(context: context, builder: (context){
-            return const OpenSettingAppDialog();
-          });
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const OpenSettingAppDialog();
+              });
         });
       } else {
         if (kDebugMode) {
@@ -140,11 +141,23 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  void showOpenAd() {
-    adsService.showOpenAd();
+  void showOpenAd(BuildContext context) {
+    adsService.showOpenAd(context);
   }
 
   void destroy() {
     adsService.dispose();
+  }
+
+  Future<void> setupLocalNotification() async {
+    final localNotificationService = locator<LocalNotificationService>();
+    final bool isNotificationOn =
+        await prefs.getBoolean(SharedPrefsConstants.isNotificationOn);
+    if (!isNotificationOn) {
+      return;
+    }
+    await localNotificationService
+        .cancelNotification(LocalNotificationConstants.notificationId);
+    await localNotificationService.showRepeatedNotification();
   }
 }

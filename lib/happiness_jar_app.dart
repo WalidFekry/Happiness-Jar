@@ -1,6 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/constants/theme_data.dart';
@@ -8,10 +6,14 @@ import 'package:happiness_jar/providers/theme_provider.dart';
 import 'package:happiness_jar/routs/app_router.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/firebase_options.dart';
+import 'package:happiness_jar/services/firebase_service.dart';
+import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'constants/shared_preferences_constants.dart';
 import 'services/locator.dart';
 
 Future<void> initServices() async {
@@ -19,14 +21,20 @@ Future<void> initServices() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseService.init();
   setupLocator();
+  await locator<LocalNotificationService>().init();
+}
+
+ Future<bool> checkFirstOpen() async {
+  final prefs = locator<SharedPrefServices>();
+  await prefs.init();
+  return await prefs.getBoolean(SharedPrefsConstants.getStarted);
 }
 
 class HappinessJarApp extends StatelessWidget {
-  const HappinessJarApp({super.key});
-
+  const HappinessJarApp(this.getStarted,{super.key});
+  final bool getStarted;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -43,20 +51,13 @@ class HappinessJarApp extends StatelessWidget {
               isDarkTheme: themeProvider.getIsDarkTheme,
               context: context,
             ),
-            initialRoute: RouteName.HOME,
+            initialRoute: getStarted ? RouteName.HOME : RouteName.GET_STARTED,
             navigatorKey: locator<NavigationService>().navigatorKey,
             onGenerateRoute: AppRouter.generateRoute,
           );
         },
       ),
     );
-  }
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  if (kDebugMode) {
-    print('Handling a background message: ${message.messageId}');
   }
 }
 

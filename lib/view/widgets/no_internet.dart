@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
-
-import '../../constants/app_consts.dart';
+import '../../constants/app_constants.dart';
 import '../../constants/assets_manager.dart';
 
 class NoInternetWidget extends StatelessWidget {
@@ -23,7 +22,7 @@ class NoInternetWidget extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: SubtitleTextWidget(
-            label: AppConsts.noInternetMessage,
+            label: AppConstants.noInternetMessage,
             textAlign: TextAlign.center,
           ),
         )

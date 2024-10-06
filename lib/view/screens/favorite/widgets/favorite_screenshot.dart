@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 
 import '../../../../constants/app_colors.dart';
+import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../widgets/content_text.dart';
 import '../model/favorite_messages_model.dart';
@@ -54,7 +54,7 @@ class FavoriteScreenshot extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: ContentTextWidget(
                       color: Colors.black,
-                      label: AppConsts.copyMessage,                     textAlign: TextAlign.center)),
+                      label: AppConstants.copyMessage,textAlign: TextAlign.center)),
             ],
           ),
         ),

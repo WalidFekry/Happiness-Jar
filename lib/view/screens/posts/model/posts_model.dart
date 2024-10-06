@@ -28,8 +28,10 @@ class PostItem implements DatabaseModel {
   int? id;
   String? userName;
   String? text;
+  int? likes;
   String? createdAt;
   bool isFavourite = false;
+  bool isLike = false;
 
   PostItem({required this.userName, required this.text, required this.createdAt});
 
@@ -38,6 +40,7 @@ class PostItem implements DatabaseModel {
     text = json['text'];
     userName = json['user_name'];
     createdAt = json['created_at'];
+    likes = json['likes'];
   }
 
   Map<String, dynamic> toJson() {

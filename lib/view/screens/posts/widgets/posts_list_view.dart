@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_jar/view/screens/posts/view_model/posts_view_model.dart';
@@ -12,7 +11,6 @@ import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
-import '../../../widgets/title_text.dart';
 import '../dialogs/show_post_dialog.dart';
 
 class PostsListView extends StatelessWidget {
@@ -48,40 +46,87 @@ class PostsListView extends StatelessWidget {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SvgPicture.asset(
-                          AssetsManager.quote,
-                          width: 30,
-                          height: 30,
-                          colorFilter: ColorFilter.mode(
-                              Theme.of(context)
-                                  .cardColor,
-                              BlendMode.srcIn),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AssetsManager.quote,
+                                width: 30,
+                                height: 30,
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).cardColor,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                              horizontalSpace(10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SubtitleTextWidget(
+                                    label:
+                                        "بقلم : ${viewModel.list[index].userName}",
+                                    fontSize: 16,
+                                    maxLines: 1,
+                                    overflew: TextOverflow.ellipsis,
+                                  ),
+                                  verticalSpace(2.5),
+                                  SubtitleTextWidget(
+                                    label: viewModel.list[index].createdAt,
+                                    fontSize: 14,
+                                    maxLines: 1,
+                                    overflew: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        horizontalSpace(10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SubtitleTextWidget(
-                              label: "بقلم : ${viewModel.list[index].userName}",
-                              fontSize: 16,
-                              maxLines: 1,
-                            ),
-                            verticalSpace(2.5),
-                            SubtitleTextWidget(
-                              label: viewModel.list[index].createdAt,
-                              fontSize: 14,
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
+                        if (!viewModel.isLocalDatebase)
+                          Row(
+                            children: [
+                              SubtitleTextWidget(
+                                label: '[${viewModel.list[index].likes}]',
+                                fontSize: 16,
+                                maxLines: 1,
+                              ),
+                              horizontalSpace(2.5),
+                              !viewModel.isLoadingLikePost
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        if (!viewModel.list[index].isLike) {
+                                          viewModel.likePost(index);
+                                        } else {
+                                          viewModel.unLikePost(index);
+                                        }
+                                      },
+                                      child: SvgPicture.asset(
+                                        viewModel.list[index].isLike
+                                            ? AssetsManager.liked
+                                            : AssetsManager.like,
+                                        width: 25,
+                                        height: 25,
+                                        colorFilter: ColorFilter.mode(
+                                          Theme.of(context).cardColor,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                    )
+                                  : CircularProgressIndicator(
+                                backgroundColor: Theme.of(context).cardColor,
+                                strokeAlign: -2,
+                                strokeWidth: 5,
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                     Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ContentTextWidget(
                           label: viewModel.list[index].text,
-                          textAlign:  TextAlign.center,
+                          textAlign: TextAlign.center,
                         )),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -90,7 +135,7 @@ class PostsListView extends StatelessWidget {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          if(!viewModel.isLocalDatebase)
+                          if (!viewModel.isLocalDatebase)
                             Flexible(
                               child: IconButton(
                                   onPressed: () {
@@ -99,8 +144,9 @@ class PostsListView extends StatelessWidget {
                                       showTopSnackBar(
                                         Overlay.of(context),
                                         CustomSnackBar.success(
-                                          backgroundColor:
-                                          Theme.of(context).iconTheme.color!,
+                                          backgroundColor: Theme.of(context)
+                                              .iconTheme
+                                              .color!,
                                           message: "تمت الإضافة للمفضلة",
                                           icon: Icon(
                                             IconlyBold.heart,
@@ -115,41 +161,37 @@ class PostsListView extends StatelessWidget {
                                   },
                                   icon: viewModel.list[index].isFavourite
                                       ? Icon(IconlyBold.heart,
-                                      color: Theme.of(context)
-                                          .iconTheme
-                                          .color)
+                                          color:
+                                              Theme.of(context).iconTheme.color)
                                       : Icon(IconlyLight.heart,
-                                      color: Theme.of(context)
-                                          .iconTheme
-                                          .color)),
+                                          color: Theme.of(context)
+                                              .iconTheme
+                                              .color)),
                             ),
-                          if(viewModel.isLocalDatebase)
-                          Flexible(
-                            child: IconButton(
-                              onPressed: () {
-                                viewModel
-                                    .deleteLocalPost(index);
-                                showTopSnackBar(
-                                  Overlay.of(context),
-                                  CustomSnackBar.error(
-                                    backgroundColor:
-                                    Theme.of(context).cardColor,
-                                    message: "تم الحذف",
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Theme.of(context)
-                                          .iconTheme
-                                          .color,
-                                      size: 50,
+                          if (viewModel.isLocalDatebase)
+                            Flexible(
+                              child: IconButton(
+                                onPressed: () {
+                                  viewModel.deleteLocalPost(index);
+                                  showTopSnackBar(
+                                    Overlay.of(context),
+                                    CustomSnackBar.error(
+                                      backgroundColor:
+                                          Theme.of(context).cardColor,
+                                      message: "تم الحذف",
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                        size: 50,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              icon: Icon(IconlyLight.delete,
-                                  color:
-                                  Theme.of(context).cardColor),
+                                  );
+                                },
+                                icon: Icon(IconlyLight.delete,
+                                    color: Theme.of(context).cardColor),
+                              ),
                             ),
-                          ),
                           Flexible(
                             child: IconButton(
                               onPressed: () {
@@ -158,9 +200,8 @@ class PostsListView extends StatelessWidget {
                                 showTopSnackBar(
                                   Overlay.of(context),
                                   CustomSnackBar.success(
-                                    backgroundColor: Theme.of(context)
-                                        .iconTheme
-                                        .color!,
+                                    backgroundColor:
+                                        Theme.of(context).iconTheme.color!,
                                     message: "تم النسخ",
                                     icon: Icon(
                                       Icons.copy,

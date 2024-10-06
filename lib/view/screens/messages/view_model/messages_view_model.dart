@@ -24,6 +24,7 @@ import '../model/wheel_model.dart';
 
 class MessagesViewModel extends BaseViewModel {
   List<Messages> list = [];
+  List<String> favoriteIds = [];
   String? userName;
   String? lastGetMessagesTime;
   final apiService = locator<ApiService>();
@@ -81,13 +82,14 @@ class MessagesViewModel extends BaseViewModel {
 
 
   Future<void> getMessages() async {
-    if (list.isNotEmpty) {
-      return;
-    }
     Resource<MessagesModel> resource = await apiService.getMessages();
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.messageFavoriteIds);
     if (resource.status == Status.SUCCESS) {
       noInternet = false;
       list = resource.data!.content!;
+      for (var message in list){
+        message.isFavourite = favoriteIds.contains(message.id.toString());
+      }
     } else {
       noInternet = true;
       showMessages = false;
@@ -183,6 +185,9 @@ class MessagesViewModel extends BaseViewModel {
     DateTime now = DateTime.now();
     String createdAt = "${now.year}-${now.month}-${now.day}";
     await appDatabase.saveFavoriteMessage(list[index].body, createdAt);
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.messageFavoriteIds);
+    favoriteIds.add(list[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.messageFavoriteIds, favoriteIds);
     list[index].isFavourite = !list[index].isFavourite;
     setState(ViewState.Idle);
   }
@@ -222,4 +227,14 @@ class MessagesViewModel extends BaseViewModel {
       }
     }
   }
+
+  Future<void> removeFavoriteMessage(index) async {
+    await appDatabase.deleteFavoriteMessageByText(list[index].body!);
+    favoriteIds = await prefs.getStringList(SharedPrefsConstants.messageFavoriteIds);
+    favoriteIds.remove(list[index].id.toString());
+    await prefs.saveStringList(SharedPrefsConstants.messageFavoriteIds, favoriteIds);
+    list[index].isFavourite = !list[index].isFavourite;
+    setState(ViewState.Idle);
+  }
+
 }

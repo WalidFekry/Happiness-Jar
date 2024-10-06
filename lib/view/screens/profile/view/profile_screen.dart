@@ -1,19 +1,16 @@
-
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/constants/app_consts.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/info_dialog.dart';
-import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../../services/locator.dart';
-import '../../../../providers/theme_provider.dart';
+import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
-import '../../../../services/navigation_service.dart';
-import '../../../widgets/app_bar_text.dart';
+import '../../../../providers/theme_provider.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
@@ -29,7 +26,9 @@ class ProfileScreen extends StatelessWidget {
       viewModel.getUserData();
     }, builder: (context, viewModel, child) {
       return Scaffold(
-          appBar: const CustomAppBar(title: 'حسابي الشخصي',),
+          appBar: const CustomAppBar(
+            title: 'حسابي الشخصي',
+          ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.only(top: 20),
             child: Column(
@@ -51,8 +50,8 @@ class ProfileScreen extends StatelessWidget {
                                 image: viewModel.image != null
                                     ? FileImage(viewModel.image!)
                                     : const AssetImage(
-                                    AssetsManager.userProfile)
-                                as ImageProvider,
+                                            AssetsManager.userProfile)
+                                        as ImageProvider,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -80,20 +79,24 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: TitleTextWidget(
-                                      label: "مرحباً يا ${viewModel.userName} 🦋"),
+                                      label:
+                                          "مرحباً يا ${viewModel.userName} 🦋"),
                                 ),
                                 IconButton(
                                   onPressed: () async {
-                                    final newUserName = await ChangeNameDialog.show(context, viewModel.userName);
+                                    final newUserName = await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return ChangeNameDialog(
+                                              userName: viewModel.userName);
+                                        });
                                     if (newUserName != null) {
                                       viewModel.changeUserName(newUserName);
                                     }
                                   },
-                                  icon: Icon(
-                                      Icons.edit,
+                                  icon: Icon(Icons.edit,
                                       color: Theme.of(context).iconTheme.color,
-                                      size: 25
-                                  ),
+                                      size: 25),
                                 ),
                               ],
                             ),
@@ -118,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       verticalSpace(7),
-                      const SubtitleTextWidget(label: "اعدادات التطبيق"),
+                      const SubtitleTextWidget(label: "إعدادات التطبيق"),
                       verticalSpace(7),
                       SwitchListTile(
                         secondary: Image.asset(
@@ -139,22 +142,69 @@ class ProfileScreen extends StatelessWidget {
                         thickness: 1,
                         color: Colors.grey,
                       ),
-                      if(viewModel.version != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ListTile(
-                          title: const ContentTextWidget(
-                            label: 'إصدار التطبيق',
-                          ),
-                          leading: Icon(Icons.verified,color:Theme.of(context).iconTheme.color,),
-                          trailing: ContentTextWidget(
-                            label: viewModel.version,
-                          ),
-                          onTap: () {
-                            viewModel.openFacebookPage();
-                          },
+                      SwitchListTile(
+                        secondary: Image.asset(
+                          AssetsManager.notificationJar,
                         ),
+                        title: const ContentTextWidget(
+                          label: 'إشعارات التطبيق',
+                        ),
+                        value: viewModel.isNotificationOn,
+                        onChanged: (value) {
+                          viewModel.enableNotification(value);
+                          value
+                              ? showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.success(
+                                    backgroundColor:
+                                        Theme.of(context).iconTheme.color!,
+                                    message: "تم تفعيل الإشعارات",
+                                    icon: Icon(
+                                      Icons.notifications_active,
+                                      color: Theme.of(context).cardColor,
+                                      size: 50,
+                                    ),
+                                  ),
+                                )
+                              : showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.error(
+                                    backgroundColor:
+                                        Theme.of(context).cardColor,
+                                    message: "تم إيقاف الإشعارات",
+                                    icon: Icon(
+                                      Icons.notifications_off,
+                                      color: Theme.of(context).iconTheme.color,
+                                      size: 50,
+                                    ),
+                                  ),
+                                );
+                        },
                       ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      if (viewModel.version != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ListTile(
+                            title: const ContentTextWidget(
+                              label: 'إصدار التطبيق',
+                            ),
+                            leading: Icon(
+                              Icons.verified,
+                              color: Theme.of(context).iconTheme.color,
+                              size: 30,
+                            ),
+                            trailing: ContentTextWidget(
+                              label: viewModel.version,
+                            ),
+                            onTap: () {
+                              viewModel.openFacebookPage();
+                            },
+                          ),
+                        ),
                       const Divider(
                         thickness: 2,
                         color: Colors.grey,
@@ -181,7 +231,11 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         leading: const Icon(Icons.info),
                         onTap: () {
-                          showDialog(context: context, builder: (context) => const InfoDialog(content: AppConsts.appInfo,));
+                          showDialog(
+                              context: context,
+                              builder: (context) => const InfoDialog(
+                                    content: AppConstants.appInfo,
+                                  ));
                         },
                       ),
                       const Divider(

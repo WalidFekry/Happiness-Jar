@@ -6,6 +6,7 @@ import 'package:happiness_jar/view/screens/categories/model/messages_content_mod
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
 import 'package:happiness_jar/view/screens/home/model/today_advice.dart';
 import 'package:happiness_jar/view/screens/posts/model/add_post_response_model.dart';
+import 'package:happiness_jar/view/screens/posts/model/like_post_response_model.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -92,7 +93,7 @@ class ApiService {
   }
 
   Future<Resource<RefreshTokenModel>> refreshToken(
-      String fcmToken, String name) async {
+      String? fcmToken, String? name) async {
     try {
       var response = await dio.post(
         ApiConstants.register,
@@ -100,6 +101,21 @@ class ApiService {
       );
       var refreshToken = RefreshTokenModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: refreshToken);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<LikePostResponseModel>> likePost(
+      String? server,int? postId) async {
+    try {
+      var response = await dio.post(
+        ApiConstants.likePost,
+        data: {'server': server,'post_id': postId},
+      );
+      var responseModel = LikePostResponseModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: responseModel);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

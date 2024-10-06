@@ -80,6 +80,7 @@ class NotificationsViewModel extends BaseViewModel {
   }
 
   Future<void> removeFavoriteMessage(int index) async {
+    await appDatabase.deleteFavoriteMessageByText(list[index].text!);
     favoriteIds = await prefs.getStringList(SharedPrefsConstants.notificationFavoriteIds);
     favoriteIds.remove(list[index].id.toString());
     await prefs.saveStringList(SharedPrefsConstants.notificationFavoriteIds, favoriteIds);

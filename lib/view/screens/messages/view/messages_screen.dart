@@ -43,8 +43,7 @@ class MessagesScreen extends StatelessWidget {
                     visible: viewModel.noInternet,
                     child: NoInternetWidget(viewModel.userName)),
                 Visibility(
-                    visible: viewModel.noInternet,
-                    child: verticalSpace(25)),
+                    visible: viewModel.noInternet, child: verticalSpace(25)),
                 Visibility(
                     visible: viewModel.showEmptyJar,
                     child: EmptyMessageWidget(viewModel.userName)),
@@ -75,7 +74,8 @@ class MessagesScreen extends StatelessWidget {
                                   child: Container(
                                     padding: const EdgeInsets.all(14),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).scaffoldBackgroundColor,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 1.0,
@@ -90,39 +90,40 @@ class MessagesScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    child: Stack(
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            const TitleTextWidget(
-                                                label: "إضغط لفتح رسائل البرطمان 💙"),
-                                            TitleTextWidget(
-                                                label: 'يا ${viewModel.userName} 👇'),
-                                            verticalSpace(15),
-                                            Center(
-                                              child: Image.asset(
-                                                AssetsManager.appLogo,
-                                                width: 150,
-                                                fit: BoxFit.cover,
-                                              ),
+                                    child: Stack(children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const TitleTextWidget(
+                                              label:
+                                                  "إضغط لفتح رسائل البرطمان 💙"),
+                                          TitleTextWidget(
+                                              label:
+                                                  'يا ${viewModel.userName} 👇'),
+                                          verticalSpace(15),
+                                          Center(
+                                            child: Image.asset(
+                                              AssetsManager.appLogo,
+                                              width: 150,
+                                              fit: BoxFit.cover,
                                             ),
-                                          ],
-                                        ),
-                                        Positioned(
-                                          bottom: -20,
-                                          left: -100,
-                                          child: Lottie.asset(
-                                            AssetsManager.openBox,
-                                            width: 150,
-                                            height: 150,
-                                            fit: BoxFit.cover,
                                           ),
+                                        ],
+                                      ),
+                                      Positioned(
+                                        bottom: -20,
+                                        left: -100,
+                                        child: Lottie.asset(
+                                          AssetsManager.openBox,
+                                          width: 150,
+                                          height: 150,
+                                          fit: BoxFit.cover,
                                         ),
-                                      ]
-                                    ),
+                                      ),
+                                    ]),
                                   ),
                                 ),
                               ),
@@ -219,25 +220,33 @@ class MessagesScreen extends StatelessWidget {
                                                         .iconTheme
                                                         .color),
                                             onPressed: () {
-                                              viewModel.saveFavoriteMessage(
-                                                  viewModel.currentPage);
-                                              showTopSnackBar(
-                                                Overlay.of(context),
-                                                CustomSnackBar.success(
-                                                  backgroundColor:
-                                                      Theme.of(context)
-                                                          .iconTheme
-                                                          .color!,
-                                                  message:
-                                                      "تمت الإضافة للمفضلة",
-                                                  icon: Icon(
-                                                    IconlyBold.heart,
-                                                    color: Theme.of(context)
-                                                        .cardColor,
-                                                    size: 50,
+                                              if (!viewModel
+                                                  .list[viewModel.currentPage]
+                                                  .isFavourite) {
+                                                viewModel.saveFavoriteMessage(
+                                                    viewModel.currentPage);
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor:
+                                                        Theme.of(context)
+                                                            .iconTheme
+                                                            .color!,
+                                                    message:
+                                                        "تمت الإضافة للمفضلة",
+                                                    icon: Icon(
+                                                      IconlyBold.heart,
+                                                      color: Theme.of(context)
+                                                          .cardColor,
+                                                      size: 50,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              } else {
+                                                viewModel
+                                                    .removeFavoriteMessage(
+                                                    viewModel.currentPage);
+                                              }
                                             },
                                           ),
                                         ),
@@ -260,19 +269,19 @@ class MessagesScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        if(Platform.isAndroid)
-                                        Flexible(
-                                          child: IconButton(
-                                            onPressed: () {
-                                              viewModel.shareFacebook(
-                                                  viewModel.currentPage);
-                                            },
-                                            icon: Icon(Icons.facebook,
-                                                color: Theme.of(context)
-                                                    .iconTheme
-                                                    .color),
+                                        if (Platform.isAndroid)
+                                          Flexible(
+                                            child: IconButton(
+                                              onPressed: () {
+                                                viewModel.shareFacebook(
+                                                    viewModel.currentPage);
+                                              },
+                                              icon: Icon(Icons.facebook,
+                                                  color: Theme.of(context)
+                                                      .iconTheme
+                                                      .color),
+                                            ),
                                           ),
-                                        ),
                                         horizontalSpace(10),
                                         Visibility(
                                           visible: viewModel.nextMessage,

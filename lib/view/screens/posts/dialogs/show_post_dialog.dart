@@ -16,6 +16,7 @@ class ShowPostDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       title: Row(
@@ -51,8 +52,10 @@ class ShowPostDialog extends StatelessWidget {
             width: 100,
             fit: BoxFit.cover,
           ),
-          ContentTextWidget(
-              label: viewModel.list[index].text, textAlign: TextAlign.center),
+          Flexible(
+            child: ContentTextWidget(
+                label: viewModel.list[index].text, textAlign: TextAlign.center),
+          ),
         ],
       ),
       actions: [

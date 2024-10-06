@@ -21,7 +21,7 @@ class SharedPrefServices {
   }
 
   Future<List<String>> getStringList(String key) async {
-    return _prefs?.getStringList(key) ?? [];
+    return await Future.value(_prefs?.getStringList(key) ?? []);
   }
 
   Future<void> saveBoolean(String key, bool value) async {
@@ -32,8 +32,8 @@ class SharedPrefServices {
     await _prefs?.setInt(key, value);
   }
 
-  Future<bool> getBoolean(String? key) async {
-    return _prefs?.getBool(key!) ?? false;
+  Future<bool> getBoolean(String key) async {
+    return await Future.value(_prefs?.getBool(key) ?? false);
   }
 
   Future<bool> isContain(String? key) async {
@@ -41,7 +41,7 @@ class SharedPrefServices {
   }
 
   Future<int> getInteger(String? key) async {
-    return _prefs?.getInt(key!) ?? 0;
+    return await Future.value(_prefs!.getInt(key!) ?? 0);
   }
 
   Future<void> saveInteger(String? key, int value) async {
@@ -52,12 +52,12 @@ class SharedPrefServices {
     await _prefs?.setDouble(key!, value);
   }
 
-  Future<double> getDouble(String? key) async {
-    return _prefs?.getDouble(key!) ?? 0.0;
+  Future<double> getDouble(String key) async {
+    return await Future.value(_prefs?.getDouble(key) ?? 0.0);
   }
 
-  Future<String> getString(String? key, {String defaultValue = ""}) async {
-    return _prefs?.getString(key!) ?? defaultValue;
+  Future<String> getString(String key, {String defaultValue = ""}) async {
+    return await Future.value(_prefs?.getString(key) ?? defaultValue);
   }
 
   Future<void> removeFromLocalStorage({@required String? key}) async {

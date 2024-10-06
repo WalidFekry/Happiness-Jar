@@ -2,7 +2,7 @@ import 'dart:io';
 
 class AdsManager {
 
-  static bool testAds = false;
+  static bool testAds = true;
 
   static String get bannerAdUnitId {
     if (!testAds) {
@@ -21,9 +21,9 @@ class AdsManager {
   static String get interstitialAdUnitId {
     if (!testAds) {
       if (Platform.isAndroid) {
-        return "ca-app-pub-4380347337966794/5169542253";
+        return "ca-app-pub-1264835814900584/7461169229";
       } else if (Platform.isIOS) {
-        return "ca-app-pub-4380347337966794/8692754213";
+        return "ca-app-pub-1264835814900584/7385137864";
       } else {
         throw UnsupportedError("Unsupported platform");
       }
@@ -35,9 +35,9 @@ class AdsManager {
   static String get rewardedAdUnitId {
     if (!testAds) {
       if (Platform.isAndroid) {
-        return "ca-app-pub-4380347337966794/6471015639";
+        return "ca-app-pub-1264835814900584/3585493651";
       } else if (Platform.isIOS) {
-        return "ca-app-pub-4380347337966794/7379672541";
+        return "ca-app-pub-1264835814900584/1278904258";
       } else {
         throw UnsupportedError("Unsupported platform");
       }
@@ -49,9 +49,9 @@ class AdsManager {
   static String get openAdUnitId {
     if (!testAds) {
       if (Platform.isAndroid) {
-        return "ca-app-pub-4380347337966794/6662587325";
+        return "ca-app-pub-1264835814900584/6403228681";
       } else if (Platform.isIOS) {
-        return "ca-app-pub-4380347337966794/3935251551";
+        return "ca-app-pub-1264835814900584/1917188763";
       } else {
         throw UnsupportedError("Unsupported platform");
       }

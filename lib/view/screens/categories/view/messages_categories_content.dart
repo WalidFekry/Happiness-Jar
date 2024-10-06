@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/no_internet.dart';
 import 'package:iconly/iconly.dart';
@@ -12,9 +11,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
-import '../../../../services/locator.dart';
-import '../../../../services/navigation_service.dart';
-import '../../../widgets/app_bar_text.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
@@ -32,7 +28,6 @@ class MessagesCategoriesContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<CategoriesViewModel>(onModelReady: (viewModel) {
       viewModel.getContent(messagesCategories?.categorie);
-      viewModel.showBannerAd();
     }, onFinish: (viewModel) {
       viewModel.destroy();
     }, builder: (context, viewModel, child) {
@@ -337,13 +332,6 @@ class MessagesCategoriesContent extends StatelessWidget {
             if (!viewModel.isDoneContent) const NoInternetWidget()
           ],
         ),
-        bottomNavigationBar: viewModel.isBottomBannerAdLoaded
-            ? SizedBox(
-                height: viewModel.bannerAd?.size.height.toDouble(),
-                width: viewModel.bannerAd?.size.width.toDouble(),
-                child: AdWidget(ad: viewModel.bannerAd!),
-              )
-            : const SizedBox(),
       );
     });
   }

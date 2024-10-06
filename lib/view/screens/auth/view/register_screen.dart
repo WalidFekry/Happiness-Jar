@@ -21,8 +21,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return BaseView<RegisterViewModel>(
       onModelReady: (viewModel) {
+        viewModel.setDoneGetStarted();
       },
-      onFinish:(viewModel) {
+      onFinish: (viewModel) {
         viewModel.destroy();
       },
       builder: (context, viewModel, child) {
@@ -39,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       AssetsManager.registerJar,
                       height: 150,
                       width: 150,
-                      fit:  BoxFit.cover,
+                      fit: BoxFit.cover,
                     ),
                     verticalSpace(15),
                     const TitleTextWidget(
@@ -67,15 +68,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             child: CircleAvatar(
                               backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
+                                  Theme.of(context).scaffoldBackgroundColor,
                               radius: 40,
                               backgroundImage: viewModel.image != null
                                   ? FileImage(viewModel.image!)
                                   : null,
                               child: viewModel.image == null
                                   ? Icon(Icons.add_a_photo,
-                                  size: 40,
-                                  color: Theme.of(context).iconTheme.color)
+                                      size: 40,
+                                      color: Theme.of(context).iconTheme.color)
                                   : null,
                             ),
                           ),
@@ -98,7 +99,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         decoration: InputDecoration(
                           labelText: 'واكتب اسمك هنا ..',
-                          prefixIcon: Icon(IconlyLight.add_user,color: Theme.of(context).iconTheme.color),
+                          prefixIcon: Icon(IconlyLight.add_user,
+                              color: Theme.of(context).iconTheme.color),
                         ),
                       ),
                     ),

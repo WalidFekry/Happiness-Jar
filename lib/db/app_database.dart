@@ -2,7 +2,6 @@
 
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
@@ -89,7 +88,17 @@ class AppDatabase {
     db?.close();
   }
 
-  Future<int?> deleteFavoriteMessage(int? id) async {
+  Future<void> deleteFavoriteMessageByText(String text) async {
+    final Database? db = await getDb();
+    await db?.delete(
+      'favorite_messages',
+      where: 'title = ?',
+      whereArgs: [text],
+    );
+    db?.close();
+  }
+
+  Future<void> deleteFavoriteMessage(int? id) async {
     final Database? db = await getDb();
     await db?.delete(
       'favorite_messages',
@@ -97,7 +106,6 @@ class AppDatabase {
       whereArgs: [id],
     );
     db?.close();
-    return null;
   }
 
   Future<int?> deleteLocalPost(int? id) async {
