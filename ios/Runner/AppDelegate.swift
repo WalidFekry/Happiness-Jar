@@ -66,6 +66,10 @@ import flutter_local_notifications
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
+        let userInfo = response.notification.request.content.userInfo
+        if let action = userInfo["click_action"] as? String {
+            NotificationCenter.default.post(name: NSNotification.Name("FCMNotificationReceived"), object: nil, userInfo: userInfo)
+        }
         completionHandler()
     }
 }
