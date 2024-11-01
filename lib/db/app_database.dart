@@ -60,7 +60,6 @@ class AppDatabase {
     db.execute(
       'CREATE TABLE IF NOT EXISTS feelings_content(id INTEGER UNIQUE, title TEXT, body TEXT, categorie INTEGER)',
     );
-
   }
 
   Future<Database?> getDb() async {

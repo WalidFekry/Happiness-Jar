@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_jar/view/screens/feelings/view_model/feeling_view_model.dart';
+import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -41,25 +42,40 @@ class FeelingsContentListView extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SvgPicture.asset(
-                      AssetsManager.quote,
-                      width: 30,
-                      height: 30,
+                      AssetsManager.quoteDown,
+                      width: 25,
+                      height: 25,
                       colorFilter: ColorFilter.mode(
                         Theme.of(context).cardColor,
                         BlendMode.srcIn,
                       ),
                     ),
+                    const Spacer(),
+                    SubtitleTextWidget(label: viewModel.listOfFeelingsContent[index].title),
+                    const Spacer(),
                   ],
                 ),
+
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ContentTextWidget(
                       label: viewModel.listOfFeelingsContent[index].body,
                       textAlign: TextAlign.center,
                     )),
+                Align(
+                  alignment:Alignment.bottomLeft,
+                  child: SvgPicture.asset(
+                    AssetsManager.quoteUp,
+                    width: 25,
+                    height: 25,
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).cardColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Divider(color: Colors.grey, thickness: 1),
