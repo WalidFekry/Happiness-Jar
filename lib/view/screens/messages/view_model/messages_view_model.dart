@@ -14,6 +14,7 @@ import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';
+import '../../../../services/current_session_service.dart';
 import '../../../../services/locator.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
@@ -44,7 +45,8 @@ class MessagesViewModel extends BaseViewModel {
   final adsService = locator<AdsService>();
 
   Future<void> getUserData() async {
-    userName = await prefs.getString(SharedPrefsConstants.userName);
+    await CurrentSessionService.getUserName();
+    userName = CurrentSessionService.cachedUserName;
     setState(ViewState.Idle);
   }
 

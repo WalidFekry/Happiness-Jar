@@ -16,6 +16,7 @@ import 'package:in_app_review/in_app_review.dart';
 import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/shared_preferences_constants.dart';
+import '../../../../services/current_session_service.dart';
 import '../../../widgets/app_bar_text.dart';
 import '../../base_screen.dart';
 import '../../categories/view/categories_screen.dart';

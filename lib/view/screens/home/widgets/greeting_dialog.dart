@@ -6,6 +6,8 @@ import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/home/widgets/show_greeting_dialog.dart';
 
+import '../../../../services/current_session_service.dart';
+
 class GreetingDialog {
   Future<void> showGreeting(BuildContext context) async {
     final now = DateTime.now();
@@ -14,7 +16,7 @@ class GreetingDialog {
     String? lastEveningShownDate;
     String? userName;
 
-    userName = await prefs.getString(SharedPrefsConstants.userName);
+    userName = CurrentSessionService.cachedUserName;
     lastMorningShownDate =
         await prefs.getString(SharedPrefsConstants.lastMorningGreetingDate);
     lastEveningShownDate =

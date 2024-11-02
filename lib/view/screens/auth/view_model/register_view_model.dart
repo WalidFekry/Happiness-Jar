@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../routs/routs_names.dart';
+import '../../../../services/current_session_service.dart';
 import '../../../../services/navigation_service.dart';
 
 class RegisterViewModel extends BaseViewModel {
@@ -28,14 +29,13 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   Future<void> saveData() async {
-    await prefs.saveString(
-        SharedPrefsConstants.userName, nameController.text.trim());
+    CurrentSessionService.setUserName(nameController.text.trim());
     if (image != null) {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
       const fileName = 'profile_image.png';
       final File localImage = await image!.copy('$path/$fileName');
-      await prefs.saveString(SharedPrefsConstants.userImage, localImage.path);
+      CurrentSessionService.setUserImage(localImage.path);
     }
     await prefs.saveBoolean(SharedPrefsConstants.isLogin, true);
     locator<NavigationService>().navigateToAndClearStack(RouteName.HOME);

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/local_notification_constants.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
+import 'package:happiness_jar/services/current_session_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
@@ -68,8 +69,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> getUserData() async {
-    final imagePath = await prefs.getString(SharedPrefsConstants.userImage);
-    if (imagePath.isNotEmpty) {
+    await CurrentSessionService.getUserName();
+    await CurrentSessionService.getUserImage();
+    final imagePath = CurrentSessionService.cachedUserImage;
+    if (imagePath!.isNotEmpty) {
       image = File(imagePath);
     }
     setState(ViewState.Idle);
@@ -94,7 +97,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   sendToken() async {
-    String? userName = await prefs.getString(SharedPrefsConstants.userName);
+    String? userName = CurrentSessionService.cachedUserName;
     String? token = await FirebaseMessaging.instance.getToken();
     if (token == null || token.isEmpty) {
       return;

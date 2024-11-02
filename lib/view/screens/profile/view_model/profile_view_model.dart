@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
+import 'package:happiness_jar/services/current_session_service.dart';
 import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
@@ -35,9 +36,9 @@ class ProfileViewModel extends BaseViewModel {
   Future<void> getUserData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
-    userName = await prefs.getString(SharedPrefsConstants.userName);
-    final imagePath = await prefs.getString(SharedPrefsConstants.userImage);
-    if (imagePath.isNotEmpty) {
+    userName = CurrentSessionService.cachedUserName;
+    final imagePath = CurrentSessionService.cachedUserImage;
+    if (imagePath!.isNotEmpty) {
       image = File(imagePath);
     }
     isNotificationOn = await prefs.getBoolean(SharedPrefsConstants.isNotificationOn);
@@ -106,7 +107,7 @@ class ProfileViewModel extends BaseViewModel {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
       final File localImage = await image!.copy('$path/$newFileName');
-      await prefs.saveString(SharedPrefsConstants.userImage, localImage.path);
+      CurrentSessionService.setUserImage(localImage.path);
     }
     setState(ViewState.Idle);
   }
@@ -115,12 +116,13 @@ class ProfileViewModel extends BaseViewModel {
     prefs.saveString(SharedPrefsConstants.userName, "");
     prefs.saveString(SharedPrefsConstants.userImage, "");
     prefs.saveBoolean(SharedPrefsConstants.isLogin, false);
+    CurrentSessionService.clearSessionCache();
     setState(ViewState.Idle);
   }
 
   Future<void> changeUserName(String newUserName) async {
     userName = newUserName;
-    await prefs.saveString(SharedPrefsConstants.userName, newUserName);
+    CurrentSessionService.setUserName(newUserName);
     String? token = await FirebaseMessaging.instance.getToken();
     if(token == null || token.isEmpty) {
       setState(ViewState.Idle);

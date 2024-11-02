@@ -21,6 +21,7 @@ import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
+import '../../../../services/current_session_service.dart';
 import '../../../../services/locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../../services/shared_pref_services.dart';
@@ -78,7 +79,7 @@ class PostsViewModel extends BaseViewModel {
   }
 
   Future<void> getUserName() async {
-    userName = await prefs.getString(SharedPrefsConstants.userName);
+    userName = CurrentSessionService.cachedUserName;
     userNameController.text = userName!;
     setState(ViewState.Idle);
   }
@@ -293,8 +294,7 @@ class PostsViewModel extends BaseViewModel {
     if (userName == userNameController.text) {
       return;
     }
-    await prefs.saveString(
-        SharedPrefsConstants.userName, userNameController.text);
+    CurrentSessionService.setUserName(userNameController.text);
   }
 
   Future<void> deleteLocalPost(int index) async {
