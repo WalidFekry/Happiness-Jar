@@ -22,7 +22,7 @@ class EmptyFeelings extends StatelessWidget {
         ),
         verticalSpace(10),
         const Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: SubtitleTextWidget(
             label: AppConstants.emptyFeeling,
             textAlign: TextAlign.center,

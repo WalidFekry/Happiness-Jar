@@ -2,26 +2,29 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:happiness_jar/view/screens/feelings/view_model/feeling_view_model.dart';
+import 'package:happiness_jar/view/screens/feelings/widgets/show_feelings_content_dialog.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../../constants/app_colors.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../widgets/content_text.dart';
+import '../../posts/dialogs/show_post_dialog.dart';
+import '../view_model/feelings_view_model.dart';
 
 class FeelingsContentListView extends StatelessWidget {
   FeelingsContentListView(this.viewModel, {super.key});
 
-  FeelingViewModel viewModel;
+  FeelingsViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: viewModel.listOfFeelingsContent.length-1,
+      itemCount: viewModel.listOfFeelingsContent.length - 1,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
@@ -31,13 +34,13 @@ class FeelingsContentListView extends StatelessWidget {
           ),
           child: GestureDetector(
             onTap: () {
-              // viewModel.showBinyAd();
-              // showDialog(
-              //   context: context,
-              //   builder: (context) {
-              //     return ShowPostDialog(viewModel, index);
-              //   },
-              // );
+              viewModel.showBinyAd();
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return ShowFeelingsContentDialog(viewModel, index);
+                },
+              );
             },
             child: Column(
               children: [
@@ -53,11 +56,11 @@ class FeelingsContentListView extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    SubtitleTextWidget(label: viewModel.listOfFeelingsContent[index].title),
+                    SubtitleTextWidget(
+                        label: viewModel.listOfFeelingsContent[index].title),
                     const Spacer(),
                   ],
                 ),
-
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ContentTextWidget(
@@ -65,7 +68,7 @@ class FeelingsContentListView extends StatelessWidget {
                       textAlign: TextAlign.center,
                     )),
                 Align(
-                  alignment:Alignment.bottomLeft,
+                  alignment: Alignment.bottomLeft,
                   child: SvgPicture.asset(
                     AssetsManager.quoteUp,
                     width: 25,
@@ -86,8 +89,8 @@ class FeelingsContentListView extends StatelessWidget {
                       Flexible(
                         child: IconButton(
                           onPressed: () {
-                            // viewModel.showBinyAd();
-                            // viewModel.copyMessage(index);
+                            viewModel.showBinyAd();
+                            viewModel.copyMessage(index);
                             showTopSnackBar(
                               Overlay.of(context),
                               CustomSnackBar.success(
@@ -109,7 +112,7 @@ class FeelingsContentListView extends StatelessWidget {
                       Flexible(
                         child: IconButton(
                           onPressed: () {
-                            // viewModel.shareMessage(index);
+                            viewModel.shareMessage(index);
                           },
                           icon: Icon(Icons.share,
                               color: Theme.of(context).iconTheme.color),
@@ -118,7 +121,7 @@ class FeelingsContentListView extends StatelessWidget {
                       Flexible(
                         child: IconButton(
                           onPressed: () {
-                            // viewModel.shareWhatsapp(index);
+                            viewModel.shareWhatsapp(index);
                           },
                           icon: SvgPicture.asset(
                             AssetsManager.whatsapp,
@@ -134,7 +137,7 @@ class FeelingsContentListView extends StatelessWidget {
                         Flexible(
                           child: IconButton(
                             onPressed: () {
-                              // viewModel.shareFacebook(index);
+                              viewModel.shareFacebook(index);
                             },
                             icon: Icon(Icons.facebook,
                                 color: Theme.of(context).iconTheme.color),

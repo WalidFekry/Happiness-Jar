@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';
+import '../../../../helpers/common_functions.dart';
 import '../../../../services/locator.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
@@ -58,14 +59,12 @@ class NotificationsViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
-  Future<void> shareMessage(int index) async {
-    await Share.share('${list[index].text} \n\n من تطبيق برطمان السعادة 💙');
+  void shareMessage(int index) {
+    CommonFunctions.shareMessage(list[index].text);
   }
 
   void copyMessage(int index) {
-    FlutterClipboard.copy(
-      '${list[index].text} \n\n من تطبيق برطمان السعادة 💙',
-    );
+    CommonFunctions.copyMessage(list[index].text);
   }
 
   Future<void> saveFavoriteMessage(int index) async {
@@ -92,29 +91,12 @@ class NotificationsViewModel extends BaseViewModel {
     locator<NavigationService>().goBack();
   }
 
-  Future<void> shareWhatsapp(int index) async {
-    String message = '${list[index].text} \n\n من تطبيق برطمان السعادة 💙';
-    String encodedMessage = Uri.encodeComponent(message);
-    String whatsappUrl = "https://api.whatsapp.com/send?text=$encodedMessage";
-    Uri uri = Uri.parse(whatsappUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      Share.share(message);
-    }
+  void shareWhatsapp(int index) {
+    CommonFunctions.shareWhatsapp(list[index].text);
   }
 
-  Future<void> shareFacebook(int index) async {
-    String message = '${list[index].text} \n\n من تطبيق برطمان السعادة 💙';
-    String encodedMessage = Uri.encodeComponent(message);
-    String facebookUrl =
-        "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
-    Uri uri = Uri.parse(facebookUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      Share.share(message);
-    }
+  void shareFacebook(int index) {
+    CommonFunctions.shareFacebook(list[index].text);
   }
 
   Future<void> saveToGallery(int index, BuildContext context) async {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:happiness_jar/view/screens/feelings/view_model/feeling_view_model.dart';
+import 'package:happiness_jar/services/current_session_service.dart';
 import 'package:happiness_jar/view/screens/feelings/widgets/empty_feelings.dart';
 import 'package:happiness_jar/view/screens/feelings/widgets/feelings_content_list_view.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
@@ -7,6 +7,7 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import '../../../../helpers/spacing.dart';
 import '../../base_screen.dart';
+import '../view_model/feelings_view_model.dart';
 import '../widgets/feelings_dropdown_button.dart';
 import '../widgets/feelings_get_started.dart';
 
@@ -15,10 +16,10 @@ class FeelingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<FeelingViewModel>(onModelReady: (viewModel) {
+    return BaseView<FeelingsViewModel>(onModelReady: (viewModel) {
       viewModel.getListOfFeelingsCategories();
     }, onFinish: (viewModel) {
-      // viewModel.destroyAds();
+      viewModel.destroyAds();
     }, builder: (context, viewModel, child) {
       return Scaffold(
           body: SingleChildScrollView(
@@ -41,7 +42,7 @@ class FeelingsScreen extends StatelessWidget {
                           FeelingsContentListView(viewModel),
                           verticalSpace(20),
                           ContentTextWidget(
-                            label: viewModel.listOfFeelingsContent[3].body,
+                            label: "${viewModel.listOfFeelingsContent[3].body} يا ${CurrentSessionService.cachedUserName} 💙",
                             textAlign: TextAlign.center,
                           ),
                         ] else ...[

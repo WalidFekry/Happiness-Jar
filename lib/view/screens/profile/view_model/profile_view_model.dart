@@ -46,6 +46,7 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   void logOut() {
+    CurrentSessionService.clearSessionCache();
     clearPrefs();
     locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
   }
@@ -116,7 +117,6 @@ class ProfileViewModel extends BaseViewModel {
     prefs.saveString(SharedPrefsConstants.userName, "");
     prefs.saveString(SharedPrefsConstants.userImage, "");
     prefs.saveBoolean(SharedPrefsConstants.isLogin, false);
-    CurrentSessionService.clearSessionCache();
     setState(ViewState.Idle);
   }
 
