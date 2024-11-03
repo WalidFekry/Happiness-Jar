@@ -16,6 +16,7 @@ import 'package:happiness_jar/view/screens/home/widgets/open_setting_app_dialog.
 import 'package:in_app_review/in_app_review.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../db/app_database.dart';
 import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
@@ -25,6 +26,7 @@ import '../../../../services/local_notification_service.dart';
 class HomeViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   final apiService = locator<ApiService>();
+  final appDatabase = locator<AppDatabase>();
   final adsService = locator<AdsService>();
 
   String? lastRefreshTokenTime;
@@ -136,11 +138,15 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> getAdvice() async {
-    Resource<TodayAdviceModel> resource = await apiService.getAdviceMessage();
-    if (resource.status == Status.SUCCESS) {
-      giftBoxMessage = resource.data!.content![0].body;
-      setState(ViewState.Idle);
+    giftBoxMessage = await appDatabase.getAdviceMessage();
+    if (giftBoxMessage == null) {
+      Resource<TodayAdviceModel> resource = await apiService.getAdviceMessage();
+      if (resource.status == Status.SUCCESS) {
+        await appDatabase.insertData(resource);
+        giftBoxMessage = await appDatabase.getAdviceMessage();
+      }
     }
+    setState(ViewState.Idle);
   }
 
   void showOpenAd(BuildContext context) {

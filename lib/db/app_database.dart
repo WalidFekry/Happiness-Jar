@@ -48,6 +48,9 @@ class AppDatabase {
     db.execute(
       'CREATE TABLE feelings_content(id INTEGER UNIQUE, title TEXT, body TEXT, categorie INTEGER)',
     );
+    db.execute(
+      'CREATE TABLE today_advice(id INTEGER UNIQUE, body TEXT)',
+    );
   }
 
   updateTables(Database db) {
@@ -59,6 +62,9 @@ class AppDatabase {
     );
     db.execute(
       'CREATE TABLE IF NOT EXISTS feelings_content(id INTEGER UNIQUE, title TEXT, body TEXT, categorie INTEGER)',
+    );
+    db.execute(
+      'CREATE TABLE IF NOT EXISTS today_advice(id INTEGER UNIQUE, body TEXT)',
     );
   }
 
@@ -257,6 +263,18 @@ class AppDatabase {
     } finally {
       db.close();
     }
+  }
+
+  Future<String?> getAdviceMessage() async {
+    final Database db = await mainDatabase();
+    final List<Map<String, dynamic>> maps =
+    await db.rawQuery('SELECT body FROM today_advice ORDER BY RANDOM() LIMIT 1');
+    String? data;
+    if (maps.isNotEmpty) {
+      data = maps.first['body'] as String?;
+    }
+    db.close();
+    return data;
   }
 
 
