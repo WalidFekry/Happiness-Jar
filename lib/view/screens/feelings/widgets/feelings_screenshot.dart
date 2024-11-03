@@ -44,7 +44,17 @@ class FeelingsScreenshot extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  SubtitleTextWidget(label: feelingsContent.title,color: Colors.black,),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                    ),
+                    child: SubtitleTextWidget(
+                      label: feelingsContent.title,
+                      color: Colors.black,
+                    ),
+                  ),
                   const Spacer(),
                 ],
               ),
