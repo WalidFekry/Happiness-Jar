@@ -146,7 +146,7 @@ class FeelingsContentListView extends StatelessWidget {
                       Flexible(
                         child: IconButton(
                           onPressed: () {
-                            // viewModel.sharePhoto(index, context);
+                            viewModel.sharePhoto(index);
                           },
                           icon: Icon(Icons.photo,
                               color: Theme.of(context).iconTheme.color),
@@ -155,8 +155,8 @@ class FeelingsContentListView extends StatelessWidget {
                       Flexible(
                         child: IconButton(
                           onPressed: () {
-                            // viewModel.showBinyAd();
-                            // viewModel.saveToGallery(index, context);
+                            viewModel.showBinyAd();
+                            viewModel.saveToGallery(index, context);
                           },
                           icon: Icon(Icons.download,
                               color: Theme.of(context).iconTheme.color),

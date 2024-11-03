@@ -1,3 +1,4 @@
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:happiness_jar/view/screens/feelings/model/FeelingsCategoriesModel.dart';
 
 import '../../../../db/app_database.dart';
@@ -13,6 +14,7 @@ import '../../../../services/shared_pref_services.dart';
 import '../../base_view_model.dart';
 import '../../posts/model/posts_model.dart';
 import '../model/FeelingsContentModel.dart';
+import '../widgets/feelings_screenshot.dart';
 
 class FeelingsViewModel extends BaseViewModel {
   final apiService = locator<ApiService>();
@@ -86,5 +88,13 @@ class FeelingsViewModel extends BaseViewModel {
 
   void shareFacebook(int index) {
     CommonFunctions.shareFacebook(listOfFeelingsContent[index].body);
+  }
+
+  void sharePhoto(int index) {
+    CommonFunctions.sharePhoto(listOfFeelingsContent[index].body, FeelingsScreenshot(listOfFeelingsContent[index]));
+  }
+
+  void saveToGallery(int index, BuildContext context) {
+    CommonFunctions.saveToGallery(context, FeelingsScreenshot(listOfFeelingsContent[index]));
   }
 }
