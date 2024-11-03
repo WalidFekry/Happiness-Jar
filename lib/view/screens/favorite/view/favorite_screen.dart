@@ -278,7 +278,7 @@ class FavoriteScreen extends StatelessWidget {
                                         child: IconButton(
                                           onPressed: () {
                                             viewModel.sharePhoto(
-                                                index, context);
+                                                index);
                                           },
                                           icon: Icon(Icons.photo,
                                               color: Theme.of(context)

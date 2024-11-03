@@ -213,6 +213,7 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
     if (!status.isGranted) {
       await Permission.storage.request();
     }
+
     setState(() {
       takeScreenshot = true;
     });
@@ -223,31 +224,35 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
         try {
           final result = await ImageGallerySaver.saveImage(image);
           if (result['isSuccess']) {
-            showTopSnackBar(
-              Overlay.of(context),
-              CustomSnackBar.success(
-                backgroundColor: Theme.of(context).iconTheme.color!,
-                message: "تم الحفظ كصورة بنجاح",
-                icon: Icon(
-                  Icons.download,
-                  color: Theme.of(context).cardColor,
-                  size: 50,
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              showTopSnackBar(
+                Overlay.of(context),
+                CustomSnackBar.success(
+                  backgroundColor: Theme.of(context).iconTheme.color!,
+                  message: "تم الحفظ كصورة بنجاح",
+                  icon: Icon(
+                    Icons.download,
+                    color: Theme.of(context).cardColor,
+                    size: 50,
+                  ),
                 ),
-              ),
-            );
+              );
+            });
           } else {
-            showTopSnackBar(
-              Overlay.of(context),
-              CustomSnackBar.error(
-                backgroundColor: Theme.of(context).cardColor,
-                message: "حدث خطأ أثناء حفظ الصورة",
-                icon: Icon(
-                  Icons.download,
-                  color: Theme.of(context).iconTheme.color,
-                  size: 50,
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              showTopSnackBar(
+                Overlay.of(context),
+                CustomSnackBar.error(
+                  backgroundColor: Theme.of(context).cardColor,
+                  message: "حدث خطأ أثناء حفظ الصورة",
+                  icon: Icon(
+                    Icons.download,
+                    color: Theme.of(context).iconTheme.color,
+                    size: 50,
+                  ),
                 ),
-              ),
-            );
+              );
+            });
           }
         } catch (e) {
           if (kDebugMode) {
@@ -275,6 +280,11 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
   }
 
   Future<void> sharePhoto() async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+
     setState(() {
       takeScreenshot = true;
     });
@@ -298,18 +308,20 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
           }
         }
       } else {
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.error(
-            backgroundColor: Theme.of(context).cardColor,
-            message: "حدث خطأ أثناء مشاركة الصورة",
-            icon: Icon(
-              Icons.share,
-              color: Theme.of(context).iconTheme.color,
-              size: 50,
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(
+              backgroundColor: Theme.of(context).cardColor,
+              message: "حدث خطأ أثناء مشاركة الصورة",
+              icon: Icon(
+                Icons.share,
+                color: Theme.of(context).iconTheme.color,
+                size: 50,
+              ),
             ),
-          ),
-        );
+          );
+        });
       }
       setState(() {
         takeScreenshot = false;

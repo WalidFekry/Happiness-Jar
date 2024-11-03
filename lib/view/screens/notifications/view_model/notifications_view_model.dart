@@ -33,7 +33,6 @@ class NotificationsViewModel extends BaseViewModel {
   final appDatabase = locator<AppDatabase>();
   final prefs = locator<SharedPrefServices>();
   bool isDone = true;
-  ScreenshotController screenshotController = ScreenshotController();
   final adsService = locator<AdsService>();
 
   Future<void> getContent() async {
@@ -99,67 +98,12 @@ class NotificationsViewModel extends BaseViewModel {
     CommonFunctions.shareFacebook(list[index].text);
   }
 
-  Future<void> saveToGallery(int index, BuildContext context) async {
-    screenshotController
-        .captureFromWidget(NotificationScreenshot(list[index]))
-        .then((image) async {
-      try {
-        final result = await ImageGallerySaver.saveImage(image);
-        if (result['isSuccess']) {
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.success(
-              backgroundColor: Theme.of(context).iconTheme.color!,
-              message: "تم الحفظ كصورة بنجاح",
-              icon: Icon(
-                Icons.download,
-                color: Theme.of(context).cardColor,
-                size: 50,
-              ),
-            ),
-          );
-        } else {
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.error(
-              backgroundColor: Theme.of(context).cardColor,
-              message: "حدث خطأ أثناء حفظ الصورة",
-              icon: Icon(
-                Icons.download,
-                color: Theme.of(context).iconTheme.color,
-                size: 50,
-              ),
-            ),
-          );
-        }
-      } catch (e) {
-        if (kDebugMode) {
-          print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
-        }
-      }
-        });
+  void saveToGallery(int index, BuildContext context) async {
+    CommonFunctions.saveToGallery(context, NotificationScreenshot(list[index]));
   }
 
-  Future<void> sharePhoto(int index, BuildContext context) async {
-    screenshotController
-        .captureFromWidget(NotificationScreenshot(list[index]))
-        .then((image) async {
-      try {
-        final directory = await getApplicationDocumentsDirectory();
-        final imagePath = await File('${directory.path}/image.png').create();
-        await imagePath.writeAsBytes(image);
-        final xFile = XFile(imagePath.path);
-        await Share.shareXFiles(
-          [xFile],
-          subject: 'من تطبيق برطمان السعادة 💙',
-          text: list[index].text,
-        );
-      } catch (e) {
-        if (kDebugMode) {
-          print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
-        }
-      }
-        });
+  void sharePhoto(int index) async {
+    CommonFunctions.sharePhoto(list[index].text, NotificationScreenshot(list[index]));
   }
 
   void showBinyAd() {
