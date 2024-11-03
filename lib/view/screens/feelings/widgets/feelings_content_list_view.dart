@@ -56,8 +56,14 @@ class FeelingsContentListView extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    SubtitleTextWidget(
-                        label: viewModel.listOfFeelingsContent[index].title),
+                    Container(
+                      padding:  const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                      ),
+                      child: SubtitleTextWidget(
+                          label: viewModel.listOfFeelingsContent[index].title),
+                    ),
                     const Spacer(),
                   ],
                 ),
