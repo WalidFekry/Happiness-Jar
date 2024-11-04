@@ -2,8 +2,11 @@
 
 
 
+import 'package:flutter/foundation.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
+import 'package:happiness_jar/view/screens/feelings/model/FeelingsCategoriesModel.dart';
+import 'package:happiness_jar/view/screens/feelings/model/FeelingsContentModel.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -19,7 +22,7 @@ class AppDatabase {
     return openDatabase(
       join(await getDatabasesPath(), 'database.db'),
       onCreate: (db, version) => createTables(db),
-      version: 2,
+      version: 3,
       onUpgrade: (db, oldVersion, newVersion) => updateTables(db),
     );
   }
@@ -37,13 +40,31 @@ class AppDatabase {
       'CREATE TABLE messages_notifications(id INTEGER UNIQUE, text TEXT, created_at TEXT)',
     );
     db.execute(
-      'CREATE TABLE user_posts(id INTEGER PRIMARY KEY AUTOINCREMENT,user_name TEXT, text TEXT, created_at TEXT)',
+      'CREATE TABLE user_posts(id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, text TEXT, created_at TEXT)',
+    );
+    db.execute(
+      'CREATE TABLE feelings_categories(id INTEGER UNIQUE, title TEXT, categorie INTEGER)',
+    );
+    db.execute(
+      'CREATE TABLE feelings_content(id INTEGER UNIQUE, title TEXT, body TEXT, categorie INTEGER)',
+    );
+    db.execute(
+      'CREATE TABLE today_advice(id INTEGER UNIQUE, body TEXT)',
     );
   }
 
   updateTables(Database db) {
     db.execute(
       'CREATE TABLE IF NOT EXISTS user_posts(id INTEGER PRIMARY KEY AUTOINCREMENT,user_name TEXT, text TEXT, created_at TEXT)',
+    );
+    db.execute(
+      'CREATE TABLE IF NOT EXISTS feelings_categories(id INTEGER UNIQUE, title TEXT, categorie INTEGER)',
+    );
+    db.execute(
+      'CREATE TABLE IF NOT EXISTS feelings_content(id INTEGER UNIQUE, title TEXT, body TEXT, categorie INTEGER)',
+    );
+    db.execute(
+      'CREATE TABLE IF NOT EXISTS today_advice(id INTEGER UNIQUE, body TEXT)',
     );
   }
 
@@ -178,6 +199,85 @@ class AppDatabase {
     db.close();
     return data;
   }
+
+  Future<List<FeelingsCategories>> getFeelingsCategories() async {
+    final Database db = await mainDatabase();
+    final List<Map<String, dynamic>> maps =
+    await db.rawQuery('SELECT * FROM feelings_categories ORDER BY id ASC');
+    List<FeelingsCategories> data = [];
+    for (var item in maps) {
+      data.add(FeelingsCategories.fromJson(item));
+    }
+    db.close();
+    return data;
+  }
+
+  Future<List<FeelingsContent>> getFeelingsContent(int? categorie) async {
+    final Database db = await mainDatabase();
+
+    final String queryDoaa = '''
+    SELECT * FROM feelings_content WHERE title = 'دعاء' AND categorie = $categorie ORDER BY RANDOM() LIMIT 1
+  ''';
+
+    final String queryNaseha = '''
+    SELECT * FROM feelings_content WHERE title = 'نصيحة' AND categorie = $categorie ORDER BY RANDOM() LIMIT 1
+  ''';
+
+    final String queryHikma = '''
+    SELECT * FROM feelings_content WHERE title = 'حكمة' AND categorie = $categorie ORDER BY RANDOM() LIMIT 1
+  ''';
+
+    final String queryKhatima = '''
+    SELECT * FROM feelings_content WHERE title = 'خاتمة' AND categorie = $categorie ORDER BY RANDOM() LIMIT 1
+  ''';
+
+    List<FeelingsContent> data = [];
+
+    try {
+      final List<Map<String, dynamic>> doaaMap = await db.rawQuery(queryDoaa);
+      if (doaaMap.isNotEmpty) {
+        data.add(FeelingsContent.fromJson(doaaMap.first));
+      }
+
+      final List<Map<String, dynamic>> nasehaMap = await db.rawQuery(queryNaseha);
+      if (nasehaMap.isNotEmpty) {
+        data.add(FeelingsContent.fromJson(nasehaMap.first));
+      }
+
+      final List<Map<String, dynamic>> hikmaMap = await db.rawQuery(queryHikma);
+      if (hikmaMap.isNotEmpty) {
+        data.add(FeelingsContent.fromJson(hikmaMap.first));
+      }
+
+      final List<Map<String, dynamic>> khatimaMap = await db.rawQuery(queryKhatima);
+      if (khatimaMap.isNotEmpty) {
+        data.add(FeelingsContent.fromJson(khatimaMap.first));
+      }
+
+      return data;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching feelings content: $e");
+      }
+      return [];
+    } finally {
+      db.close();
+    }
+  }
+
+  Future<String?> getAdviceMessage() async {
+    final Database db = await mainDatabase();
+    final List<Map<String, dynamic>> maps =
+    await db.rawQuery('SELECT body FROM today_advice ORDER BY RANDOM() LIMIT 1');
+    String? data;
+    if (maps.isNotEmpty) {
+      data = maps.first['body'] as String?;
+    }
+    db.close();
+    return data;
+  }
+
+
 // Future<void> update(DatabaseModel model) async {
 //   final Database? db = await getDatabase(model);
 //   await db!.update(

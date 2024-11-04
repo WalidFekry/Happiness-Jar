@@ -14,6 +14,8 @@ import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
 import '../../../../enums/status.dart';
+import '../../../../helpers/common_functions.dart';
+import '../../../../services/current_session_service.dart';
 import '../../../../services/locator.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
@@ -44,7 +46,8 @@ class MessagesViewModel extends BaseViewModel {
   final adsService = locator<AdsService>();
 
   Future<void> getUserData() async {
-    userName = await prefs.getString(SharedPrefsConstants.userName);
+    await CurrentSessionService.getUserName();
+    userName = CurrentSessionService.cachedUserName;
     setState(ViewState.Idle);
   }
 
@@ -97,14 +100,12 @@ class MessagesViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
-  Future<void> shareMessage(int index) async {
-    await Share.share('${list[index].body} \n\n من تطبيق برطمان السعادة 💙');
+  void shareMessage(int index) {
+    CommonFunctions.shareMessage(list[index].body);
   }
 
   void copyMessage(int index) {
-    FlutterClipboard.copy(
-      '${list[index].body} \n\n من تطبيق برطمان السعادة 💙',
-    );
+    CommonFunctions.copyMessage(list[index].body);
   }
 
   nextMessages() {
@@ -156,29 +157,12 @@ class MessagesViewModel extends BaseViewModel {
     });
   }
 
-  Future<void> shareWhatsapp(int index) async {
-    String message = '${list[index].body} \n\n من تطبيق برطمان السعادة 💙';
-    String encodedMessage = Uri.encodeComponent(message);
-    String whatsappUrl = "https://api.whatsapp.com/send?text=$encodedMessage";
-    Uri uri = Uri.parse(whatsappUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      Share.share(message);
-    }
+  void shareWhatsapp(int index) {
+    CommonFunctions.shareWhatsapp(list[index].body);
   }
 
-  Future<void> shareFacebook(int index) async {
-    String message = '${list[index].body} \n\n من تطبيق برطمان السعادة 💙';
-    String encodedMessage = Uri.encodeComponent(message);
-    String facebookUrl =
-        "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
-    Uri uri = Uri.parse(facebookUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      Share.share(message);
-    }
+  void shareFacebook(int index) {
+    CommonFunctions.shareFacebook(list[index].body);
   }
 
   Future<void> saveFavoriteMessage(int index) async {

@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:happiness_jar/constants/api_constants.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_content_model.dart';
+import 'package:happiness_jar/view/screens/feelings/model/FeelingsCategoriesModel.dart';
+import 'package:happiness_jar/view/screens/feelings/model/FeelingsContentModel.dart';
 import 'package:happiness_jar/view/screens/home/model/refresh_token.dart';
 import 'package:happiness_jar/view/screens/home/model/today_advice.dart';
 import 'package:happiness_jar/view/screens/posts/model/add_post_response_model.dart';
@@ -155,6 +157,30 @@ class ApiService {
       );
       var responseModel = AddPostResponseModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: responseModel);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<FeelingsCategoriesModel>> getFeelingsCategories() async {
+    try {
+      var response = await dio.get(ApiConstants.feelingCategories);
+      var feelingsCategoriesContent =
+      FeelingsCategoriesModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: feelingsCategoriesContent);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<FeelingsContentModel>> getFeelingsContent() async {
+    try {
+      var response = await dio.get(ApiConstants.feelingsContent);
+      var feelingsContent =
+      FeelingsContentModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: feelingsContent);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/local_notification_constants.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
+import 'package:happiness_jar/services/current_session_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
@@ -15,6 +16,7 @@ import 'package:happiness_jar/view/screens/home/widgets/open_setting_app_dialog.
 import 'package:in_app_review/in_app_review.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../db/app_database.dart';
 import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
 import '../../../../services/ads_service.dart';
@@ -24,6 +26,7 @@ import '../../../../services/local_notification_service.dart';
 class HomeViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   final apiService = locator<ApiService>();
+  final appDatabase = locator<AppDatabase>();
   final adsService = locator<AdsService>();
 
   String? lastRefreshTokenTime;
@@ -68,8 +71,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> getUserData() async {
-    final imagePath = await prefs.getString(SharedPrefsConstants.userImage);
-    if (imagePath.isNotEmpty) {
+    await CurrentSessionService.getUserName();
+    await CurrentSessionService.getUserImage();
+    final imagePath = CurrentSessionService.cachedUserImage;
+    if (imagePath!.isNotEmpty) {
       image = File(imagePath);
     }
     setState(ViewState.Idle);
@@ -94,7 +99,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   sendToken() async {
-    String? userName = await prefs.getString(SharedPrefsConstants.userName);
+    String? userName = CurrentSessionService.cachedUserName;
     String? token = await FirebaseMessaging.instance.getToken();
     if (token == null || token.isEmpty) {
       return;
@@ -133,11 +138,15 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> getAdvice() async {
-    Resource<TodayAdviceModel> resource = await apiService.getAdviceMessage();
-    if (resource.status == Status.SUCCESS) {
-      giftBoxMessage = resource.data!.content![0].body;
-      setState(ViewState.Idle);
+    giftBoxMessage = await appDatabase.getAdviceMessage();
+    if (giftBoxMessage == null) {
+      Resource<TodayAdviceModel> resource = await apiService.getAdviceMessage();
+      if (resource.status == Status.SUCCESS) {
+        await appDatabase.insertData(resource);
+        giftBoxMessage = await appDatabase.getAdviceMessage();
+      }
     }
+    setState(ViewState.Idle);
   }
 
   void showOpenAd(BuildContext context) {

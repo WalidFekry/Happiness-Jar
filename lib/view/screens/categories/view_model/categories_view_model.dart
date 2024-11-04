@@ -20,6 +20,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../enums/screen_state.dart';
+import '../../../../helpers/common_functions.dart';
 import '../../../../routs/routs_names.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/navigation_service.dart';
@@ -36,7 +37,6 @@ class CategoriesViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   bool isDone = true;
   bool isDoneContent = true;
-  ScreenshotController screenshotController = ScreenshotController();
   final adsService = locator<AdsService>();
 
   Future<void> getCategories() async {
@@ -110,109 +110,32 @@ class CategoriesViewModel extends BaseViewModel {
         arguments: list[index], queryParams: {'index': index.toString()});
   }
 
-  Future<void> shareMessage(int index) async {
-    await Share.share(
-        '${content[index].title} \n\n من تطبيق برطمان السعادة 💙');
+  void shareMessage(int index) {
+    CommonFunctions.shareMessage(content[index].title);
   }
 
   void copyMessage(int index) {
-    FlutterClipboard.copy(
-      '${content[index].title} \n\n من تطبيق برطمان السعادة 💙',
-    );
+    CommonFunctions.copyMessage(content[index].title);
   }
 
   void goBack() {
     locator<NavigationService>().goBack();
   }
 
-  Future<void> shareWhatsapp(int index) async {
-    String message = '${list[index].title} \n\n من تطبيق برطمان السعادة 💙';
-    String encodedMessage = Uri.encodeComponent(message);
-    String whatsappUrl = "https://api.whatsapp.com/send?text=$encodedMessage";
-    Uri uri = Uri.parse(whatsappUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      Share.share(message);
-    }
+  void shareWhatsapp(int index) {
+    CommonFunctions.shareWhatsapp(list[index].title);
   }
 
-  Future<void> shareFacebook(int index) async {
-    String message = '${list[index].title} \n\n من تطبيق برطمان السعادة 💙';
-    String encodedMessage = Uri.encodeComponent(message);
-    String facebookUrl =
-        "https://www.facebook.com/sharer/sharer.php?u=$encodedMessage";
-    Uri uri = Uri.parse(facebookUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      Share.share(message);
-    }
+  void shareFacebook(int index) {
+    CommonFunctions.shareFacebook(list[index].title);
   }
 
-  Future<void> saveToGallery(int index, BuildContext context) async {
-    screenshotController
-        .captureFromWidget(
-            CategoriesScreenshot(content[index], list[index].title))
-        .then((image) async {
-      try {
-        final result = await ImageGallerySaver.saveImage(image);
-        if (result['isSuccess']) {
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.success(
-              backgroundColor: Theme.of(context).iconTheme.color!,
-              message: "تم الحفظ كصورة بنجاح",
-              icon: Icon(
-                Icons.download,
-                color: Theme.of(context).cardColor,
-                size: 50,
-              ),
-            ),
-          );
-        } else {
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.error(
-              backgroundColor: Theme.of(context).cardColor,
-              message: "حدث خطأ أثناء حفظ الصورة",
-              icon: Icon(
-                Icons.download,
-                color: Theme.of(context).iconTheme.color,
-                size: 50,
-              ),
-            ),
-          );
-        }
-      } catch (e) {
-        if (kDebugMode) {
-          print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
-        }
-      }
-    });
+  void saveToGallery(int index, BuildContext context) async {
+    CommonFunctions.saveToGallery(context, CategoriesScreenshot(content[index], list[index].title));
   }
 
-  Future<void> sharePhoto(int index, BuildContext context) async {
-    screenshotController
-        .captureFromWidget(
-            CategoriesScreenshot(content[index], list[index].title))
-        .then((image) async {
-      try {
-        final directory = await getApplicationDocumentsDirectory();
-        final imagePath = await File('${directory.path}/image.png').create();
-        await imagePath.writeAsBytes(image);
-        final xFile = XFile(imagePath.path);
-        await Share.shareXFiles(
-          [xFile],
-          subject: 'من تطبيق برطمان السعادة 💙',
-          text: content[index].title,
-        );
-      } catch (e) {
-        if (kDebugMode) {
-          print('خطأ أثناء حفظ أو مشاركة الصورة: $e');
-        }
-      }
-    });
+  void sharePhoto(int index) async {
+    CommonFunctions.sharePhoto(list[index].title,CategoriesScreenshot(content[index], list[index].title));
   }
 
   void destroy() {

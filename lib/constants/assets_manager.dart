@@ -34,6 +34,9 @@ class AssetsManager {
   // Svgs
   static const String whatsapp = "$svgPath/whatsapp.svg";
   static const String quote = "$svgPath/quote.svg";
+  static const String quoteDown = "$svgPath/quote_down.svg";
+  static const String quoteUp = "$svgPath/quote_up.svg";
+  static const String happyFeelings = "$svgPath/happy_feelings.svg";
   static const String like = "$svgPath/like.svg";
   static const String liked = "$svgPath/liked.svg";
 }

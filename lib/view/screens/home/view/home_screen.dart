@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
+import 'package:happiness_jar/view/screens/feelings/view/feelings_screen.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
 import 'package:happiness_jar/view/screens/posts/view/posts_screen.dart';
@@ -16,6 +16,7 @@ import 'package:in_app_review/in_app_review.dart';
 import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/shared_preferences_constants.dart';
+import '../../../../services/current_session_service.dart';
 import '../../../widgets/app_bar_text.dart';
 import '../../base_screen.dart';
 import '../../categories/view/categories_screen.dart';
@@ -41,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const NotificationsScreen(),
     const CategoriesScreen(),
     const PostsScreen(),
+    const FeelingsScreen(),
     const FavoriteScreen(),
   ];
 
@@ -154,6 +156,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(IconlyBold.paper),
                   label: "الإقتباسات"),
               NavigationDestination(
+                  selectedIcon: Icon(IconlyLight.user_1),
+                  icon: Icon(IconlyBold.user_3),
+                  label: "بماذا تشعر؟"),
+              NavigationDestination(
                   selectedIcon: Icon(IconlyLight.heart),
                   icon: Icon(IconlyBold.heart),
                   label: "المفضلة"),
@@ -200,8 +206,10 @@ class _HomeScreenState extends State<HomeScreen> {
       jumpToPage(2);
     } else if (message.data["click_action"] == "posts") {
       jumpToPage(3);
-    } else if (message.data["click_action"] == "favorite") {
+    } else if (message.data["click_action"] == "feelings") {
       jumpToPage(4);
+    } else if (message.data["click_action"] == "favorite") {
+      jumpToPage(5);
     } else if (message.data["click_action"] == "rate") {
       rateApp();
     }
@@ -232,6 +240,9 @@ class _HomeScreenState extends State<HomeScreen> {
         appBarTitle = "الإقتباسات";
         break;
       case 4:
+        appBarTitle = "بماذا تشعر؟";
+        break;
+      case 5:
         appBarTitle = "المفضلة";
         break;
       default:
@@ -253,7 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void setLocalNotification() {
     streamController.stream.listen((notificationResponse) {
-      if(notificationResponse?.payload == LocalNotificationConstants.notificationPayload || notificationResponse?.payload == LocalNotificationConstants.notificationPayload_2) {
+      if (notificationResponse?.payload ==
+              LocalNotificationConstants.notificationPayload ||
+          notificationResponse?.payload ==
+              LocalNotificationConstants.notificationPayload_2) {
         jumpToPage(1);
       }
     });

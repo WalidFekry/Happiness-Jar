@@ -290,7 +290,7 @@ class MessagesCategoriesContent extends StatelessWidget {
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          viewModel.sharePhoto(index, context);
+                                          viewModel.sharePhoto(index);
                                         },
                                         icon: Icon(Icons.photo,
                                             color: Theme.of(context)

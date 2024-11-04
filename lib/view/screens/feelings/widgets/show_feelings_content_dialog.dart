@@ -5,23 +5,24 @@ import '../../../../constants/assets_manager.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
-import '../view_model/posts_view_model.dart';
+import '../view_model/feelings_view_model.dart';
 
-class ShowPostDialog extends StatelessWidget {
-  const ShowPostDialog(this.viewModel,this.index,{super.key});
+class ShowFeelingsContentDialog extends StatelessWidget {
+  const ShowFeelingsContentDialog(this.viewModel, this.index, {super.key});
 
-  final PostsViewModel viewModel;
+  final FeelingsViewModel viewModel;
   final int index;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       title: Row(
         children: [
-          const TitleTextWidget(label: "من منشورات البرطمان", fontSize: 18),
+          TitleTextWidget(
+              label: "${viewModel.listOfFeelingsContent[index].title}",
+              fontSize: 18),
           const Spacer(),
           IconButton(
             onPressed: () => viewModel.shareMessage(index),
@@ -54,7 +55,8 @@ class ShowPostDialog extends StatelessWidget {
           ),
           Flexible(
             child: ContentTextWidget(
-                label: viewModel.list[index].text, textAlign: TextAlign.center),
+                label: viewModel.listOfFeelingsContent[index].body,
+                textAlign: TextAlign.center),
           ),
         ],
       ),

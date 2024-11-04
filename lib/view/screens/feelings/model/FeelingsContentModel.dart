@@ -1,17 +1,15 @@
-
-
 import 'package:happiness_jar/models/database_model.dart';
 
-class TodayAdviceModel {
-  List<TodayAdvice>? content;
+class FeelingsContentModel {
+  List<FeelingsContent>? content;
 
-  TodayAdviceModel({this.content});
+  FeelingsContentModel({this.content});
 
-  TodayAdviceModel.fromJson(Map<String, dynamic> json) {
-    if (json['messages_advice'] != null) {
-      content = <TodayAdvice>[];
-      json['messages_advice'].forEach((v) {
-        content!.add(TodayAdvice.fromJson(v));
+  FeelingsContentModel.fromJson(Map<String, dynamic> json) {
+    if (json['feelings_content'] != null) {
+      content = <FeelingsContent>[];
+      json['feelings_content'].forEach((v) {
+        content!.add(FeelingsContent.fromJson(v));
       });
     }
   }
@@ -19,29 +17,34 @@ class TodayAdviceModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (content != null) {
-      data['messages_advice'] =
+      data['feelings_content'] =
           content!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class TodayAdvice implements DatabaseModel
-{
+class FeelingsContent implements DatabaseModel {
   int? id;
+  String? title;
   String? body;
+  int? categorie;
 
-  TodayAdvice({this.id, this.body});
+  FeelingsContent({this.id, this.title, this.body, this.categorie});
 
-  TodayAdvice.fromJson(Map<String, dynamic> json) {
+  FeelingsContent.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    title = json['title'];
     body = json['body'];
+    categorie = json['categorie'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['title'] = title;
     data['body'] = body;
+    data['categorie'] = categorie;
     return data;
   }
 
@@ -57,7 +60,7 @@ class TodayAdvice implements DatabaseModel
 
   @override
   String? table() {
-    return 'today_advice';
+    return 'feelings_content';
   }
 
   @override
