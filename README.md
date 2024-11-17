@@ -21,7 +21,7 @@
 - **Notifications Screen:** Get notifications for new messages.
 - **Categories Screen:** Explore messages categorized by themes and interests.
 - **Quotes Screen:** Users can post and interact with their quote.
-- **FeelingsScreen:** Users can share and express their current emotions and explore a range of emotions shared by the community.
+- **Feelings Screen:** Users can share and express their current emotions and explore a range of emotions shared by the community.
 - **Favorite Screen:** Access your saved favorite messages.
 
 ## 📁 File Structure
