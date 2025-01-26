@@ -71,17 +71,23 @@ class ApiService {
     }
   }
 
-  Future<Resource<PostsModel>> getPosts() async {
+  Future<Resource<PostsModel>> getPosts({required int limit, required int offset}) async {
     try {
-      var response = await dio.get(ApiConstants.posts);
-      var postsContent =
-      PostsModel.fromJson(response.data);
+      var response = await dio.get(
+        ApiConstants.posts,
+        queryParameters: {
+          'limit': limit,
+          'offset': offset,
+        },
+      );
+      var postsContent = PostsModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: postsContent);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());
     }
   }
+
 
   Future<Resource<MessagesModel>> getMessages() async {
     try {

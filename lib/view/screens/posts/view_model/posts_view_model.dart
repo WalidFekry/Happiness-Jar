@@ -1,18 +1,9 @@
-import 'dart:io';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/enums/screen_state.dart';
 import 'package:happiness_jar/helpers/common_functions.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/view/screens/posts/widgets/post_screenshot.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../db/app_database.dart';
@@ -38,25 +29,36 @@ class PostsViewModel extends BaseViewModel {
   List<String> favoriteIds = [];
   List<String> likeIds = [];
   bool isDone = true;
+  bool isLoading = false;
   bool isLocalDatebase = false;
   String? userName;
   TextEditingController userNameController = TextEditingController();
   TextEditingController postController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
   final formKey = GlobalKey<FormState>();
   bool isLoadingAddPost = false;
   bool isLoadingLikePost = false;
+  int limit = 10;
+  int offset = 0;
 
   Future<void> getPosts() async {
-    Resource<PostsModel> resource = await apiService.getPosts();
+    if (isLoading) {
+      return;
+    }
+    isLoading = true;
+    setState(ViewState.Idle);
+    Resource<PostsModel> resource =
+        await apiService.getPosts(limit: limit, offset: offset);
     await getFavoriteIdsAndLikeIds();
     if (resource.status == Status.SUCCESS) {
-      list = resource.data!.content!;
+      list.addAll(resource.data!.content!);
       for (var message in list) {
         message.isFavourite = favoriteIds.contains(message.id.toString());
         message.isLike = likeIds.contains(message.id.toString());
       }
       isDone = true;
       isLocalDatebase = false;
+      offset += limit;
     } else {
       list = await appDatabase.getUserPosts();
       if (list.isEmpty) {
@@ -64,7 +66,15 @@ class PostsViewModel extends BaseViewModel {
       }
       isLocalDatebase = true;
     }
+    isLoading = false;
     setState(ViewState.Idle);
+  }
+
+  void onScroll() {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      getPosts();
+    }
   }
 
   Future<void> getLocalPost() async {
@@ -166,6 +176,10 @@ class PostsViewModel extends BaseViewModel {
     userNameController.dispose();
   }
 
+  void disposeScrollController() {
+    scrollController.dispose();
+  }
+
   Future<bool> addPost() async {
     isLoadingAddPost = true;
     setState(ViewState.Idle);
@@ -206,6 +220,7 @@ class PostsViewModel extends BaseViewModel {
     if (isLocalDatebase) {
       await getLocalPost();
     } else {
+      offset = 0;
       await getPosts();
     }
   }

@@ -19,6 +19,7 @@ class PostsListView extends StatelessWidget {
 
   PostsViewModel viewModel;
 
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -26,6 +27,7 @@ class PostsListView extends StatelessWidget {
         color: Theme.of(context).cardColor,
         onRefresh: viewModel.refreshPosts,
         child: ListView.separated(
+          controller: viewModel.scrollController,
           itemCount: viewModel.list.length,
           itemBuilder: (context, index) {
             return Container(
