@@ -201,7 +201,11 @@ class ProfileScreen extends StatelessWidget {
                               label: viewModel.version,
                             ),
                             onTap: () {
-                              viewModel.openFacebookPage();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => const InfoDialog(
+                                    content: AppConstants.appVersionMessage,
+                                  ));
                             },
                           ),
                         ),
