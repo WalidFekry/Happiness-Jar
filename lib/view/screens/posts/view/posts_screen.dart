@@ -36,7 +36,7 @@ class PostsScreen extends StatelessWidget {
                 )
               : CustomCircularProgressIndicator(visible: viewModel.isDone),
           if (viewModel.isLoading)
-            CustomCircularProgressIndicator(visible: viewModel.isDone),
+            CustomCircularProgressIndicator(visible: viewModel.isLoading),
           if (!viewModel.isDone) const EmptyPosts()
         ],
       ));

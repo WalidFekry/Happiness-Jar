@@ -38,7 +38,7 @@ class PostsViewModel extends BaseViewModel {
   final formKey = GlobalKey<FormState>();
   bool isLoadingAddPost = false;
   bool isLoadingLikePost = false;
-  int limit = 10;
+  int limit = 100;
   int offset = 0;
 
   Future<void> getPosts() async {

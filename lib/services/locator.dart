@@ -29,13 +29,13 @@ void setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => CategoriesViewModel());
   locator.registerLazySingleton(() => FavoriteViewModel());
-  locator.registerLazySingleton(() => NotificationsViewModel());
   locator.registerLazySingleton(() => AppDatabase());
   locator.registerLazySingleton(() => FeelingsViewModel());
 
   locator.registerFactory(() => RegisterViewModel());
   locator.registerFactory(() => MessagesViewModel());
   locator.registerFactory(() => HomeViewModel());
+  locator.registerFactory(() => NotificationsViewModel());
   locator.registerFactory(() => ProfileViewModel());
   locator.registerFactory(() => PostsViewModel());
 }

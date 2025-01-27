@@ -19,16 +19,12 @@ import '../view/screens/messages/model/wheel_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
 
 class ApiService {
-
   var dio = Dio();
 
   ApiService() {
-    var options = BaseOptions(
-      baseUrl: ApiConstants.baseUrl,
-      headers: {
-        "Content-Type": "application/json",
-      }
-    );
+    var options = BaseOptions(baseUrl: ApiConstants.baseUrl, headers: {
+      "Content-Type": "application/json",
+    });
     dio.options = options;
     dio.interceptors.add(PrettyDioLogger(
       requestBody: true,
@@ -59,9 +55,17 @@ class ApiService {
     }
   }
 
-  Future<Resource<NotificationsModel>> getMessagesNotificationContent() async {
+  Future<Resource<NotificationsModel>> getMessagesNotificationContent(
+      {required int limit, required int offset}) async {
     try {
-      var response = await dio.get(ApiConstants.messagesNotifications);
+      var response = await dio.get(
+        ApiConstants.messagesNotifications,
+        queryParameters: {
+          'limit': limit,
+          'offset': offset,
+        },
+      );
+
       var contentMessagesNotification =
           NotificationsModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: contentMessagesNotification);
@@ -71,7 +75,8 @@ class ApiService {
     }
   }
 
-  Future<Resource<PostsModel>> getPosts({required int limit, required int offset}) async {
+  Future<Resource<PostsModel>> getPosts(
+      {required int limit, required int offset}) async {
     try {
       var response = await dio.get(
         ApiConstants.posts,
@@ -87,7 +92,6 @@ class ApiService {
       return Resource(Status.ERROR, errorMessage: e.toString());
     }
   }
-
 
   Future<Resource<MessagesModel>> getMessages() async {
     try {
@@ -116,11 +120,11 @@ class ApiService {
   }
 
   Future<Resource<LikePostResponseModel>> likePost(
-      String? server,int? postId) async {
+      String? server, int? postId) async {
     try {
       var response = await dio.post(
         ApiConstants.likePost,
-        data: {'server': server,'post_id': postId},
+        data: {'server': server, 'post_id': postId},
       );
       var responseModel = LikePostResponseModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: responseModel);
@@ -159,7 +163,12 @@ class ApiService {
     try {
       var response = await dio.post(
         ApiConstants.addPost,
-        data: {'server': 'AddPost', 'fcm_token': fcmToken, 'text': text, 'user_name': userName},
+        data: {
+          'server': 'AddPost',
+          'fcm_token': fcmToken,
+          'text': text,
+          'user_name': userName
+        },
       );
       var responseModel = AddPostResponseModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: responseModel);
@@ -173,7 +182,7 @@ class ApiService {
     try {
       var response = await dio.get(ApiConstants.feelingCategories);
       var feelingsCategoriesContent =
-      FeelingsCategoriesModel.fromJson(response.data);
+          FeelingsCategoriesModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: feelingsCategoriesContent);
     } catch (e) {
       debugPrint(e.toString());
@@ -184,8 +193,7 @@ class ApiService {
   Future<Resource<FeelingsContentModel>> getFeelingsContent() async {
     try {
       var response = await dio.get(ApiConstants.feelingsContent);
-      var feelingsContent =
-      FeelingsContentModel.fromJson(response.data);
+      var feelingsContent = FeelingsContentModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: feelingsContent);
     } catch (e) {
       debugPrint(e.toString());
