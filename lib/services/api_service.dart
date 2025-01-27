@@ -76,14 +76,11 @@ class ApiService {
   }
 
   Future<Resource<PostsModel>> getPosts(
-      {required int limit, required int offset}) async {
+      {required int limit, required int offset, int orderByLikes = 0}) async {
     try {
       var response = await dio.get(
         ApiConstants.posts,
-        queryParameters: {
-          'limit': limit,
-          'offset': offset,
-        },
+        queryParameters: orderByLikes == 0 ? {'limit': limit, 'offset': offset} : {'limit': limit, 'offset': offset, 'likes': orderByLikes},
       );
       var postsContent = PostsModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: postsContent);

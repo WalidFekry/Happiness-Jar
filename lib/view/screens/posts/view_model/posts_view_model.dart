@@ -40,15 +40,16 @@ class PostsViewModel extends BaseViewModel {
   bool isLoadingLikePost = false;
   int limit = 100;
   int offset = 0;
+  bool isOrderByLikes = false;
 
-  Future<void> getPosts() async {
+  Future<void> getPosts({int orderByLikes = 0}) async {
     if (isLoading) {
       return;
     }
     isLoading = true;
     setState(ViewState.Idle);
     Resource<PostsModel> resource =
-        await apiService.getPosts(limit: limit, offset: offset);
+        await apiService.getPosts(limit: limit, offset: offset, orderByLikes: orderByLikes);
     await getFavoriteIdsAndLikeIds();
     if (resource.status == Status.SUCCESS) {
       list.addAll(resource.data!.content!);
@@ -70,10 +71,25 @@ class PostsViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
+  void getPostsOrderByLikes() {
+    if (isOrderByLikes) {
+      refreshPosts();
+      return;
+    }
+    isOrderByLikes = true;
+    list.clear();
+    offset = 0;
+    getPosts(orderByLikes: 1);
+  }
+
   void onScroll() {
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
-      getPosts();
+      if (isOrderByLikes) {
+        getPosts(orderByLikes: 1);
+      } else {
+        getPosts();
+      }
     }
   }
 
@@ -215,6 +231,7 @@ class PostsViewModel extends BaseViewModel {
   }
 
   Future<void> refreshPosts() async {
+    isOrderByLikes = false;
     list.clear();
     setState(ViewState.Idle);
     if (isLocalDatebase) {

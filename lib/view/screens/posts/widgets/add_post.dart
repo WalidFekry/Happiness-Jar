@@ -47,6 +47,16 @@ class AddPost extends StatelessWidget {
             color: Theme.of(context).cardColor,
             size: 30,
           ),
+        ),
+        IconButton(
+          onPressed: () {
+            viewModel.getPostsOrderByLikes();
+          },
+          icon: Icon(
+            Icons.trending_up,
+            color: Theme.of(context).cardColor,
+            size: 30,
+          ),
         )
       ],
     );
