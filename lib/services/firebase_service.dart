@@ -10,12 +10,18 @@ class FirebaseService {
   static FirebaseCrashlytics crashlytics = FirebaseCrashlytics.instance;
 
   static Future<void> init() async {
-    await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform);
-    // Pass all uncaught "fatal" errors from the framework to Crashlytics
-    FlutterError.onError = crashlytics.recordFlutterFatalError;
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    await messaging.subscribeToTopic("all");
+    try {
+      await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform);
+      // Pass all uncaught "fatal" errors from the framework to Crashlytics
+      FlutterError.onError = crashlytics.recordFlutterFatalError;
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      messaging.subscribeToTopic("all");
+    }catch(e) {
+      if (kDebugMode) {
+        print("Firebase initialization failed: $e");
+      }
+    }
   }
 
   static Future<void> requestPermission() async {
