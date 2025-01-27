@@ -176,6 +176,19 @@ class AppDatabase {
     return data;
   }
 
+  Future<List<MessagesNotifications>> getMessageNotificationContentById(int id) async {
+    final Database db = await mainDatabase();
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+        'SELECT * FROM messages_notifications WHERE id = ?',
+        [id]);
+    List<MessagesNotifications> data = [];
+    if (maps.isNotEmpty) {
+      data.add(MessagesNotifications.fromJson(maps.first));
+    }
+    return data;
+  }
+
+
   Future<List<FavoriteMessagesModel>> getFavoriteMessages() async {
     final Database db = await mainDatabase();
     final List<Map<String, dynamic>> maps =

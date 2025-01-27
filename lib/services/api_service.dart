@@ -56,14 +56,13 @@ class ApiService {
   }
 
   Future<Resource<NotificationsModel>> getMessagesNotificationContent(
-      {required int limit, required int offset}) async {
+      {required int limit, required int offset, int? searchById}) async {
     try {
       var response = await dio.get(
         ApiConstants.messagesNotifications,
-        queryParameters: {
-          'limit': limit,
-          'offset': offset,
-        },
+        queryParameters: searchById == null
+            ? {'limit': limit, 'offset': offset}
+            : {'limit': limit, 'offset': offset, 'id': searchById},
       );
 
       var contentMessagesNotification =
@@ -80,7 +79,9 @@ class ApiService {
     try {
       var response = await dio.get(
         ApiConstants.posts,
-        queryParameters: orderByLikes == 0 ? {'limit': limit, 'offset': offset} : {'limit': limit, 'offset': offset, 'likes': orderByLikes},
+        queryParameters: orderByLikes == 0
+            ? {'limit': limit, 'offset': offset}
+            : {'limit': limit, 'offset': offset, 'likes': orderByLikes},
       );
       var postsContent = PostsModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: postsContent);

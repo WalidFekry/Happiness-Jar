@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/widgets/notification_screenshot.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
@@ -26,7 +27,9 @@ class NotificationsViewModel extends BaseViewModel {
   int limit = 100;
   int offset = 0;
   bool isLoading = false;
+  String previousSearch = '';
   final ScrollController scrollController = ScrollController();
+  final TextEditingController searchController = TextEditingController();
 
   Future<void> getContent() async {
     if (isLoading) {
@@ -57,6 +60,41 @@ class NotificationsViewModel extends BaseViewModel {
     }
     isLoading = false;
     setState(ViewState.Idle);
+  }
+
+  Future<bool> getContentBySearch(int id) async {
+    list.clear();
+    setState(ViewState.Idle);
+    Resource<NotificationsModel> resource = await apiService
+        .getMessagesNotificationContent(limit: limit, offset: offset, searchById: id);
+    favoriteIds =
+    await prefs.getStringList(SharedPrefsConstants.notificationFavoriteIds);
+    if (resource.status == Status.SUCCESS) {
+      if (resource.data?.content?.isEmpty ?? true) {
+        searchController.text = "";
+        list.clear();
+        offset = 0;
+        getContent();
+        return false;
+      }
+      list = resource.data!.content!;
+      for (var message in list) {
+        message.isFavourite = favoriteIds.contains(message.id.toString());
+      }
+      await appDatabase.insertData(resource);
+    } else {
+      list = await appDatabase.getMessageNotificationContentById(id);
+      if (list.isEmpty) {
+        searchController.text = "";
+        getContent();
+        return false;
+      }
+      for (var message in list) {
+        message.isFavourite = favoriteIds.contains(message.id.toString());
+      }
+    }
+    setState(ViewState.Idle);
+    return true;
   }
 
   void onScroll() {
@@ -129,5 +167,12 @@ class NotificationsViewModel extends BaseViewModel {
 
   void disposeScrollController() {
     scrollController.dispose();
+  }
+
+  void onClearSearch() {
+    searchController.text = "";
+    list.clear();
+    offset = 0;
+    getContent();
   }
 }
