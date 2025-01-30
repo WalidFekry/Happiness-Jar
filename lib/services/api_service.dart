@@ -14,6 +14,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../enums/status.dart';
 import '../models/resources.dart';
+import '../view/screens/home/model/notifications_count.dart';
 import '../view/screens/messages/model/messages_model.dart';
 import '../view/screens/messages/model/wheel_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
@@ -111,6 +112,19 @@ class ApiService {
       );
       var refreshToken = RefreshTokenModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: refreshToken);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<NotificationsCountModel>> getNotificationsCount() async {
+    try {
+      var response = await dio.post(
+        ApiConstants.notificationContent,
+      );
+      var notificationsCount = NotificationsCountModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: notificationsCount);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

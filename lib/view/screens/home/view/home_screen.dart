@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +11,15 @@ import 'package:happiness_jar/view/screens/feelings/view/feelings_screen.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
 import 'package:happiness_jar/view/screens/posts/view/posts_screen.dart';
+import 'package:happiness_jar/view/widgets/content_text.dart';
+import 'package:happiness_jar/view/widgets/subtitle_text.dart';
+import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:iconly/iconly.dart';
 import 'package:in_app_review/in_app_review.dart';
 
 import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../constants/shared_preferences_constants.dart';
-import '../../../../services/current_session_service.dart';
 import '../../../widgets/app_bar_text.dart';
 import '../../base_screen.dart';
 import '../../categories/view/categories_screen.dart';
@@ -34,7 +37,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PageController? controller;
-  String? appBarTitle = "رسائل البرطمان";
+  String appBarTitle = "رسائل البرطمان";
   int selectedIndex = 0;
 
   List<Widget> screens = [
@@ -66,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       viewModel.showOpenAd(context);
       viewModel.getUserData();
+      viewModel.getNotificationsCount();
       viewModel.refreshToken();
       viewModel.getTodayAdvice();
       viewModel.showInAppReview();
@@ -132,40 +136,59 @@ class _HomeScreenState extends State<HomeScreen> {
           bottomNavigationBar: NavigationBar(
             selectedIndex: selectedIndex,
             onDestinationSelected: (index) {
+              resetCountsIfNeeded(index, viewModel);
+              setAppBarTitle(index);
               setState(() {
                 selectedIndex = index;
               });
               controller?.jumpToPage(index);
-              setAppBarTitle(index);
             },
-            destinations: const [
-              NavigationDestination(
+            destinations: [
+              const NavigationDestination(
                   selectedIcon: Icon(IconlyLight.home),
                   icon: Icon(IconlyBold.home),
                   label: "الرسائل"),
               NavigationDestination(
-                  selectedIcon: Icon(IconlyLight.notification),
-                  icon: Icon(IconlyBold.notification),
+                  selectedIcon: const Icon(IconlyLight.notification),
+                  icon: badges.Badge(
+                    showBadge: viewModel.newNotificationsCount == 0 ? false : true,
+                    badgeContent: Text(viewModel.newNotificationsCount.toString()),
+                    child: const Icon(IconlyBold.notification),
+                  ),
                   label: "الإشعارات"),
-              NavigationDestination(
+              const NavigationDestination(
                   selectedIcon: Icon(IconlyLight.category),
                   icon: Icon(IconlyBold.category),
                   label: "الأقسام"),
               NavigationDestination(
-                  selectedIcon: Icon(IconlyLight.paper),
-                  icon: Icon(IconlyBold.paper),
+                  selectedIcon: const Icon(IconlyLight.paper),
+                  icon: badges.Badge(
+                    showBadge: viewModel.newPostsCount == 0 ? false : true,
+                    badgeContent: Text(viewModel.newPostsCount.toString()),
+                    child: const Icon(IconlyBold.paper),
+                  ),
                   label: "الإقتباسات"),
-              NavigationDestination(
+              const NavigationDestination(
                   selectedIcon: Icon(IconlyLight.user_1),
                   icon: Icon(IconlyBold.user_3),
                   label: "بماذا تشعر؟"),
-              NavigationDestination(
+              const NavigationDestination(
                   selectedIcon: Icon(IconlyLight.heart),
                   icon: Icon(IconlyBold.heart),
                   label: "المفضلة"),
             ],
           ));
     });
+  }
+
+  void resetCountsIfNeeded(int index, HomeViewModel viewModel) {
+    if (index == 1 && viewModel.newNotificationsCount != 0) {
+      viewModel.newNotificationsCount = 0;
+      viewModel.saveNotificationsCountLocal("notifications");
+    } else if (index == 3 && viewModel.newPostsCount != 0) {
+      viewModel.newPostsCount = 0;
+      viewModel.saveNotificationsCountLocal("posts");
+    }
   }
 
   void setFirebaseMessaging() {
@@ -217,10 +240,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void jumpToPage(int selectIndex) {
     Future.delayed(const Duration(milliseconds: 100), () {
+      setAppBarTitle(selectIndex);
       setState(() {
         selectedIndex = selectIndex;
       });
-      setAppBarTitle(selectIndex);
       controller?.jumpToPage(selectIndex);
     });
   }

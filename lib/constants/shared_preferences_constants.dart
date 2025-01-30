@@ -19,4 +19,6 @@ class SharedPrefsConstants {
   static const String postsFavoriteIds = 'POSTS_FAVORITE_IDS';
   static const String postsLikeIds = 'POSTS_LIKE_IDS';
   static const String isNotificationOn = 'IS_NOTIFICATION_ON';
+  static const String notificationsCount = 'NOTIFICATIONS_COUNT';
+  static const String postsCount = 'POSTS_COUNT';
 }

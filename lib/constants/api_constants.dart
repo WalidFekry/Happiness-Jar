@@ -12,4 +12,5 @@ class ApiConstants {
   static const String likePost = "set_like.php";
   static const String feelingCategories = "feelings_categories.php";
   static const String feelingsContent = "feelings_content.php";
+  static const String notificationContent = "get_notifications_count.php";
 }
