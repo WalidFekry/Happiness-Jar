@@ -51,7 +51,7 @@ class LocalNotificationService {
       message.notification?.title,
       message.notification?.body,
       details,
-      payload: LocalNotificationConstants.notificationPayload_2,
+      payload: message.data["click_action"],
     );
   }
 

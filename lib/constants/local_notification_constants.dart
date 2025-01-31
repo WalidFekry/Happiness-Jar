@@ -10,5 +10,4 @@ class LocalNotificationConstants {
   static const String notificationTitle = 'صديقي الجميل , ضفتلك حالا رسائل جديدة 🌸';
   static const String notificationBody = 'مش عاوز تعرف رسالة النهاردة ولا ايه ؟ يلا افتح التطبيق دلوقتي وشوف .. 👀';
   static const String notificationPayload = 'Clicked from repeated notification';
-  static const String notificationPayload_2 = 'Clicked from FCM notification';
 }

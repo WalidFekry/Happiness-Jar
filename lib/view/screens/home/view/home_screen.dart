@@ -16,6 +16,7 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:iconly/iconly.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(onModelReady: (viewModel) async {
       final bool isLogin =
-          await viewModel.prefs.getBoolean(SharedPrefsConstants.isLogin);
+      await viewModel.prefs.getBoolean(SharedPrefsConstants.isLogin);
       if (!isLogin) {
         locator<NavigationService>()
             .navigateToAndClearStack(RouteName.REGISTER);
@@ -84,28 +85,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             leading: viewModel.giftBoxMessage == null
                 ? GestureDetector(
-                    onTap: () {
-                      ShareAPPDialog.show(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Image.asset(AssetsManager.appLogoNoTitle,
-                          fit: BoxFit.contain),
-                    ),
-                  )
+              onTap: () {
+                ShareAPPDialog.show(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Image.asset(AssetsManager.appLogoNoTitle,
+                    fit: BoxFit.contain),
+              ),
+            )
                 : GestureDetector(
-                    onTap: () {
-                      TodayAdviceDialog.show(context, viewModel.giftBoxMessage);
-                      setState(() {
-                        viewModel.giftBoxMessage = null;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child:
-                          Image.asset(AssetsManager.giftBox, fit: BoxFit.cover),
-                    ),
-                  ),
+              onTap: () {
+                TodayAdviceDialog.show(context, viewModel.giftBoxMessage);
+                setState(() {
+                  viewModel.giftBoxMessage = null;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child:
+                Image.asset(AssetsManager.giftBox, fit: BoxFit.cover),
+              ),
+            ),
             actions: [
               GestureDetector(
                 onTap: () {
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       image: viewModel.image != null
                           ? FileImage(viewModel.image!)
                           : const AssetImage(AssetsManager.userProfile)
-                              as ImageProvider,
+                      as ImageProvider,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -151,8 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
               NavigationDestination(
                   selectedIcon: const Icon(IconlyLight.notification),
                   icon: badges.Badge(
-                    showBadge: viewModel.newNotificationsCount == 0 ? false : true,
-                    badgeContent: Text(viewModel.newNotificationsCount.toString()),
+                    showBadge:
+                    viewModel.newNotificationsCount == 0 ? false : true,
+                    badgeContent:
+                    Text(viewModel.newNotificationsCount.toString()),
                     child: const Icon(IconlyBold.notification),
                   ),
                   label: "الإشعارات"),
@@ -205,8 +208,22 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // The app is in the foreground and you receive a notification
-      final localNotificationService = locator<LocalNotificationService>();
-      localNotificationService.showNotificationFromFCM(message);
+      final clickAction = message.data["click_action"];
+      final actionsMap = {
+        "rate": () => rateApp(),
+        "openUrl": () {
+          final url = message.data["url"];
+          if (url != null) openUrl(url);
+        },
+      };
+      // Execute the corresponding action based on click_action
+      actionsMap[clickAction]?.call();
+      // Show local notification if no specific action is matched
+      if (!actionsMap.containsKey(clickAction)) {
+        if (clickAction == null) return;
+        final localNotificationService = locator<LocalNotificationService>();
+        localNotificationService.showNotificationFromFCM(message);
+      }
       if (kDebugMode) {
         print('onMessage: Message clicked!');
       }
@@ -220,22 +237,24 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  checkMessagePayload(RemoteMessage message) {
-    if (message.data["click_action"] == "home") {
-      jumpToPage(0);
-    } else if (message.data["click_action"] == "notification") {
-      jumpToPage(1);
-    } else if (message.data["click_action"] == "categories") {
-      jumpToPage(2);
-    } else if (message.data["click_action"] == "posts") {
-      jumpToPage(3);
-    } else if (message.data["click_action"] == "feelings") {
-      jumpToPage(4);
-    } else if (message.data["click_action"] == "favorite") {
-      jumpToPage(5);
-    } else if (message.data["click_action"] == "rate") {
-      rateApp();
-    }
+  void checkMessagePayload(RemoteMessage message) {
+    final clickAction = message.data["click_action"];
+    final actionsMap = {
+      "home": () => jumpToPage(0),
+      "notification": () => jumpToPage(1),
+      "categories": () => jumpToPage(2),
+      "posts": () => jumpToPage(3),
+      "feelings": () => jumpToPage(4),
+      "favorite": () => jumpToPage(5),
+      "rate": () => rateApp(),
+      "openUrl": () {
+        final url = message.data["url"];
+        if (url != null) openUrl(url);
+      },
+    };
+
+    // Execute the corresponding action based on the click_action
+    actionsMap[clickAction]?.call();
   }
 
   void jumpToPage(int selectIndex) {
@@ -287,12 +306,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void setLocalNotification() {
     streamController.stream.listen((notificationResponse) {
-      if (notificationResponse?.payload ==
-              LocalNotificationConstants.notificationPayload ||
-          notificationResponse?.payload ==
-              LocalNotificationConstants.notificationPayload_2) {
+      final payload = notificationResponse?.payload;
+
+      if (payload == LocalNotificationConstants.notificationPayload) {
         jumpToPage(1);
+      } else {
+        _handleNotificationAction(payload);
       }
     });
+  }
+
+  void _handleNotificationAction(String? action) {
+    final actionsMap = {
+      "home": () => jumpToPage(0),
+      "notification": () => jumpToPage(1),
+      "categories": () => jumpToPage(2),
+      "posts": () => jumpToPage(3),
+      "feelings": () => jumpToPage(4),
+      "favorite": () => jumpToPage(5),
+    };
+
+    actionsMap[action]?.call();
+  }
+
+  Future<void> openUrl(String getUrl) async {
+    final Uri url = Uri.parse(getUrl);
+
+    // Try to open the URL, first in the browser, if not possible, open externally
+    final success = await canLaunchUrl(url);
+    if (success) {
+      launchUrl(url);
+    } else {
+      launchUrl(url, mode: LaunchMode.externalApplication);
+    }
   }
 }
