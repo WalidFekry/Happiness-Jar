@@ -31,7 +31,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\Walid\\Desktop\\new_key.jks')
+            storeFile file('C:\\Users\\Walid\\OneDrive\\Desktop\\new_key.jks')
             storePassword '123456789'
             keyAlias 'key0'
             keyPassword '123456789'

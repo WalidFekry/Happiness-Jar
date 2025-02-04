@@ -52,10 +52,10 @@
         <!--    Test Ad-->
         <!--    ca-app-pub-3940256099942544~3347511713-->
         <!--    Real Ad-->
-        <!--        ca-app-pub-1264835814900584~3045365774-->
+        <!--        ca-app-pub-3354189036871191~4706137008-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1264835814900584~3045365774" />
+            android:value="ca-app-pub-3354189036871191~4706137008" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
