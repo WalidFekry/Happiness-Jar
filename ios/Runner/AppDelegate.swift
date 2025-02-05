@@ -15,7 +15,7 @@ import flutter_local_notifications
         FirebaseApp.configure()
         // Initialize Messaging
         if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().delegate = self
+            UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             UNUserNotificationCenter.current().requestAuthorization(
                 options: authOptions,
@@ -29,23 +29,20 @@ import flutter_local_notifications
         Messaging.messaging().delegate = self
         GeneratedPluginRegistrant.register(with: self)
         // Flutter local notification
-        if #available(iOS 10.0, *) {
-          UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
-        }
         FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
             GeneratedPluginRegistrant.register(with: registry)
           }
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-    
-    override func application(
-        _ application: UIApplication,
-        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
-    ) {
-        // Set the APNs token for your device
-        Messaging.messaging().apnsToken = deviceToken
-    }
-    
+
+    override func application(_ application: UIApplication,
+      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+      // Set the APNs token for your device
+      Messaging.messaging().apnsToken = deviceToken
+      super.application(application,
+      didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+      }
+
     @objc func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         // Handle FCM token
         print("FCM token: \(fcmToken ?? "")")
@@ -67,9 +64,7 @@ import flutter_local_notifications
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         let userInfo = response.notification.request.content.userInfo
-        if let action = userInfo["click_action"] as? String {
             NotificationCenter.default.post(name: NSNotification.Name("FCMNotificationReceived"), object: nil, userInfo: userInfo)
-        }
         completionHandler()
     }
 }
