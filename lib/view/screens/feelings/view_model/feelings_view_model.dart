@@ -12,7 +12,6 @@ import '../../../../services/locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../../services/shared_pref_services.dart';
 import '../../base_view_model.dart';
-import '../../posts/model/posts_model.dart';
 import '../model/FeelingsContentModel.dart';
 import '../widgets/feelings_screenshot.dart';
 

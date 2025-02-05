@@ -1,5 +1,4 @@
 import 'package:happiness_jar/models/database_model.dart';
-import 'package:sqflite/sqflite.dart';
 
 class FeelingsCategoriesModel {
   List<FeelingsCategories>? content;

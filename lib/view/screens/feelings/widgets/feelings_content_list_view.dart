@@ -7,11 +7,9 @@ import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../../constants/app_colors.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../widgets/content_text.dart';
-import '../../posts/dialogs/show_post_dialog.dart';
 import '../view_model/feelings_view_model.dart';
 
 class FeelingsContentListView extends StatelessWidget {

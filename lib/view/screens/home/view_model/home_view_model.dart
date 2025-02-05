@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/local_notification_constants.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';

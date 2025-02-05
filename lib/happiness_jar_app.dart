@@ -1,11 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:happiness_jar/constants/theme_data.dart';
 import 'package:happiness_jar/providers/theme_provider.dart';
 import 'package:happiness_jar/routs/app_router.dart';
 import 'package:happiness_jar/routs/routs_names.dart';
-import 'package:happiness_jar/services/firebase_options.dart';
 import 'package:happiness_jar/services/firebase_service.dart';
 import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/navigation_service.dart';

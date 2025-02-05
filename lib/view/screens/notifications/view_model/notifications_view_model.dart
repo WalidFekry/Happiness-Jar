@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/widgets/notification_screenshot.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
