@@ -250,7 +250,7 @@ class PostsViewModel extends BaseViewModel {
     if (userName == userNameController.text) {
       return;
     }
-    CurrentSessionService.setUserName(userNameController.text);
+    CurrentSessionService.setUserName(userNameController.text.trim());
   }
 
   Future<void> deleteLocalPost(int index) async {

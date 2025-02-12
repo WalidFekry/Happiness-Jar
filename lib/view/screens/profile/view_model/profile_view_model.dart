@@ -121,14 +121,15 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   Future<void> changeUserName(String newUserName) async {
-    userName = newUserName;
-    CurrentSessionService.setUserName(newUserName);
-    String? token = await FirebaseMessaging.instance.getToken();
-    if(token == null || token.isEmpty) {
-      setState(ViewState.Idle);
-      return;
+    final trimmedUserName = newUserName.trim();
+    userName = trimmedUserName;
+    CurrentSessionService.setUserName(trimmedUserName);
+
+    final token = await FirebaseMessaging.instance.getToken();
+    if (token?.isNotEmpty ?? false) {
+      await apiService.refreshToken(token!, trimmedUserName);
     }
-    await apiService.refreshToken(token, newUserName);
+
     setState(ViewState.Idle);
   }
 
