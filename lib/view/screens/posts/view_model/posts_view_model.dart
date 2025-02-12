@@ -205,8 +205,8 @@ class PostsViewModel extends BaseViewModel {
 
     Resource<AddPostResponseModel> resource = await apiService.addPost(
       token,
-      postController.text,
-      userNameController.text,
+      postController.text.trim(),
+      userNameController.text.trim(),
     );
     if (resource.status == Status.SUCCESS && resource.data?.success != null) {
       await addPostToDatabase();

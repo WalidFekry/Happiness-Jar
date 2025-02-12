@@ -6,6 +6,7 @@ import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../helpers/spacing.dart';
+import '../../../../helpers/validators.dart';
 import '../../../widgets/custom_elevated_button.dart';
 import '../../base_screen.dart';
 
@@ -91,12 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: viewModel.nameController,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.done,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'من فضلك قم بكتابة إسمك ⚠️';
-                          }
-                          return null;
-                        },
+                        validator: Validators.validateUserName,
                         decoration: InputDecoration(
                           labelText: 'واكتب اسمك هنا ..',
                           prefixIcon: Icon(IconlyLight.add_user,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
+import 'package:happiness_jar/helpers/validators.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:iconly/iconly.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -61,12 +62,7 @@ class AddPostDialog extends StatelessWidget {
                                     color: Theme.of(context).iconTheme.color),
                                 labelText: 'إسمك',
                               ),
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'من فضلك قم بكتابة إسمك ⚠️';
-                                }
-                                return null;
-                              }),
+                              validator: Validators.validateUserName),
                           verticalSpace(15),
                           TextFormField(
                             maxLines: 5,
@@ -114,35 +110,42 @@ class AddPostDialog extends StatelessWidget {
                                 var result = await viewModel.addPost();
                                 if (result) {
                                   viewModel.goBack();
-                                  showTopSnackBar(
-                                    Overlay.of(context),
-                                    CustomSnackBar.success(
-                                      backgroundColor:
-                                          Theme.of(context).iconTheme.color!,
-                                      message:
-                                          "تم إرسال الاقتباس بنجاح للمراجعة\nسوف تتلقى إشعارًا عند الموافقة.",
-                                      icon: Icon(
-                                        Icons.access_alarm,
-                                        color: Theme.of(context).cardColor,
-                                        size: 50,
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    showTopSnackBar(
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor:
+                                            Theme.of(context).iconTheme.color!,
+                                        message:
+                                            "تم إرسال الاقتباس بنجاح للمراجعة\nسوف تتلقى إشعارًا عند الموافقة.",
+                                        icon: Icon(
+                                          Icons.access_alarm,
+                                          color: Theme.of(context).cardColor,
+                                          size: 50,
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  });
                                 } else {
-                                  showTopSnackBar(
-                                    Overlay.of(context),
-                                    CustomSnackBar.error(
-                                      backgroundColor:
-                                          Theme.of(context).cardColor,
-                                      message: "حدث خطأ أثناء أرسال الاقتباس.",
-                                      icon: Icon(
-                                        Icons.error,
-                                        color:
-                                            Theme.of(context).iconTheme.color,
-                                        size: 50,
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    showTopSnackBar(
+                                      Overlay.of(context),
+                                      CustomSnackBar.error(
+                                        backgroundColor:
+                                            Theme.of(context).cardColor,
+                                        message:
+                                            "حدث خطأ أثناء أرسال الاقتباس.",
+                                        icon: Icon(
+                                          Icons.error,
+                                          color:
+                                              Theme.of(context).iconTheme.color,
+                                          size: 50,
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  });
                                 }
                               },
                               backgroundColor:
@@ -152,14 +155,15 @@ class AddPostDialog extends StatelessWidget {
                               vertical: 10,
                             )
                           : Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: CircularProgressIndicator(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: CircularProgressIndicator(
                                 backgroundColor:
                                     Theme.of(context).iconTheme.color,
                                 strokeAlign: 5,
                                 strokeWidth: 5,
                               ),
-                          ),
+                            ),
                       horizontalSpace(10),
                       CustomElevatedButton(
                         label: "إغلاق",

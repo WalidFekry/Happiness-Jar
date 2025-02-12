@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 
 import '../../../../constants/assets_manager.dart';
+import '../../../../helpers/validators.dart';
 import '../../../../services/locator.dart';
 import '../../../../services/navigation_service.dart';
 import '../../../widgets/subtitle_text.dart';
@@ -13,8 +14,9 @@ class ChangeNameDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController =
-        TextEditingController(text: userName ?? '');
+    final TextEditingController nameController =
+    TextEditingController(text: userName ?? '');
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return SingleChildScrollView(
       child: AlertDialog(
@@ -26,23 +28,29 @@ class ChangeNameDialog extends StatelessWidget {
           label: "تغيير الاسم",
           textAlign: TextAlign.center,
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              AssetsManager.profileJar,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-            TextField(
-              maxLength: 20,
-              controller: nameController,
-              decoration: const InputDecoration(hintText: "ادخل الاسم الجديد"),
-            ),
-          ],
+        content: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                AssetsManager.profileJar,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              TextFormField(
+                maxLength: 20,
+                controller: nameController,
+                decoration: const InputDecoration(
+                  hintText: "ادخل الاسم الجديد",
+                ),
+                validator: Validators.validateUserName,
+              ),
+            ],
+          ),
         ),
         actions: <Widget>[
           TextButton(
@@ -56,8 +64,9 @@ class ChangeNameDialog extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              if (nameController.text.isEmpty) return;
-              locator<NavigationService>().goBackWithData(nameController.text);
+              if (formKey.currentState!.validate()) {
+                locator<NavigationService>().goBackWithData(nameController.text);
+              }
             },
             child: ContentTextWidget(
               label: "تغيير",
