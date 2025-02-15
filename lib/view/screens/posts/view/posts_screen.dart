@@ -7,6 +7,8 @@ import 'package:happiness_jar/view/screens/posts/widgets/posts_list_view.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../widgets/custom_circular_progress_Indicator.dart';
 import '../../base_screen.dart';
+import '../dialogs/add_post_dialog.dart';
+import '../widgets/floating_action_button_add_post.dart';
 
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key});
@@ -21,6 +23,7 @@ class PostsScreen extends StatelessWidget {
       viewModel.disposeScrollController();
     }, builder: (context, viewModel, child) {
       return Scaffold(
+         floatingActionButton: const FloatingActionButtonAddPost(),
           body: Stack(
         children: [
           viewModel.list.isNotEmpty
