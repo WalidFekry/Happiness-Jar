@@ -10,6 +10,7 @@ import 'package:happiness_jar/view/screens/home/model/today_advice.dart';
 import 'package:happiness_jar/view/screens/posts/model/add_post_response_model.dart';
 import 'package:happiness_jar/view/screens/posts/model/like_post_response_model.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
+import 'package:happiness_jar/view/screens/profile/model/delete_account_model.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../enums/status.dart';
@@ -112,6 +113,21 @@ class ApiService {
       );
       var refreshToken = RefreshTokenModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: refreshToken);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<DeleteAccountModel>> deleteAccount(
+      String? fcmToken) async {
+    try {
+      var response = await dio.post(
+        ApiConstants.deleteAccount,
+        data: {'server': 'Delete', 'fcm_token': fcmToken},
+      );
+      var responseModel = DeleteAccountModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: responseModel);
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

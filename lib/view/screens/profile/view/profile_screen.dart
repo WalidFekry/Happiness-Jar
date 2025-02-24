@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
+import 'package:happiness_jar/view/widgets/warning_dialog.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
@@ -11,10 +12,12 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../../constants/app_constants.dart';
 import '../../../../constants/assets_manager.dart';
 import '../../../../providers/theme_provider.dart';
+import '../../../../services/locator.dart';
+import '../../../../services/navigation_service.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
-import '../widgets/change_name_dialog.dart';
+import '../dialogs/change_name_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -204,8 +207,8 @@ class ProfileScreen extends StatelessWidget {
                               showDialog(
                                   context: context,
                                   builder: (context) => const InfoDialog(
-                                    content: AppConstants.appVersionMessage,
-                                  ));
+                                        content: AppConstants.appVersionMessage,
+                                      ));
                             },
                           ),
                         ),
@@ -331,6 +334,31 @@ class ProfileScreen extends StatelessWidget {
                         leading: const Icon(Icons.privacy_tip),
                         onTap: () {
                           viewModel.openPrivacyPolicy();
+                        },
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      ListTile(
+                        title: SubtitleTextWidget(
+                          label: 'حذف الحساب',
+                          color: Theme.of(context).cardColor,
+                        ),
+                        leading: Icon(
+                          Icons.delete_forever,
+                          color: Theme.of(context).cardColor,
+                        ),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => WarningDialog(
+                                    content: AppConstants.deleteAccountMessage,
+                                    onConfirm: () {
+                                      locator<NavigationService>().goBack();
+                                      viewModel.deleteAccount();
+                                    },
+                                  ));
                         },
                       ),
                       const Divider(

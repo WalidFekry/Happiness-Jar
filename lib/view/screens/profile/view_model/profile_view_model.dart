@@ -12,6 +12,7 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
+import 'package:happiness_jar/view/screens/profile/model/delete_account_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -21,6 +22,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/app_constants.dart';
 import '../../../../constants/local_notification_constants.dart';
+import '../../../../enums/status.dart';
+import '../../../../models/resources.dart';
 import '../../../../services/api_service.dart';
 
 class ProfileViewModel extends BaseViewModel {
@@ -49,6 +52,14 @@ class ProfileViewModel extends BaseViewModel {
     CurrentSessionService.clearSessionCache();
     clearPrefs();
     locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
+  }
+
+  Future<void> deleteAccount() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    Resource<DeleteAccountModel> resource = await apiService.deleteAccount(token);
+    if (resource.status == Status.SUCCESS) {
+      logOut();
+    }
   }
 
   Future<void> openPrivacyPolicy() async {
@@ -116,6 +127,7 @@ class ProfileViewModel extends BaseViewModel {
   void clearPrefs() {
     prefs.saveString(SharedPrefsConstants.userName, "");
     prefs.saveString(SharedPrefsConstants.userImage, "");
+    prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime, "");
     prefs.saveBoolean(SharedPrefsConstants.isLogin, false);
     setState(ViewState.Idle);
   }

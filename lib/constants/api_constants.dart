@@ -13,4 +13,5 @@ class ApiConstants {
   static const String feelingCategories = "feelings_categories.php";
   static const String feelingsContent = "feelings_content.php";
   static const String notificationContent = "get_notifications_count.php";
+  static const String deleteAccount = "delete_account.php";
 }
