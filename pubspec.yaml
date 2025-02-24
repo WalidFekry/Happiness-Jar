@@ -3,7 +3,7 @@ description: "Happiness jar project."
 
 publish_to: 'none'
 
-version: 1.7.5+31
+version: 1.7.6+32
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
