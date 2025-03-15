@@ -25,6 +25,7 @@ import '../../favorite/view/favorite_screen.dart';
 import '../../messages/view/messages_screen.dart';
 import '../../notifications/view/notifications_screen.dart';
 import '../widgets/today_advice_dialog.dart';
+import 'more_main_sections_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -43,8 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const NotificationsScreen(),
     const CategoriesScreen(),
     const PostsScreen(),
-    const FeelingsScreen(),
     const FavoriteScreen(),
+    const MoreMainSectionsScreen(),
   ];
 
   @override
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: viewModel.giftBoxMessage == null
                 ? GestureDetector(
               onTap: () {
-                ShareAPPDialog.show(context);
+                ShareAppDialog.show(context);
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
@@ -169,13 +170,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   label: "الإقتباسات"),
               const NavigationDestination(
-                  selectedIcon: Icon(IconlyLight.user_1),
-                  icon: Icon(IconlyBold.user_3),
-                  label: "بماذا تشعر؟"),
-              const NavigationDestination(
                   selectedIcon: Icon(IconlyLight.heart),
                   icon: Icon(IconlyBold.heart),
                   label: "المفضلة"),
+              const NavigationDestination(
+                  selectedIcon: Icon(IconlyLight.more_circle),
+                  icon: Icon(IconlyBold.more_circle),
+                  label: "المزيد"),
             ],
           ));
     });
@@ -241,8 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
       "notification": () => jumpToPage(1),
       "categories": () => jumpToPage(2),
       "posts": () => jumpToPage(3),
+      "favorite": () => jumpToPage(4),
       "feelings": () => jumpToPage(4),
-      "favorite": () => jumpToPage(5),
       "rate": () => rateApp(),
       "openUrl": () {
         final url = message.data["url"];
@@ -279,10 +280,10 @@ class _HomeScreenState extends State<HomeScreen> {
         appBarTitle = "الإقتباسات";
         break;
       case 4:
-        appBarTitle = "بماذا تشعر؟";
+        appBarTitle = "المفضلة";
         break;
       case 5:
-        appBarTitle = "المفضلة";
+        appBarTitle = "المزيد ..";
         break;
       default:
         appBarTitle = "رسائل البرطمان";
@@ -319,8 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
       "notification": () => jumpToPage(1),
       "categories": () => jumpToPage(2),
       "posts": () => jumpToPage(3),
+      "favorite": () => jumpToPage(4),
       "feelings": () => jumpToPage(4),
-      "favorite": () => jumpToPage(5),
     };
 
     actionsMap[action]?.call();

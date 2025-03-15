@@ -6,6 +6,7 @@ import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
 import '../../../../helpers/spacing.dart';
+import '../../../widgets/custom_app_bar.dart';
 import '../../base_screen.dart';
 import '../view_model/feelings_view_model.dart';
 import '../widgets/feelings_dropdown_button.dart';
@@ -22,13 +23,14 @@ class FeelingsScreen extends StatelessWidget {
       viewModel.destroyAds();
     }, builder: (context, viewModel, child) {
       return Scaffold(
+          appBar: const CustomAppBar(title: "بماذا تشعر؟"),
           body: SingleChildScrollView(
         child: Stack(
           children: [
             viewModel.listOfFeelingsCategories.isNotEmpty
                 ? Padding(
                     padding:
-                        const EdgeInsets.only(top: 10, left: 20, right: 20),
+                        const EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: Column(
                       children: [
                         verticalSpace(10),

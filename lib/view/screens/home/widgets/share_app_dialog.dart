@@ -9,7 +9,7 @@ import '../../../../services/navigation_service.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/subtitle_text.dart';
 
-class ShareAPPDialog {
+class ShareAppDialog {
   static void show(BuildContext context) {
     showDialog(
       context: context,
