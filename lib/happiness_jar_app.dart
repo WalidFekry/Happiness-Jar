@@ -14,7 +14,6 @@ import 'constants/shared_preferences_constants.dart';
 import 'services/locator.dart';
 
 Future<void> initServices() async {
-  MobileAds.instance.initialize();
   await FirebaseService.init();
   setupLocator();
   await locator<LocalNotificationService>().init();

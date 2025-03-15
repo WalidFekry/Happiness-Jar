@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:606206499108:android:d58ec7233a24e166ff7bb1',
     messagingSenderId: '606206499108',
     projectId: 'happiness-jar-9f725',
-    storageBucket: 'happiness-jar-9f725.appspot.com',
+    storageBucket: 'happiness-jar-9f725.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,7 +62,8 @@ class DefaultFirebaseOptions {
     appId: '1:606206499108:ios:91cc277faf89b53bff7bb1',
     messagingSenderId: '606206499108',
     projectId: 'happiness-jar-9f725',
-    storageBucket: 'happiness-jar-9f725.appspot.com',
+    storageBucket: 'happiness-jar-9f725.firebasestorage.app',
     iosBundleId: 'com.walid.happiness.jar.happinessJar',
   );
+
 }
