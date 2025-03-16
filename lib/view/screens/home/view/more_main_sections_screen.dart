@@ -22,7 +22,7 @@ class MoreMainSectionsScreen extends StatelessWidget {
                 imagePath: AssetsManager.speaking,
                 title: 'فضفضة',
                 context: context,
-                routeName: RouteName.GET_NOTIFICATION_SCREEN),
+                routeName: RouteName.FADFADA_SCREEN),
             horizontalSpace(20),
             _buildSectionCard(
                 imagePath: AssetsManager.feeling,

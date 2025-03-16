@@ -254,8 +254,10 @@ class PostsViewModel extends BaseViewModel {
   }
 
   Future<void> deleteLocalPost(int index) async {
-    await appDatabase.deleteLocalPost(list[index].id);
-    getLocalPost();
+    int deletedRows = await appDatabase.deleteById(list[index].id, "user_posts");
+    if (deletedRows > 0) {
+      getLocalPost();
+    }
   }
 
   Future<void> likePost(int index) async {

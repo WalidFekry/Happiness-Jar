@@ -9,4 +9,8 @@ class RouteName {
   static const String GET_NOTIFICATION_SCREEN = '/GET_NOTIFICATION_SCREEN';
   static const String POSTS_USER_SCREEN = '/POSTS_USER_SCREEN';
   static const String FEELINGS_SCREEN = '/FEELINGS_SCREEN';
+  static const String FADFADA_SCREEN = '/FADFADA_SCREEN';
+  static const String ADD_FADFADA_SCREEN = '/ADD_FADFADA_SCREEN';
+  static const String VIEW_FADFADA_SCREEN = '/VIEW_FADFADA_SCREEN';
+  static const String EDIT_FADFADA_SCREEN = '/EDIT_FADFADA_SCREEN';
 }
