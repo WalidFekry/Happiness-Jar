@@ -16,9 +16,51 @@ class FadfadaViewModel extends BaseViewModel {
   final appDatabase = locator<AppDatabase>();
   final navigationService = locator<NavigationService>();
   List<FadfadaModel> fadfadaList = [];
+  List<String> categories = [];
+  List<FadfadaModel> filteredFadfadaList = [];
+  String? categoryFilter;
+  String sortOrder = "newest";
 
   void getFadfadaList() async {
     fadfadaList = await appDatabase.getFadfadaList();
+    fadfadaList
+        .sort((a, b) => (b.isPinned ? 1 : 0).compareTo(a.isPinned ? 1 : 0));
+    categories =
+        fadfadaList.map((fadfada) => fadfada.category!).toSet().toList();
+    categories.insert(0, "كل الفئات");
+    print("categories: ${categories.length}");
+    filteredFadfadaList =
+        categoryFilter == null || categoryFilter == "كل الفئات"
+            ? fadfadaList
+            : fadfadaList
+                .where((fadfada) => fadfada.category == categoryFilter)
+                .toList();
+    setState(ViewState.Idle);
+  }
+
+  void sortFadfadaList() {
+    if (sortOrder == "newest") {
+      filteredFadfadaList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+    } else {
+      filteredFadfadaList.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+    }
+
+    setState(ViewState.Idle);
+  }
+
+  void setSortOrder(String order) {
+    sortOrder = order;
+    sortFadfadaList();
+  }
+
+  void setSelectedCategory(String category) {
+    categoryFilter = category;
+    filteredFadfadaList =
+        categoryFilter == null || categoryFilter == "كل الفئات"
+            ? fadfadaList
+            : fadfadaList
+                .where((fadfada) => fadfada.category == categoryFilter)
+                .toList();
     setState(ViewState.Idle);
   }
 
@@ -78,5 +120,17 @@ class FadfadaViewModel extends BaseViewModel {
 
   void clearController() {
     controller.clear();
+  }
+
+  void togglePinFadfada(int id) {
+    int index = fadfadaList.indexWhere((fadfada) => fadfada.id == id);
+    print(index);
+    if (index != -1) {
+      fadfadaList[index].isPinned = !fadfadaList[index].isPinned;
+      appDatabase.insert(fadfadaList[index]);
+      fadfadaList
+          .sort((a, b) => (b.isPinned ? 1 : 0).compareTo(a.isPinned ? 1 : 0));
+      setState(ViewState.Idle);
+    }
   }
 }

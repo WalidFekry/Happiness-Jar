@@ -38,14 +38,14 @@ class EditFadfadaScreen extends StatelessWidget {
                     maxLines: 20,
                     minLines: 15,
                     decoration: const InputDecoration(
-                      hintText: "عدل فضفضتك هنا...",
+                      hintText: "ابدأ الكتابة، دع قلبك يروي قصته، وتذكر أنك لست وحدك.",
                     ),
                   ),
                   verticalSpace(8),
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.delete, color: Theme.of(context).cardColor),
+                        icon: Icon(Icons.delete, color: Theme.of(context).cardColor,size: 30,),
                         onPressed: () {
                           viewModel.clearController();
                         },

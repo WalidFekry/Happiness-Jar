@@ -14,72 +14,72 @@ class AddFadfadaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<FadfadaViewModel>(
-        onModelReady: (viewModel) {
-          viewModel.clearController();
-        },
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            appBar: const CustomAppBar(title: "إضافة فضفضة"),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FadfadaCategories(viewModel: viewModel),
-                    verticalSpace(16),
-                    TextField(
-                      controller: viewModel.controller,
-                      maxLength: viewModel.maxChars,
-                      maxLines: 20,
-                      minLines: 15,
-                      decoration: const InputDecoration(
-                        hintText: "اكتب فضفضتك هنا...",
-                      ),
-                    ),
-                    verticalSpace(8),
-                    IconButton(
-                      icon: Icon(Icons.delete,color: Theme.of(context).cardColor,),
-                      onPressed: () {
-                        viewModel.clearController();
-                      },
-                    ),
-                    verticalSpace(16),
-                    Center(
-                        child: CustomElevatedButton(
-                            onPressed: () {
-                              if (viewModel.controller.text.isEmpty) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  showTopSnackBar(
-                                    Overlay.of(context),
-                                    CustomSnackBar.error(
-                                      backgroundColor:
-                                      Theme.of(context).cardColor,
-                                      message:
-                                      "لا يمكنك الحفاظ على فضفضة فارغة",
-                                      icon: Icon(
-                                        Icons.error,
-                                        color:
-                                        Theme.of(context).iconTheme.color,
-                                        size: 50,
-                                      ),
-                                    ),
-                                  );
-                                });
-                                return;
-                              }
-                              viewModel.addFadfada();
-                            },
-                            label: "حفظ",
-                            backgroundColor: Theme.of(context).iconTheme.color,
-                            textColor: Theme.of(context).primaryColor))
-                  ],
+    return BaseView<FadfadaViewModel>(onModelReady: (viewModel) {
+      viewModel.clearController();
+    }, builder: (context, viewModel, child) {
+      return Scaffold(
+        appBar: const CustomAppBar(title: "إضافة فضفضة"),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FadfadaCategories(viewModel: viewModel),
+                verticalSpace(16),
+                TextField(
+                  controller: viewModel.controller,
+                  maxLength: viewModel.maxChars,
+                  maxLines: 20,
+                  minLines: 15,
+                  decoration: const InputDecoration(
+                    hintText:
+                        "اكتب، لأن الكلمات في قلبك هي أصدق من أي شيء آخر.",
+                  ),
                 ),
-              ),
+                verticalSpace(8),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).cardColor,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    viewModel.clearController();
+                  },
+                ),
+                verticalSpace(16),
+                Center(
+                    child: CustomElevatedButton(
+                        horizontal: 60,
+                        onPressed: () {
+                          if (viewModel.controller.text.isEmpty) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              showTopSnackBar(
+                                Overlay.of(context),
+                                CustomSnackBar.error(
+                                  backgroundColor: Theme.of(context).cardColor,
+                                  message: "لا يمكنك الحفاظ على فضفضة فارغة",
+                                  icon: Icon(
+                                    Icons.error,
+                                    color: Theme.of(context).iconTheme.color,
+                                    size: 50,
+                                  ),
+                                ),
+                              );
+                            });
+                            return;
+                          }
+                          viewModel.addFadfada();
+                        },
+                        label: "حفظ",
+                        backgroundColor: Theme.of(context).iconTheme.color,
+                        textColor: Theme.of(context).primaryColor))
+              ],
             ),
-          );
-        });
+          ),
+        ),
+      );
+    });
   }
 }
