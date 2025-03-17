@@ -71,6 +71,7 @@ class EditFadfadaScreen extends StatelessWidget {
                   verticalSpace(16),
                   Center(
                     child: CustomElevatedButton(
+                      horizontal: 60,
                       onPressed: () {
                         if (viewModel.controller.text.isEmpty) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
