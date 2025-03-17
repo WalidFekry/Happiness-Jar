@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/fadfada/view_model/fadfada_view_model.dart';
+import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/custom_elevated_button.dart';
+import 'package:happiness_jar/view/widgets/subtitle_text.dart';
+import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../../helpers/date_time_helper.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../base_screen.dart';
 import '../widgets/fadfada_categories.dart';
 
 class AddFadfadaScreen extends StatelessWidget {
   const AddFadfadaScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BaseView<FadfadaViewModel>(onModelReady: (viewModel) {
       viewModel.clearController();
+      viewModel.startTimer();
     }, builder: (context, viewModel, child) {
       return Scaffold(
         appBar: const CustomAppBar(title: "إضافة فضفضة"),
@@ -27,14 +31,18 @@ class AddFadfadaScreen extends StatelessWidget {
               children: [
                 FadfadaCategories(viewModel: viewModel),
                 verticalSpace(16),
+                ContentTextWidget(
+                  fontSize: 16,
+                  label: "⏳ الوقت المستغرق: ${DateTimeHelper.formatTime(viewModel.stopwatch.elapsed.inSeconds)}",
+                ),
+                verticalSpace(8),
                 TextField(
                   controller: viewModel.controller,
                   maxLength: viewModel.maxChars,
                   maxLines: 20,
                   minLines: 15,
                   decoration: const InputDecoration(
-                    hintText:
-                        "اكتب، لأن الكلمات في قلبك هي أصدق من أي شيء آخر.",
+                    hintText: "اكتب، لأن الكلمات في قلبك هي أصدق من أي شيء آخر.",
                   ),
                 ),
                 verticalSpace(8),

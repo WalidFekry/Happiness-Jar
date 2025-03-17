@@ -1,4 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/screens/fadfada/model/fadfada_model.dart';
 
@@ -20,6 +21,29 @@ class FadfadaViewModel extends BaseViewModel {
   List<FadfadaModel> filteredFadfadaList = [];
   String? categoryFilter;
   String sortOrder = "newest";
+  final Stopwatch stopwatch = Stopwatch();
+  Timer? timer;
+
+  void startTimer() {
+    if (stopwatch.isRunning) {
+      resetTimer();
+      return;
+    }
+    stopwatch.start();
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      stopwatch.elapsed.inSeconds;
+      setState(ViewState.Idle);
+    });
+  }
+
+  void stopTimer() {
+    stopwatch.stop();
+    timer?.cancel();
+  }
+
+  void resetTimer() {
+    stopwatch.reset();
+  }
 
   void getFadfadaList() async {
     fadfadaList = await appDatabase.getFadfadaList();
@@ -28,7 +52,6 @@ class FadfadaViewModel extends BaseViewModel {
     categories =
         fadfadaList.map((fadfada) => fadfada.category!).toSet().toList();
     categories.insert(0, "كل الفئات");
-    print("categories: ${categories.length}");
     filteredFadfadaList =
         categoryFilter == null || categoryFilter == "كل الفئات"
             ? fadfadaList
@@ -64,22 +87,18 @@ class FadfadaViewModel extends BaseViewModel {
     setState(ViewState.Idle);
   }
 
-  String formatTimestamp(int timestamp) {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-    String formattedDate =
-        DateFormat('EEEE، d MMMM yyyy - hh:mm a', 'ar').format(dateTime);
-    return formattedDate;
-  }
-
   Future<void> addFadfada() async {
+    stopTimer();
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     FadfadaModel fadfadaItem = FadfadaModel(
       category: selectedCategory,
       text: controller.text,
       createdAt: timestamp,
+      timeSpent: stopwatch.elapsed.inSeconds,
     );
     await appDatabase.insert(fadfadaItem);
-    controller.clear();
+    resetTimer();
+    clearController();
     getFadfadaList();
     navigationService.goBack();
   }
@@ -96,13 +115,16 @@ class FadfadaViewModel extends BaseViewModel {
         arguments: fadfadaList[index]);
   }
 
-  void updateFadfada(int? id, int? createdAt) {
+  void updateFadfada(int? id, int? createdAt, int? oldTimeSpent) {
+    stopTimer();
     FadfadaModel fadfadaItem = FadfadaModel(
         id: id,
         category: selectedCategory,
         text: controller.text,
-        createdAt: createdAt);
+        createdAt: createdAt,
+        timeSpent: oldTimeSpent! + stopwatch.elapsed.inSeconds);
     appDatabase.insert(fadfadaItem);
+    resetTimer();
     getFadfadaList();
     navigationService.goBack();
   }
@@ -124,7 +146,6 @@ class FadfadaViewModel extends BaseViewModel {
 
   void togglePinFadfada(int id) {
     int index = fadfadaList.indexWhere((fadfada) => fadfada.id == id);
-    print(index);
     if (index != -1) {
       fadfadaList[index].isPinned = !fadfadaList[index].isPinned;
       appDatabase.insert(fadfadaList[index]);

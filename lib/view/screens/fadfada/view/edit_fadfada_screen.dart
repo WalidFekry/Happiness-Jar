@@ -5,6 +5,7 @@ import 'package:happiness_jar/view/screens/fadfada/view_model/fadfada_view_model
 import 'package:happiness_jar/view/widgets/custom_elevated_button.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import '../../../../helpers/date_time_helper.dart';
 import '../../../widgets/content_text.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../base_screen.dart';
@@ -20,6 +21,7 @@ class EditFadfadaScreen extends StatelessWidget {
     return BaseView<FadfadaViewModel>(
       onModelReady: (viewModel) {
         viewModel.setFadfada(fadfadaModel);
+        viewModel.startTimer();
       },
       builder: (context, viewModel, child) {
         return Scaffold(
@@ -32,6 +34,20 @@ class EditFadfadaScreen extends StatelessWidget {
                 children: [
                   FadfadaCategories(viewModel: viewModel),
                   verticalSpace(16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ContentTextWidget(
+                        fontSize: 14,
+                        label: "⏳ الوقت المستغرق: ${DateTimeHelper.formatTime(viewModel.stopwatch.elapsed.inSeconds)}",
+                      ),
+                      ContentTextWidget(
+                        fontSize: 14,
+                        label: "🕐 الوقت السابق: ${DateTimeHelper.formatTime(fadfadaModel.timeSpent)}",
+                      ),
+                    ],
+                  ),
+                  verticalSpace(8),
                   TextField(
                     controller: viewModel.controller,
                     maxLength: viewModel.maxChars,
@@ -73,7 +89,7 @@ class EditFadfadaScreen extends StatelessWidget {
                           });
                           return;
                         }
-                        viewModel.updateFadfada(fadfadaModel.id,fadfadaModel.createdAt);
+                        viewModel.updateFadfada(fadfadaModel.id,fadfadaModel.createdAt,fadfadaModel.timeSpent);
                       },
                       label: "حفظ التعديلات",
                       backgroundColor: Theme.of(context).iconTheme.color,

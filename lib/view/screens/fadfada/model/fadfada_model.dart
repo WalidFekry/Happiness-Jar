@@ -6,29 +6,34 @@ class FadfadaModel implements DatabaseModel {
   String? text;
   int? createdAt;
   bool isPinned;
+  int? timeSpent;
 
-  FadfadaModel(
-      {this.id,
-        required this.category,
-        required this.text,
-        this.createdAt,
-        this.isPinned = false});
+  FadfadaModel({
+    this.id,
+    required this.category,
+    required this.text,
+    this.createdAt,
+    this.isPinned = false,
+    this.timeSpent,
+  });
 
   FadfadaModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         category = json['category'],
         text = json['text'],
         createdAt = json['created_at'],
-        isPinned = json['is_pinned'] == 1;
+        isPinned = json['is_pinned'] == 1,
+        timeSpent = json['time_spent'] ?? 0;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['category'] = category;
-    data['text'] = text;
-    data['created_at'] = createdAt;
-    data['is_pinned'] = isPinned ? 1 : 0;
-    return data;
+    return {
+      'id': id,
+      'category': category,
+      'text': text,
+      'created_at': createdAt,
+      'is_pinned': isPinned ? 1 : 0,
+      'time_spent': timeSpent,
+    };
   }
 
   @override
