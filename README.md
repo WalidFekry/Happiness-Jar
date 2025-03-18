@@ -21,9 +21,10 @@
 - **Notifications Screen:** Get notifications for new messages.
 - **Categories Screen:** Explore messages categorized by themes and interests.
 - **Quotes Screen:** Users can post and interact with their quote.
-- **Feelings Screen:** Users can share and express their current emotions and explore a range of emotions shared by the community.
 - **Favorite Screen:** Access your saved favorite messages.
-
+- **Feelings Screen:** Users can share and express their current emotions and explore a range of emotions shared by the community.
+- **Fadfada Screen:** Users can freely express their thoughts, feelings, and concerns in a private space, allowing them to release emotions and reflect.
+  
 ## 📁 File Structure
 <img src="assets/screenshots/file_structure.png" width="500" >
 
