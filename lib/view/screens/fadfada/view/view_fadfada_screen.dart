@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:happiness_jar/helpers/common_functions.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/fadfada/model/fadfada_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
@@ -10,6 +8,7 @@ import '../../../../helpers/date_time_helper.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../base_screen.dart';
 import '../view_model/fadfada_view_model.dart';
+import '../widgets/audio_waveform_player.dart';
 
 class ViewFadfadaScreen extends StatelessWidget {
   final FadfadaModel fadfada;
@@ -37,25 +36,36 @@ class ViewFadfadaScreen extends StatelessWidget {
                     ContentTextWidget(
                       label: "🗂 التصنيف: ${fadfada.category}",
                     ),
-                    verticalSpace(8),
+                    verticalSpace(4),
                     Row(
                       children: [
                         const Icon(Icons.date_range, size: 18, color: Colors.blueGrey),
-                        const SizedBox(width: 6),
+                        horizontalSpace(6),
                         ContentTextWidget(
                           fontSize: 12,
                           label: "تمت كتابتها بتاريخ: ${DateTimeHelper.formatTimestamp(fadfada.createdAt!)}",
                         ),
                       ],
                     ),
-                    verticalSpace(8),
+                    verticalSpace(4),
                     Row(
                       children: [
                         const Icon(Icons.timer, size: 18, color: Colors.blueGrey),
-                        const SizedBox(width: 6),
+                        horizontalSpace(6),
                         ContentTextWidget(
                           fontSize: 12,
                           label: "الوقت المستغرق: ${DateTimeHelper.formatTimeSpent(fadfada.timeSpent)}",
+                        ),
+                      ],
+                    ),
+                    verticalSpace(4),
+                    Row(
+                      children: [
+                        const Icon(Icons.mic, size: 18, color: Colors.blueGrey),
+                        horizontalSpace(6),
+                        ContentTextWidget(
+                          fontSize: 12,
+                          label: "تسجيل صوتي: ${fadfada.hasAudio ? "نعم" : "لا"}",
                         ),
                       ],
                     ),
@@ -68,6 +78,11 @@ class ViewFadfadaScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    if (fadfada.hasAudio && fadfada.audioPath != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: AudioWaveformPlayerWidget(audioPath: fadfada.audioPath!),
+                      ),
                     const Divider(height: 20, thickness: 1),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

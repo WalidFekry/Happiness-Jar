@@ -10,6 +10,7 @@ import '../../../widgets/content_text.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../base_screen.dart';
 import '../widgets/fadfada_categories.dart';
+import '../widgets/record_and_player.dart';
 
 class EditFadfadaScreen extends StatelessWidget {
   final FadfadaModel fadfadaModel;
@@ -22,13 +23,16 @@ class EditFadfadaScreen extends StatelessWidget {
       onModelReady: (viewModel) {
         viewModel.setFadfada(fadfadaModel);
         viewModel.startTimer();
-      },
+      },onFinish: (viewModel){
+      viewModel.disposeController();
+    },
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: const CustomAppBar(title: "تعديل الفضفضة"),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -39,7 +43,7 @@ class EditFadfadaScreen extends StatelessWidget {
                     children: [
                       ContentTextWidget(
                         fontSize: 14,
-                        label: "⏳ الوقت المستغرق: ${DateTimeHelper.formatTime(viewModel.stopwatch.elapsed.inSeconds)}",
+                        label: "⏳ الوقت المستغرق: ${DateTimeHelper.formatTime(viewModel.stopwatch?.elapsed.inSeconds)}",
                       ),
                       ContentTextWidget(
                         fontSize: 14,
@@ -57,17 +61,18 @@ class EditFadfadaScreen extends StatelessWidget {
                       hintText: "ابدأ الكتابة، دع قلبك يروي قصته، وتذكر أنك لست وحدك.",
                     ),
                   ),
-                  verticalSpace(8),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.delete, color: Theme.of(context).cardColor,size: 30,),
-                        onPressed: () {
-                          viewModel.clearController();
-                        },
-                      ),
-                    ],
+                  IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Theme.of(context).cardColor,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      viewModel.clearController();
+                    },
                   ),
+                  verticalSpace(4),
+                  RecordAndPlayerWidget(viewModel: viewModel),
                   verticalSpace(16),
                   Center(
                     child: CustomElevatedButton(

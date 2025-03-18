@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/screens/fadfada/model/fadfada_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../db/app_database.dart';
 import '../../../../enums/screen_state.dart';
@@ -23,6 +26,78 @@ class FadfadaViewModel extends BaseViewModel {
   String sortOrder = "newest";
   final Stopwatch stopwatch = Stopwatch();
   Timer? timer;
+  final RecorderController recorderController = RecorderController();
+  String? audioPath;
+  bool isRecording = false;
+  bool isPaused = false;
+  final PlayerController player = PlayerController();
+  bool isPlaying = false;
+  bool isPrepared = false;
+
+  Future<void> startRecording() async {
+    final dir = await getApplicationDocumentsDirectory();
+    audioPath =
+        '${dir.path}/fadfada_${DateTime.now().millisecondsSinceEpoch}.m4a';
+    await recorderController.record(path: audioPath!);
+    isRecording = true;
+    isPaused = false;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> pauseRecording() async {
+    await recorderController.pause();
+    isPaused = true;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> resumeRecording() async {
+    await recorderController.record();
+    isPaused = false;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> stopRecording({bool save = true}) async {
+    await recorderController.stop();
+    isRecording = false;
+    isPaused = false;
+    if (!save && audioPath != null && File(audioPath!).existsSync()) {
+      await File(audioPath!).delete();
+      audioPath = null;
+    }
+    setState(ViewState.Idle);
+  }
+
+  Future<void> playAudio() async {
+    if (audioPath == null) return;
+    if (!isPrepared) {
+      isPrepared = true;
+      await player.preparePlayer(path: audioPath!);
+      player.setFinishMode(finishMode: FinishMode.pause);
+      player.onCompletion.listen((_) async {
+        isPlaying = false;
+        setState(ViewState.Idle);
+      });
+    }
+    await player.startPlayer();
+    isPlaying = true;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> pauseAudio() async {
+    await player.pausePlayer();
+    isPlaying = false;
+    setState(ViewState.Idle);
+  }
+
+  Future<void> deleteAudio() async {
+    if (audioPath != null && File(audioPath!).existsSync()) {
+      await File(audioPath!).delete();
+      audioPath = null;
+      isPlaying = false;
+      isPrepared = false;
+    }
+    setState(ViewState.Idle);
+  }
 
   void startTimer() {
     if (stopwatch.isRunning) {
@@ -95,11 +170,11 @@ class FadfadaViewModel extends BaseViewModel {
       text: controller.text,
       createdAt: timestamp,
       timeSpent: stopwatch.elapsed.inSeconds,
+      audioPath: audioPath,
+      hasAudio: audioPath != null,
     );
     await appDatabase.insert(fadfadaItem);
     resetTimer();
-    clearController();
-    getFadfadaList();
     navigationService.goBack();
   }
 
@@ -122,22 +197,29 @@ class FadfadaViewModel extends BaseViewModel {
         category: selectedCategory,
         text: controller.text,
         createdAt: createdAt,
-        timeSpent: oldTimeSpent! + stopwatch.elapsed.inSeconds);
+        timeSpent: oldTimeSpent! + stopwatch.elapsed.inSeconds,
+        audioPath: audioPath,
+        hasAudio: audioPath != null
+    );
     appDatabase.insert(fadfadaItem);
     resetTimer();
-    getFadfadaList();
     navigationService.goBack();
   }
 
   void setFadfada(FadfadaModel fadfada) {
     controller.text = fadfada.text!;
     selectedCategory = fadfada.category!;
+    audioPath = fadfada.audioPath;
     setState(ViewState.Idle);
   }
 
   void navigateToEditFadfada(int index) {
     navigationService.navigateTo(RouteName.EDIT_FADFADA_SCREEN,
-        arguments: fadfadaList[index]);
+        arguments: fadfadaList[index]).then((_) => getFadfadaList());
+  }
+
+  void navigateToAddFadfada() {
+    navigationService.navigateTo(RouteName.ADD_FADFADA_SCREEN).then((_) => getFadfadaList());
   }
 
   void clearController() {
@@ -153,5 +235,12 @@ class FadfadaViewModel extends BaseViewModel {
           .sort((a, b) => (b.isPinned ? 1 : 0).compareTo(a.isPinned ? 1 : 0));
       setState(ViewState.Idle);
     }
+  }
+
+  void disposeController() {
+    controller.dispose();
+    recorderController.dispose();
+    player.dispose();
+    stopwatch.stop();
   }
 }

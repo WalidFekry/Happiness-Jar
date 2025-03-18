@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
@@ -11,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vision_gallery_saver/vision_gallery_saver.dart';
 
 class CommonFunctions {
   static ScreenshotController screenshotController = ScreenshotController();
@@ -87,7 +87,7 @@ class CommonFunctions {
         .captureFromWidget(widget)
         .then((image) async {
       try {
-        final result = await ImageGallerySaver.saveImage(image);
+        final result = await VisionGallerySaver.saveImage(image);
         if (result['isSuccess']) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showTopSnackBar(

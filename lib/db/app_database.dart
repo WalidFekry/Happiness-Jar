@@ -62,7 +62,7 @@ class AppDatabase {
       'CREATE TABLE today_advice(id INTEGER UNIQUE, body TEXT)',
     );
     db.execute(
-      'CREATE TABLE fadfada(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, text TEXT, is_pinned INTEGER, time_spent INTEGER, created_at INTEGER)',
+      'CREATE TABLE fadfada(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, text TEXT, is_pinned INTEGER, time_spent INTEGER, audio_path TEXT, has_audio INTEGER, created_at INTEGER)',
     );
   }
 
@@ -80,7 +80,7 @@ class AppDatabase {
       'CREATE TABLE IF NOT EXISTS today_advice(id INTEGER UNIQUE, body TEXT)',
     );
     db.execute(
-      'CREATE TABLE IF NOT EXISTS fadfada(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, text TEXT, is_pinned INTEGER, time_spent INTEGER, created_at INTEGER)',
+      'CREATE TABLE IF NOT EXISTS fadfada(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, text TEXT, is_pinned INTEGER, time_spent INTEGER, audio_path TEXT, has_audio INTEGER, created_at INTEGER)',
     );
   }
 

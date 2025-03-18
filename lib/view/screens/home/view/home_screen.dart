@@ -7,7 +7,6 @@ import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/local_notification_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
-import 'package:happiness_jar/view/screens/feelings/view/feelings_screen.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
 import 'package:happiness_jar/view/screens/posts/view/posts_screen.dart';
@@ -60,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(onModelReady: (viewModel) async {
       final bool isLogin =
-      await viewModel.prefs.getBoolean(SharedPrefsConstants.isLogin);
+          await viewModel.prefs.getBoolean(SharedPrefsConstants.isLogin);
       if (!isLogin) {
         locator<NavigationService>()
             .navigateToAndClearStack(RouteName.REGISTER);
@@ -83,28 +82,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             leading: viewModel.giftBoxMessage == null
                 ? GestureDetector(
-              onTap: () {
-                ShareAppDialog.show(context);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Image.asset(AssetsManager.appLogoNoTitle,
-                    fit: BoxFit.contain),
-              ),
-            )
+                    onTap: () {
+                      ShareAppDialog.show(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Image.asset(AssetsManager.appLogoNoTitle,
+                          fit: BoxFit.contain),
+                    ),
+                  )
                 : GestureDetector(
-              onTap: () {
-                TodayAdviceDialog.show(context, viewModel.giftBoxMessage);
-                setState(() {
-                  viewModel.giftBoxMessage = null;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child:
-                Image.asset(AssetsManager.giftBox, fit: BoxFit.cover),
-              ),
-            ),
+                    onTap: () {
+                      TodayAdviceDialog.show(context, viewModel.giftBoxMessage);
+                      setState(() {
+                        viewModel.giftBoxMessage = null;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child:
+                          Image.asset(AssetsManager.giftBox, fit: BoxFit.cover),
+                    ),
+                  ),
             actions: [
               GestureDetector(
                 onTap: () {
@@ -119,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       image: viewModel.image != null
                           ? FileImage(viewModel.image!)
                           : const AssetImage(AssetsManager.userProfile)
-                      as ImageProvider,
+                              as ImageProvider,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -151,9 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   selectedIcon: const Icon(IconlyLight.notification),
                   icon: badges.Badge(
                     showBadge:
-                    viewModel.newNotificationsCount == 0 ? false : true,
+                        viewModel.newNotificationsCount == 0 ? false : true,
                     badgeContent:
-                    Text(viewModel.newNotificationsCount.toString()),
+                        Text(viewModel.newNotificationsCount.toString()),
                     child: const Icon(IconlyBold.notification),
                   ),
                   label: "الإشعارات"),
@@ -243,7 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
       "categories": () => jumpToPage(2),
       "posts": () => jumpToPage(3),
       "favorite": () => jumpToPage(4),
-      "feelings": () => jumpToPage(4),
+      "feelings": () => navigateToScreen(RouteName.FEELINGS_SCREEN),
+      "fadfada": () => navigateToScreen(RouteName.FADFADA_SCREEN),
       "rate": () => rateApp(),
       "openUrl": () {
         final url = message.data["url"];
@@ -297,9 +297,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     controller?.dispose();
     streamController.close();
+    super.dispose();
   }
 
   void setLocalNotification() {
@@ -321,7 +321,8 @@ class _HomeScreenState extends State<HomeScreen> {
       "categories": () => jumpToPage(2),
       "posts": () => jumpToPage(3),
       "favorite": () => jumpToPage(4),
-      "feelings": () => jumpToPage(4),
+      "feelings": () => navigateToScreen(RouteName.FEELINGS_SCREEN),
+      "fadfada": () => navigateToScreen(RouteName.FADFADA_SCREEN),
     };
 
     actionsMap[action]?.call();
@@ -338,4 +339,9 @@ class _HomeScreenState extends State<HomeScreen> {
       launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
+
+  void navigateToScreen(String routeName) {
+    locator<NavigationService>().navigateTo(routeName);
+  }
+
 }

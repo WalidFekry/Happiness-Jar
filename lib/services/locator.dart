@@ -39,5 +39,5 @@ void setupLocator() {
   locator.registerFactory(() => NotificationsViewModel());
   locator.registerFactory(() => ProfileViewModel());
   locator.registerFactory(() => PostsViewModel());
-  locator.registerLazySingleton(() => FadfadaViewModel());
+  locator.registerFactory(() => FadfadaViewModel());
 }

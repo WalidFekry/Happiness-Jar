@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/view/screens/fadfada/view_model/fadfada_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 
@@ -30,7 +31,7 @@ class FadfadaCategories extends StatelessWidget {
               decoration: BoxDecoration(
                 color: viewModel.selectedCategory == category
                     ? Theme.of(context).cardColor
-                    : Colors.grey[300],
+                    : AppColors.gray300,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: ContentTextWidget(

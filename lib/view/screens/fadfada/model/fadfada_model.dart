@@ -7,6 +7,8 @@ class FadfadaModel implements DatabaseModel {
   int? createdAt;
   bool isPinned;
   int? timeSpent;
+  String? audioPath;
+  bool hasAudio;
 
   FadfadaModel({
     this.id,
@@ -15,6 +17,8 @@ class FadfadaModel implements DatabaseModel {
     this.createdAt,
     this.isPinned = false,
     this.timeSpent,
+    this.audioPath,
+    this.hasAudio = false,
   });
 
   FadfadaModel.fromJson(Map<String, dynamic> json)
@@ -23,7 +27,9 @@ class FadfadaModel implements DatabaseModel {
         text = json['text'],
         createdAt = json['created_at'],
         isPinned = json['is_pinned'] == 1,
-        timeSpent = json['time_spent'] ?? 0;
+        timeSpent = json['time_spent'] ?? 0,
+        audioPath = json['audio_path'],
+        hasAudio = json['has_audio'] == 1;
 
   Map<String, dynamic> toJson() {
     return {
@@ -33,6 +39,8 @@ class FadfadaModel implements DatabaseModel {
       'created_at': createdAt,
       'is_pinned': isPinned ? 1 : 0,
       'time_spent': timeSpent,
+      'audio_path': audioPath,
+      'has_audio': hasAudio ? 1 : 0,
     };
   }
 

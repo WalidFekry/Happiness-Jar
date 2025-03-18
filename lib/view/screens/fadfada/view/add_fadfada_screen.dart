@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/fadfada/view_model/fadfada_view_model.dart';
+import 'package:happiness_jar/view/screens/fadfada/widgets/record_and_player.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/custom_elevated_button.dart';
-import 'package:happiness_jar/view/widgets/subtitle_text.dart';
-import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -15,17 +14,20 @@ import '../widgets/fadfada_categories.dart';
 
 class AddFadfadaScreen extends StatelessWidget {
   const AddFadfadaScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BaseView<FadfadaViewModel>(onModelReady: (viewModel) {
-      viewModel.clearController();
       viewModel.startTimer();
+    },onFinish: (viewModel){
+      viewModel.disposeController();
     }, builder: (context, viewModel, child) {
       return Scaffold(
         appBar: const CustomAppBar(title: "إضافة فضفضة"),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -33,7 +35,8 @@ class AddFadfadaScreen extends StatelessWidget {
                 verticalSpace(16),
                 ContentTextWidget(
                   fontSize: 16,
-                  label: "⏳ الوقت المستغرق: ${DateTimeHelper.formatTime(viewModel.stopwatch.elapsed.inSeconds)}",
+                  label:
+                      "⏳ الوقت المستغرق: ${DateTimeHelper.formatTime(viewModel.stopwatch.elapsed.inSeconds ?? 0)}",
                 ),
                 verticalSpace(8),
                 TextField(
@@ -42,10 +45,10 @@ class AddFadfadaScreen extends StatelessWidget {
                   maxLines: 20,
                   minLines: 15,
                   decoration: const InputDecoration(
-                    hintText: "اكتب، لأن الكلمات في قلبك هي أصدق من أي شيء آخر.",
+                    hintText:
+                        "اكتب، لأن الكلمات في قلبك هي أصدق من أي شيء آخر.",
                   ),
                 ),
-                verticalSpace(8),
                 IconButton(
                   icon: Icon(
                     Icons.delete,
@@ -56,6 +59,8 @@ class AddFadfadaScreen extends StatelessWidget {
                     viewModel.clearController();
                   },
                 ),
+                verticalSpace(4),
+                RecordAndPlayerWidget(viewModel: viewModel),
                 verticalSpace(16),
                 Center(
                     child: CustomElevatedButton(

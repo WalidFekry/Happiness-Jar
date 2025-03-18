@@ -69,5 +69,7 @@
         <string>ca-app-pub-3354189036871191~7196036141</string>
         <key>NSPhotoLibraryUsageDescription</key>
         <string>We need access to the photo library so that you can select and upload a profile picture within the app.</string>
+        <key>NSMicrophoneUsageDescription</key>
+        <string>We need a microphone to record audio with the fadfada section</string>
 	</dict>
 </plist>
