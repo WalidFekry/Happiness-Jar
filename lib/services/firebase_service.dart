@@ -23,7 +23,6 @@ class FirebaseService {
         return true;
       };
       FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-      messaging.subscribeToTopic("all_users");
       MobileAds.instance.initialize();
     }catch(e) {
       if (kDebugMode) {
