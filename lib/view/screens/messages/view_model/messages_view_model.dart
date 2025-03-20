@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/screens/base_view_model.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:vision_gallery_saver/vision_gallery_saver.dart';
 
 import '../../../../constants/shared_preferences_constants.dart';
 import '../../../../db/app_database.dart';
@@ -196,7 +196,7 @@ class MessagesViewModel extends BaseViewModel {
     try {
       var response = await Dio()
           .get(imageUrl!, options: Options(responseType: ResponseType.bytes));
-      final result = await ImageGallerySaver.saveImage(
+      final result = await VisionGallerySaver.saveImage(
           Uint8List.fromList(response.data),
           quality: 100,
           name: "hello");

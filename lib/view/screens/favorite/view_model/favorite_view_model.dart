@@ -23,8 +23,10 @@ class FavoriteViewModel extends BaseViewModel {
   }
 
   Future<void> deleteFavoriteMessage(int index) async {
-    await appDatabase.deleteFavoriteMessage(list[index].id);
-    getFavoriteMessages();
+    int deletedRows = await appDatabase.deleteById(list[index].id, "favorite_messages");
+    if (deletedRows > 0) {
+      getFavoriteMessages();
+    }
   }
 
   void shareMessage(int index) {

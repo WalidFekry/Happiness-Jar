@@ -9,6 +9,8 @@ class ContentTextWidget extends StatelessWidget {
     this.color,
     this.textAlign = TextAlign.start,
     this.fontFamily = "avenir_regular",
+    this.overflew,
+    this.maxLines, this.height,
   });
 
   final String? label;
@@ -17,14 +19,20 @@ class ContentTextWidget extends StatelessWidget {
   final Color? color;
   final String fontFamily;
   final TextAlign? textAlign;
+  final TextOverflow? overflew;
+  final int? maxLines;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Text(
       label!,
       textAlign: textAlign,
+      overflow: overflew,
+      maxLines: maxLines,
       style: TextStyle(
         fontFamily: fontFamily,
         fontSize: fontSize,
+        height: height,
         fontWeight: fontWeight,
         color: color,
       ),

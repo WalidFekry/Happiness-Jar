@@ -39,4 +39,6 @@ class AssetsManager {
   static const String happyFeelings = "$svgPath/happy_feelings.svg";
   static const String like = "$svgPath/like.svg";
   static const String liked = "$svgPath/liked.svg";
+  static const String feeling = "$svgPath/feeling.svg";
+  static const String speaking = "$svgPath/speaking.svg";
 }

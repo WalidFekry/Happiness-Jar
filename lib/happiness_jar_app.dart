@@ -11,13 +11,23 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:happiness_jar/services/shared_pref_services.dart';
 import 'package:provider/provider.dart';
 import 'constants/shared_preferences_constants.dart';
+import 'db/app_database.dart';
 import 'services/locator.dart';
 
 Future<void> initServices() async {
-  MobileAds.instance.initialize();
   await FirebaseService.init();
   setupLocator();
   await locator<LocalNotificationService>().init();
+  WidgetsBinding.instance.addObserver(_AppLifecycleObserver());
+}
+
+class _AppLifecycleObserver extends WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.detached) {
+      locator<AppDatabase>().closeDatabase();
+    }
+  }
 }
 
  Future<bool> checkFirstOpen() async {

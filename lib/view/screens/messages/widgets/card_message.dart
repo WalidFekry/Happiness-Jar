@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/constants/assets_manager.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +13,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:happiness_jar/providers/theme_provider.dart';
-
-import '../../../../constants/app_constants.dart'; // تأكد من تضمين المزود المناسب
+import 'package:vision_gallery_saver/vision_gallery_saver.dart';
+import '../../../../constants/app_constants.dart';
 
 class CardMessageWidget extends StatefulWidget {
   const CardMessageWidget(
@@ -222,7 +220,7 @@ class _CardMessageWidgetState extends State<CardMessageWidget> {
         .then((image) async {
       if (image != null) {
         try {
-          final result = await ImageGallerySaver.saveImage(image);
+          final result = await VisionGallerySaver.saveImage(image);
           if (result['isSuccess']) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               showTopSnackBar(

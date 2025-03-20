@@ -81,10 +81,11 @@ class HomeViewModel extends BaseViewModel {
 
   /// Send Firebase token to the server
   Future<void> sendToken() async {
-    String? userName = CurrentSessionService.cachedUserName;
-    String? token = await FirebaseMessaging.instance.getToken();
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    final FirebaseMessaging messaging = FirebaseMessaging.instance;
+    messaging.subscribeToTopic("all");
     messaging.subscribeToTopic(Platform.isAndroid ? "android" : "ios");
+    final String? userName = CurrentSessionService.cachedUserName;
+    final String? token = await FirebaseMessaging.instance.getToken();
     if (token == null || token.isEmpty) {
       return;
     }

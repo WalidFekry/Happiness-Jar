@@ -21,9 +21,10 @@
 - **Notifications Screen:** Get notifications for new messages.
 - **Categories Screen:** Explore messages categorized by themes and interests.
 - **Quotes Screen:** Users can post and interact with their quote.
-- **Feelings Screen:** Users can share and express their current emotions and explore a range of emotions shared by the community.
 - **Favorite Screen:** Access your saved favorite messages.
-
+- **Feelings Screen:** Users can share and express their current emotions and explore a range of emotions shared by the community.
+- **Fadfada Screen:** Users can freely express their thoughts, feelings, and concerns in a private space, allowing them to release emotions and reflect.
+  
 ## 📁 File Structure
 <img src="assets/screenshots/file_structure.png" width="500" >
 
@@ -79,15 +80,15 @@
   sqflite: ^2.0.2
   path: ^1.8.0
   easy_localization: ^3.0.0
-  share_plus: ^8.0.3
+  share_plus: ^10.1.4
   clipboard: ^0.1.3
   top_snackbar_flutter: ^3.1.0
   image_picker: ^0.8.4+3
   path_provider: ^2.1.3
-  firebase_core: ^3.1.0
-  firebase_crashlytics: ^4.0.1
-  firebase_analytics: ^11.0.1
-  firebase_messaging: ^15.0.1
+  firebase_core: ^3.4.0
+  firebase_crashlytics: ^4.3.4
+  firebase_analytics: ^11.4.4
+  firebase_messaging: ^15.1.3
   permission_handler: ^11.3.1
   app_settings: ^5.1.1
   in_app_review: ^2.0.9
@@ -96,12 +97,13 @@
   url_launcher: ^6.3.0
   package_info_plus: ^8.0.0
   screenshot: ^3.0.0
-  image_gallery_saver: ^2.0.3
   google_mobile_ads: ^5.1.0
   flutter_fortune_wheel: ^1.3.1
   cached_network_image: ^3.3.1
   flutter_local_notifications: ^17.2.2
   badges: ^3.1.2
+  vision_gallery_saver: ^2.0.2
+  audio_waveforms: ^1.3.0
   flutter_native_splash: ^2.4.1
 ```
 

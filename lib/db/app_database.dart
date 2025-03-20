@@ -1,9 +1,6 @@
-
-
-
-
 import 'package:flutter/foundation.dart';
 import 'package:happiness_jar/view/screens/categories/model/messages_categories_model.dart';
+import 'package:happiness_jar/view/screens/fadfada/model/fadfada_model.dart';
 import 'package:happiness_jar/view/screens/favorite/model/favorite_messages_model.dart';
 import 'package:happiness_jar/view/screens/feelings/model/FeelingsCategoriesModel.dart';
 import 'package:happiness_jar/view/screens/feelings/model/FeelingsContentModel.dart';
@@ -16,16 +13,29 @@ import '../models/resources.dart';
 import '../view/screens/categories/model/messages_content_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
 
-
 class AppDatabase {
-  Future<Database> mainDatabase() async {
-    return openDatabase(
+  static Database? _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+
+    _database = await openDatabase(
       join(await getDatabasesPath(), 'database.db'),
+      version: 4,
       onCreate: (db, version) => createTables(db),
-      version: 3,
       onUpgrade: (db, oldVersion, newVersion) => updateTables(db),
     );
+
+    return _database!;
   }
+
+  Future<void> closeDatabase() async {
+    if (_database != null) {
+      await _database!.close();
+      _database = null;
+    }
+  }
+
   createTables(Database db) {
     db.execute(
       'CREATE TABLE messages_categories(id INTEGER UNIQUE, title TEXT, categorie INTEGER)',
@@ -51,6 +61,9 @@ class AppDatabase {
     db.execute(
       'CREATE TABLE today_advice(id INTEGER UNIQUE, body TEXT)',
     );
+    db.execute(
+      'CREATE TABLE fadfada(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, text TEXT, is_pinned INTEGER, time_spent INTEGER, audio_path TEXT, has_audio INTEGER, created_at INTEGER)',
+    );
   }
 
   updateTables(Database db) {
@@ -66,39 +79,46 @@ class AppDatabase {
     db.execute(
       'CREATE TABLE IF NOT EXISTS today_advice(id INTEGER UNIQUE, body TEXT)',
     );
-  }
-
-  Future<Database?> getDb() async {
-    return await mainDatabase();
+    db.execute(
+      'CREATE TABLE IF NOT EXISTS fadfada(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, text TEXT, is_pinned INTEGER, time_spent INTEGER, audio_path TEXT, has_audio INTEGER, created_at INTEGER)',
+    );
   }
 
   Future<void> insertData(Resource resource) async {
-    final Database? db = await getDb();
-    var batch = db?.batch();
+    final Database db = await database;
+    var batch = db.batch();
     for (var element in resource.data!.content!) {
-      batch?.insert(
+      batch.insert(
         element.table()!,
         element.toMap()!,
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
-    await batch?.commit(noResult: true);
-    db?.close();
+    await batch.commit(noResult: true);
   }
 
   Future<void> insert(DatabaseModel model) async {
-  final Database? db = await getDb();
-  await db?.insert(
-    model.table()!,
-    model.toMap()!,
-    conflictAlgorithm: ConflictAlgorithm.replace,
-  );
-  db?.close();
-}
+    final Database db = await database;
+    await db.insert(
+      model.table()!,
+      model.toMap()!,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<int> deleteById(int? id, String table) async {
+    final Database db = await database;
+    int count = await db.delete(
+      table,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    return count;
+  }
 
   Future<void> saveFavoriteMessage(String? title, String createdAt) async {
-    final Database? db = await getDb();
-    await db?.insert(
+    final Database db = await database;
+    await db.insert(
       'favorite_messages',
       {
         'title': title,
@@ -106,81 +126,55 @@ class AppDatabase {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    db?.close();
   }
 
   Future<void> deleteFavoriteMessageByText(String text) async {
-    final Database? db = await getDb();
-    await db?.delete(
+    final Database db = await database;
+    await db.delete(
       'favorite_messages',
       where: 'title = ?',
       whereArgs: [text],
     );
-    db?.close();
   }
 
-  Future<void> deleteFavoriteMessage(int? id) async {
-    final Database? db = await getDb();
-    await db?.delete(
-      'favorite_messages',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    db?.close();
-  }
-
-  Future<int?> deleteLocalPost(int? id) async {
-    final Database? db = await getDb();
-    await db?.delete(
-      'user_posts',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    db?.close();
-    return null;
-  }
-
-    Future<List<MessagesCategories>> getMessagesCategories() async {
-    final Database db = await mainDatabase();
-    final List<Map<String, dynamic>> maps =
-    await db.rawQuery('SELECT * FROM messages_categories ORDER BY RANDOM()');
+  Future<List<MessagesCategories>> getMessagesCategories() async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('SELECT * FROM messages_categories ORDER BY RANDOM()');
     List<MessagesCategories> data = [];
     for (var item in maps) {
       data.add(MessagesCategories.fromJson(item));
     }
-    db.close();
     return data;
   }
 
   Future<List<MessagesContent>> getMessagesContent(int? categorie) async {
-    final Database db = await mainDatabase();
-    final List<Map<String, dynamic>> maps =
-    await db.rawQuery('SELECT * FROM messages_content WHERE categorie = $categorie ORDER BY RANDOM()');
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+        'SELECT * FROM messages_content WHERE categorie = $categorie ORDER BY RANDOM()');
     List<MessagesContent> data = [];
     for (var item in maps) {
       data.add(MessagesContent.fromJson(item));
     }
-    db.close();
     return data;
   }
 
   Future<List<MessagesNotifications>> getMessagesNotificationContent() async {
-    final Database db = await mainDatabase();
-    final List<Map<String, dynamic>> maps =
-    await db.rawQuery('SELECT * FROM messages_notifications ORDER BY RANDOM()');
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('SELECT * FROM messages_notifications ORDER BY RANDOM()');
     List<MessagesNotifications> data = [];
     for (var item in maps) {
       data.add(MessagesNotifications.fromJson(item));
     }
-    db.close();
     return data;
   }
 
-  Future<List<MessagesNotifications>> getMessageNotificationContentById(int id) async {
-    final Database db = await mainDatabase();
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-        'SELECT * FROM messages_notifications WHERE id = ?',
-        [id]);
+  Future<List<MessagesNotifications>> getMessageNotificationContentById(
+      int id) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('SELECT * FROM messages_notifications WHERE id = ?', [id]);
     List<MessagesNotifications> data = [];
     if (maps.isNotEmpty) {
       data.add(MessagesNotifications.fromJson(maps.first));
@@ -188,45 +182,41 @@ class AppDatabase {
     return data;
   }
 
-
   Future<List<FavoriteMessagesModel>> getFavoriteMessages() async {
-    final Database db = await mainDatabase();
+    final Database db = await database;
     final List<Map<String, dynamic>> maps =
-    await db.rawQuery('SELECT * FROM favorite_messages ORDER BY id DESC');
+        await db.rawQuery('SELECT * FROM favorite_messages ORDER BY id DESC');
     List<FavoriteMessagesModel> data = [];
     for (var item in maps) {
       data.add(FavoriteMessagesModel.fromJson(item));
     }
-    db.close();
     return data;
   }
 
   Future<List<PostItem>> getUserPosts() async {
-    final Database db = await mainDatabase();
+    final Database db = await database;
     final List<Map<String, dynamic>> maps =
-    await db.rawQuery('SELECT * FROM user_posts ORDER BY id DESC');
+        await db.rawQuery('SELECT * FROM user_posts ORDER BY id DESC');
     List<PostItem> data = [];
     for (var item in maps) {
       data.add(PostItem.fromJson(item));
     }
-    db.close();
     return data;
   }
 
   Future<List<FeelingsCategories>> getFeelingsCategories() async {
-    final Database db = await mainDatabase();
+    final Database db = await database;
     final List<Map<String, dynamic>> maps =
-    await db.rawQuery('SELECT * FROM feelings_categories ORDER BY id ASC');
+        await db.rawQuery('SELECT * FROM feelings_categories ORDER BY id ASC');
     List<FeelingsCategories> data = [];
     for (var item in maps) {
       data.add(FeelingsCategories.fromJson(item));
     }
-    db.close();
     return data;
   }
 
   Future<List<FeelingsContent>> getFeelingsContent(int? categorie) async {
-    final Database db = await mainDatabase();
+    final Database db = await database;
 
     final String queryDoaa = '''
     SELECT * FROM feelings_content WHERE title = 'دعاء' AND categorie = $categorie ORDER BY RANDOM() LIMIT 1
@@ -252,7 +242,8 @@ class AppDatabase {
         data.add(FeelingsContent.fromJson(doaaMap.first));
       }
 
-      final List<Map<String, dynamic>> nasehaMap = await db.rawQuery(queryNaseha);
+      final List<Map<String, dynamic>> nasehaMap =
+          await db.rawQuery(queryNaseha);
       if (nasehaMap.isNotEmpty) {
         data.add(FeelingsContent.fromJson(nasehaMap.first));
       }
@@ -262,7 +253,8 @@ class AppDatabase {
         data.add(FeelingsContent.fromJson(hikmaMap.first));
       }
 
-      final List<Map<String, dynamic>> khatimaMap = await db.rawQuery(queryKhatima);
+      final List<Map<String, dynamic>> khatimaMap =
+          await db.rawQuery(queryKhatima);
       if (khatimaMap.isNotEmpty) {
         data.add(FeelingsContent.fromJson(khatimaMap.first));
       }
@@ -273,47 +265,28 @@ class AppDatabase {
         print("Error fetching feelings content: $e");
       }
       return [];
-    } finally {
-      db.close();
-    }
+    } finally {}
   }
 
   Future<String?> getAdviceMessage() async {
-    final Database db = await mainDatabase();
-    final List<Map<String, dynamic>> maps =
-    await db.rawQuery('SELECT body FROM today_advice ORDER BY RANDOM() LIMIT 1');
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('SELECT body FROM today_advice ORDER BY RANDOM() LIMIT 1');
     String? data;
     if (maps.isNotEmpty) {
       data = maps.first['body'] as String?;
     }
-    db.close();
     return data;
   }
 
-
-// Future<void> update(DatabaseModel model) async {
-//   final Database? db = await getDatabase(model);
-//   await db!.update(
-//     model.table()!,
-//     model.toMap()!,
-//     where: 'id = ?',
-//     whereArgs: [model.getId()!],
-//     conflictAlgorithm: ConflictAlgorithm.replace,
-//   );
-//   debugPrint('model with id :  ${model.getId()} updated ');
-//   // db?.close();
-// }
-
-// Future<void> delete(DatabaseModel model) async {
-//   final Database? db = await getDatabase(model);
-//   db?.delete(
-//     model.table()!,
-//     where: 'id = ?',
-//     whereArgs: [
-//       model.getId(),
-//     ],
-//   );
-//   // db?.close();
-// }
-
+  Future<List<FadfadaModel>> getFadfadaList() async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps =
+    await db.rawQuery('SELECT * FROM fadfada ORDER BY id DESC');
+    List<FadfadaModel> data = [];
+    for (var item in maps) {
+      data.add(FadfadaModel.fromJson(item));
+    }
+    return data;
+  }
 }
