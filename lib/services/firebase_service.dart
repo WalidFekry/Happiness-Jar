@@ -15,15 +15,15 @@ class FirebaseService {
       await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform);
       FlutterError.onError = (errorDetails) {
-        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+        crashlytics.recordFlutterFatalError(errorDetails);
       };
       // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
       PlatformDispatcher.instance.onError = (error, stack) {
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        crashlytics.recordError(error, stack, fatal: true);
         return true;
       };
       FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-      messaging.subscribeToTopic("all");
+      messaging.subscribeToTopic("all_users");
       MobileAds.instance.initialize();
     }catch(e) {
       if (kDebugMode) {
