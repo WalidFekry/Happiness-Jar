@@ -187,7 +187,7 @@ class FadfadaViewModel extends BaseViewModel {
 
   void navigateToContent(int index) {
     navigationService.navigateTo(RouteName.VIEW_FADFADA_SCREEN,
-        arguments: fadfadaList[index]);
+        arguments: filteredFadfadaList[index]);
   }
 
   void updateFadfada(int? id, int? createdAt, int? oldTimeSpent) {
@@ -215,7 +215,7 @@ class FadfadaViewModel extends BaseViewModel {
 
   void navigateToEditFadfada(int index) {
     navigationService.navigateTo(RouteName.EDIT_FADFADA_SCREEN,
-        arguments: fadfadaList[index]).then((_) => getFadfadaList());
+        arguments: filteredFadfadaList[index]).then((_) => getFadfadaList());
   }
 
   void navigateToAddFadfada() {
@@ -227,11 +227,11 @@ class FadfadaViewModel extends BaseViewModel {
   }
 
   void togglePinFadfada(int id) {
-    int index = fadfadaList.indexWhere((fadfada) => fadfada.id == id);
+    int index = filteredFadfadaList.indexWhere((fadfada) => fadfada.id == id);
     if (index != -1) {
-      fadfadaList[index].isPinned = !fadfadaList[index].isPinned;
-      appDatabase.insert(fadfadaList[index]);
-      fadfadaList
+      filteredFadfadaList[index].isPinned = !filteredFadfadaList[index].isPinned;
+      appDatabase.insert(filteredFadfadaList[index]);
+      filteredFadfadaList
           .sort((a, b) => (b.isPinned ? 1 : 0).compareTo(a.isPinned ? 1 : 0));
       setState(ViewState.Idle);
     }
