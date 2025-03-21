@@ -268,7 +268,8 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         leading: const Icon(Icons.share),
                         onTap: () {
-                          viewModel.shareApp();
+                          final RenderBox? box = context.findRenderObject() as RenderBox?;
+                          viewModel.shareApp(box);
                         },
                       ),
                       const Divider(

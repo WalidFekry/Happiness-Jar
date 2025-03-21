@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:happiness_jar/constants/shared_preferences_constants.dart';
@@ -81,8 +82,13 @@ class ProfileViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> shareApp() async {
-    await Share.share(AppConstants.shareApp);
+  Future<void> shareApp(RenderBox? box) async {
+    await Share.share(
+      AppConstants.shareApp,
+      sharePositionOrigin: box != null
+          ? box.localToGlobal(Offset.zero) & box.size
+          : const Rect.fromLTWH(0, 0, 1, 1),
+    );
   }
 
   Future<void> contact() async {
