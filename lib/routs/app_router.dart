@@ -8,6 +8,9 @@ import 'package:happiness_jar/view/screens/categories/view/messages_categories_c
 import 'package:happiness_jar/view/screens/fadfada/model/fadfada_model.dart';
 import 'package:happiness_jar/view/screens/fadfada/view/add_fadfada_screen.dart';
 import 'package:happiness_jar/view/screens/fadfada/view/fadfada_screen.dart';
+import 'package:happiness_jar/view/screens/fadfada/view/forgot_fadfada_pin_screen.dart';
+import 'package:happiness_jar/view/screens/fadfada/view/login_fadfada_pin_screen.dart';
+import 'package:happiness_jar/view/screens/fadfada/view/set_fadfada_pin_screen.dart';
 import 'package:happiness_jar/view/screens/fadfada/view/view_fadfada_screen.dart';
 import 'package:happiness_jar/view/screens/feelings/view/feelings_screen.dart';
 import 'package:happiness_jar/view/screens/get_started/view/get_notification_screen.dart';
@@ -49,6 +52,12 @@ class AppRouter {
         return _getPageRoute(const FadfadaScreen(), settings);
       case RouteName.ADD_FADFADA_SCREEN:
         return _getPageRoute(const AddFadfadaScreen(), settings);
+      case RouteName.SET_FADFADA_PIN_SCREEN:
+        return _getPageRoute(const SetFadfadaPinScreen(), settings);
+      case RouteName.LOGIN_FADFADA_PIN_SCREEN:
+        return _getPageRoute(const LoginFadfadaPinScreen(), settings);
+      case RouteName.FORGOT_FADFADA_PIN_SCREEN:
+        return _getPageRoute(const ForgotFadfadaPinScreen(), settings);
       case RouteName.VIEW_FADFADA_SCREEN:
         var fadfadaArguments = settings.arguments as FadfadaModel;
         return _getPageRoute(

@@ -7,6 +7,11 @@ class CurrentSessionService {
   static final prefs = locator<SharedPrefServices>();
   static String? cachedUserName;
   static String? cachedUserImage;
+  static bool isOpenFadfadaPin = false;
+
+  static void setIsOpenFadfadaPin(bool value) {
+    isOpenFadfadaPin = value;
+  }
 
   static Future<void> getUserName() async {
     if (cachedUserName != null) {

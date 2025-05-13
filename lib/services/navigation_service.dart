@@ -23,6 +23,17 @@ class NavigationService {
         .pushNamedAndRemoveUntil(routeName, (r) => false, arguments: arguments);
   }
 
+  Future<dynamic> navigateToReplacement(String routeName,
+      {Map<String, String>? queryParams, Object? arguments}) {
+    if (queryParams != null) {
+      routeName =
+          Uri(path: routeName, queryParameters: queryParams).toString();
+    }
+
+    return navigatorKey.currentState!
+        .pushReplacementNamed(routeName, arguments: arguments);
+  }
+
   void goBackUnTill(String routName) {
     return navigatorKey.currentState!
         .popUntil((route) => route.settings.name == routName);

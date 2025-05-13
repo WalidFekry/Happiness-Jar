@@ -21,4 +21,7 @@ class SharedPrefsConstants {
   static const String isNotificationOn = 'IS_NOTIFICATION_ON';
   static const String notificationsCount = 'NOTIFICATIONS_COUNT';
   static const String postsCount = 'POSTS_COUNT';
+  static const String fadfadaPinCode = 'FADFADA_PIN_CODE';
+  static const String fadfadaSecurityQuestion = 'FADFADA_SECURITY_QUESTION';
+  static const String fadfadaSecurityAnswer = 'FADFADA_SECURITY_ANSWER';
 }

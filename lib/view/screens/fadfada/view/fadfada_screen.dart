@@ -15,6 +15,7 @@ class FadfadaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<FadfadaViewModel>(
       onModelReady: (viewModel) {
+        viewModel.checkPinBeforeAccess();
         viewModel.getFadfadaList();
       },
       builder: (context, viewModel, child) {
@@ -40,6 +41,15 @@ class FadfadaScreen extends StatelessWidget {
                         }).toList(),
                         onChanged: (value) {
                           viewModel.setSelectedCategory(value!);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.lock,
+                          color: Theme.of(context).cardColor,
+                        ),
+                        onPressed: () {
+                          viewModel.navigateToSetFadfadaPin();
                         },
                       ),
                       DropdownButton<String>(

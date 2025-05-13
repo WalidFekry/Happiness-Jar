@@ -13,4 +13,7 @@ class RouteName {
   static const String ADD_FADFADA_SCREEN = '/ADD_FADFADA_SCREEN';
   static const String VIEW_FADFADA_SCREEN = '/VIEW_FADFADA_SCREEN';
   static const String EDIT_FADFADA_SCREEN = '/EDIT_FADFADA_SCREEN';
+  static const String SET_FADFADA_PIN_SCREEN = '/SET_FADFADA_PIN_SCREEN';
+  static const String LOGIN_FADFADA_PIN_SCREEN = '/LOGIN_FADFADA_PIN_SCREEN';
+  static const String FORGOT_FADFADA_PIN_SCREEN = '/FORGOT_FADFADA_PIN_SCREEN';
 }
