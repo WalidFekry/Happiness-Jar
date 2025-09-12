@@ -16,8 +16,17 @@ import '../../../../services/navigation_service.dart';
 class RegisterViewModel extends BaseViewModel {
   final prefs = locator<SharedPrefServices>();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   File? image;
+  DateTime? birthDate;
+
+  void setBirthDate(DateTime date) {
+    birthDate = date;
+    birthDateController.text =
+    "${date.day}-${date.month}-${date.year}";
+    notifyListeners();
+  }
 
   Future<void> pickImage() async {
     final pickedFile =
@@ -30,6 +39,9 @@ class RegisterViewModel extends BaseViewModel {
 
   Future<void> saveData() async {
     CurrentSessionService.setUserName(nameController.text.trim());
+    if (birthDate != null){
+      CurrentSessionService.setUserBirthday(birthDate!);
+    }
     if (image != null) {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
@@ -47,6 +59,8 @@ class RegisterViewModel extends BaseViewModel {
 
   void destroy() {
     image = null;
+    birthDate = null;
     nameController.dispose();
+    birthDateController.dispose();
   }
 }

@@ -32,15 +32,26 @@ class ProfileViewModel extends BaseViewModel {
   final apiService = locator<ApiService>();
   final localNotificationService = locator<LocalNotificationService>();
   String? userName;
+  DateTime? userBirthday;
   String? version;
   File? image;
   bool isNotificationOn = true;
   static const platform = MethodChannel('battery_optimization_channel');
 
+  String get formattedBirthday {
+    if (userBirthday == null) return "";
+    final d = userBirthday!;
+    final day = d.day.toString().padLeft(2, '0');
+    final month = d.month.toString().padLeft(2, '0');
+    final year = d.year;
+    return "$year-$month-$day";
+  }
+
   Future<void> getUserData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
     userName = CurrentSessionService.cachedUserName;
+    userBirthday = CurrentSessionService.cachedUserBirthday;
     final imagePath = CurrentSessionService.cachedUserImage;
     if (imagePath!.isNotEmpty) {
       image = File(imagePath);
@@ -133,6 +144,7 @@ class ProfileViewModel extends BaseViewModel {
   void clearPrefs() {
     prefs.saveString(SharedPrefsConstants.userName, "");
     prefs.saveString(SharedPrefsConstants.userImage, "");
+    prefs.saveInteger(SharedPrefsConstants.userBirthday, 0);
     prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime, "");
     prefs.saveBoolean(SharedPrefsConstants.isLogin, false);
     setState(ViewState.Idle);
@@ -196,5 +208,10 @@ class ProfileViewModel extends BaseViewModel {
     }
     isNotificationOn = value;
     setState(ViewState.Idle);
+  }
+
+  void changeUserBirthday(result) {
+    userBirthday = result;
+    CurrentSessionService.setUserBirthday(userBirthday!);
   }
 }

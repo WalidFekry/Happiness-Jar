@@ -2,6 +2,7 @@ class SharedPrefsConstants {
   static const String isLogin = 'IS_LOGIN';
   static const String userName = 'USER_NAME';
   static const String userImage = 'USER_IMAGE';
+  static const String userBirthday = 'USER_BIRTHDAY';
   static const String getStarted = 'GET_STARTED';
   static const String lastGetMessagesTime = 'LAST_GET_MESSAGES_TIME';
   static const String lastRefreshTokenTime = 'LAST_REFRESH_TOKEN_TIME';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
-import 'package:happiness_jar/view/widgets/warning_dialog.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/info_dialog.dart';
+import 'package:happiness_jar/view/widgets/warning_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -17,7 +17,7 @@ import '../../../../services/navigation_service.dart';
 import '../../../widgets/subtitle_text.dart';
 import '../../../widgets/title_text.dart';
 import '../../base_screen.dart';
-import '../dialogs/change_name_dialog.dart';
+import '../dialogs/change_name_birthday_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -82,29 +82,88 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: TitleTextWidget(
-                                      label:
-                                          "مرحباً يا ${viewModel.userName} 🦋"),
+                                    label: "مرحباً يا ${viewModel.userName} 🦋",
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () async {
-                                    final newUserName = await showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return ChangeNameDialog(
-                                              userName: viewModel.userName);
-                                        });
-                                    if (newUserName != null) {
-                                      viewModel.changeUserName(newUserName);
+                                    final result = await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return ChangeNameAndBirthdayDialog(
+                                          userName: viewModel.userName,
+                                          userBirthday: viewModel.userBirthday,
+                                        );
+                                      },
+                                    );
+                                    if (result != null) {
+                                      if (result["birthday"] != null) {
+                                        viewModel.changeUserBirthday(result["birthday"]);
+                                      }
+                                      if (result["name"] != null) {
+                                        viewModel.changeUserName(result["name"]);
+                                      }
                                     }
                                   },
-                                  icon: Icon(Icons.edit,
-                                      color: Theme.of(context).iconTheme.color,
-                                      size: 25),
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Theme.of(context).iconTheme.color,
+                                    size: 25,
+                                  ),
                                 ),
                               ],
                             ),
                             const SubtitleTextWidget(
                                 label: "اتمنى ان تكون بخير 💙"),
+                            verticalSpace(8),
+                            if (viewModel.userBirthday != null)
+                              Row(
+                                children: [
+                                  Icon(Icons.cake,
+                                      size: 18,
+                                      color: Theme.of(context).cardColor),
+                                  horizontalSpace(4),
+                                  ContentTextWidget(
+                                    label:
+                                        "تاريخ ميلادك: ${viewModel.formattedBirthday}",
+                                    fontSize: 14,
+                                  )
+                                ],
+                              )
+                            else
+                              GestureDetector(
+                                onTap: () async {
+                                  final result = await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return ChangeNameAndBirthdayDialog(
+                                        userName: viewModel.userName,
+                                        userBirthday: viewModel.userBirthday,
+                                      );
+                                    },
+                                  );
+                                  if (result != null) {
+                                    if (result["birthday"] != null) {
+                                      viewModel.changeUserBirthday(result["birthday"]);
+                                    }
+                                    if (result["name"] != null) {
+                                      viewModel.changeUserName(result["name"]);
+                                    }
+                                  }
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.cake_outlined,
+                                        size: 18,
+                                        color: Theme.of(context).cardColor),
+                                    horizontalSpace(4),
+                                    const ContentTextWidget(
+                                      label: "اختر تاريخ ميلادك",
+                                      fontSize: 14,
+                                    )
+                                  ],
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -268,7 +327,8 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         leading: const Icon(Icons.share),
                         onTap: () {
-                          final RenderBox? box = context.findRenderObject() as RenderBox?;
+                          final RenderBox? box =
+                              context.findRenderObject() as RenderBox?;
                           viewModel.shareApp(box);
                         },
                       ),

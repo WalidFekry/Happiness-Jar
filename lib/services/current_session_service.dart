@@ -7,6 +7,7 @@ class CurrentSessionService {
   static final prefs = locator<SharedPrefServices>();
   static String? cachedUserName;
   static String? cachedUserImage;
+  static DateTime? cachedUserBirthday;
   static bool isOpenFadfadaPin = false;
 
   static void setIsOpenFadfadaPin(bool value) {
@@ -25,6 +26,26 @@ class CurrentSessionService {
     cachedUserName = userName;
   }
 
+  static Future<void> setUserBirthday(DateTime birthday) async {
+    await prefs.saveInteger(
+      SharedPrefsConstants.userBirthday,
+      birthday.millisecondsSinceEpoch,
+    );
+    cachedUserBirthday = birthday;
+  }
+
+  static Future<void> getUserBirthday() async {
+    final millis = await prefs.getInteger(SharedPrefsConstants.userBirthday);
+    if (millis == 0) {
+      cachedUserBirthday = null;
+      return;
+    }
+
+    final date = DateTime.fromMillisecondsSinceEpoch(millis);
+    cachedUserBirthday = date;
+  }
+
+
   static Future<void> getUserImage() async {
     if (cachedUserImage != null) {
       return;
@@ -40,5 +61,6 @@ class CurrentSessionService {
   static void clearSessionCache() {
     cachedUserName = null;
     cachedUserImage = null;
+    cachedUserBirthday = null;
   }
 }

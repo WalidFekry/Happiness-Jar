@@ -64,6 +64,7 @@ class HomeViewModel extends BaseViewModel {
   Future<void> getUserData() async {
     await CurrentSessionService.getUserName();
     await CurrentSessionService.getUserImage();
+    await CurrentSessionService.getUserBirthday();
     final imagePath = CurrentSessionService.cachedUserImage;
     if (imagePath!.isNotEmpty) {
       image = File(imagePath);
