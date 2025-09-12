@@ -11,6 +11,7 @@ import 'package:happiness_jar/view/screens/posts/model/add_post_response_model.d
 import 'package:happiness_jar/view/screens/posts/model/like_post_response_model.dart';
 import 'package:happiness_jar/view/screens/posts/model/posts_model.dart';
 import 'package:happiness_jar/view/screens/profile/model/delete_account_model.dart';
+import 'package:intl/intl.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../enums/status.dart';
@@ -105,11 +106,17 @@ class ApiService {
   }
 
   Future<Resource<RefreshTokenModel>> refreshToken(
-      String? fcmToken, String? name) async {
+      String? fcmToken, String? name, DateTime? birthdate) async {
     try {
       var response = await dio.post(
         ApiConstants.register,
-        data: {'server': 'Register', 'fcm_token': fcmToken, 'name': name},
+        data: {
+          'server': 'Register',
+          'fcm_token': fcmToken,
+          'name': name,
+          if (birthdate != null)
+            "birthdate": DateFormat('yyyy-MM-dd').format(birthdate),
+        },
       );
       var refreshToken = RefreshTokenModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: refreshToken);
@@ -119,8 +126,7 @@ class ApiService {
     }
   }
 
-  Future<Resource<DeleteAccountModel>> deleteAccount(
-      String? fcmToken) async {
+  Future<Resource<DeleteAccountModel>> deleteAccount(String? fcmToken) async {
     try {
       var response = await dio.post(
         ApiConstants.deleteAccount,

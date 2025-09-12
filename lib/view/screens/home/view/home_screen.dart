@@ -68,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
       viewModel.showOpenAd(context);
       viewModel.getUserData();
       viewModel.getNotificationsCount();
-      viewModel.refreshToken();
       viewModel.getTodayAdvice();
       viewModel.showInAppReview();
       viewModel.checkNotificationsPermission(context);

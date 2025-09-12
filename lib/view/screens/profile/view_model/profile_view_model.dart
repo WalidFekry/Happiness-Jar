@@ -157,7 +157,7 @@ class ProfileViewModel extends BaseViewModel {
 
     final token = await FirebaseMessaging.instance.getToken();
     if (token?.isNotEmpty ?? false) {
-      await apiService.refreshToken(token!, trimmedUserName);
+      updateUserDataOnServer(token, trimmedUserName, userBirthday);
     }
 
     setState(ViewState.Idle);
@@ -213,5 +213,9 @@ class ProfileViewModel extends BaseViewModel {
   void changeUserBirthday(result) {
     userBirthday = result;
     CurrentSessionService.setUserBirthday(userBirthday!);
+  }
+
+  Future<void> updateUserDataOnServer(String? token, String userName, DateTime? userBirthday) async {
+    await apiService.refreshToken(token, userName, userBirthday);
   }
 }

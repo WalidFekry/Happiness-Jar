@@ -70,11 +70,12 @@ class HomeViewModel extends BaseViewModel {
     await CurrentSessionService.getUserName();
     await CurrentSessionService.getUserImage();
     await CurrentSessionService.getUserBirthday();
-    checkBirthdayReminder();
     final imagePath = CurrentSessionService.cachedUserImage;
     if (imagePath!.isNotEmpty) {
       image = File(imagePath);
     }
+    refreshToken();
+    checkBirthdayReminder();
     setState(ViewState.Idle);
   }
 
@@ -94,12 +95,13 @@ class HomeViewModel extends BaseViewModel {
     messaging.subscribeToTopic("all");
     messaging.subscribeToTopic(Platform.isAndroid ? "android" : "ios");
     final String? userName = CurrentSessionService.cachedUserName;
+    final DateTime? birthdate = CurrentSessionService.cachedUserBirthday;
     final String? token = await FirebaseMessaging.instance.getToken();
     if (token == null || token.isEmpty) {
       return;
     }
     Resource<RefreshTokenModel> resource =
-        await apiService.refreshToken(token, userName);
+        await apiService.refreshToken(token, userName, birthdate);
     if (resource.status == Status.SUCCESS) {
       await prefs.saveString(SharedPrefsConstants.lastRefreshTokenTime,
           DateTime.now().toIso8601String());
@@ -208,7 +210,7 @@ class HomeViewModel extends BaseViewModel {
     final daysLeft = daysUntilBirthday(birthday);
 
 
-    // if (lastSentBirthdayDate == today) return;
+    if (lastSentBirthdayDate == today) return;
 
     if (daysLeft == 3) {
       localNotificationService.showBirthdayNotification(
