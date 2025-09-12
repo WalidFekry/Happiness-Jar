@@ -89,6 +89,40 @@ class LocalNotificationService {
     );
   }
 
+  // Show birthday notification.
+  Future<void> showBirthdayNotification(String title, String body) async {
+    const AndroidNotificationDetails android = AndroidNotificationDetails(
+      LocalNotificationConstants.channelId_3,
+      LocalNotificationConstants.channelName_3,
+      channelDescription: LocalNotificationConstants.channelDescription_3,
+      importance: Importance.max,
+      priority: Priority.max,
+      autoCancel: false,
+      sound: RawResourceAndroidNotificationSound('notification_sound'),
+    );
+
+    const DarwinNotificationDetails ios = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+      interruptionLevel: InterruptionLevel.active,
+    );
+
+    NotificationDetails details = const NotificationDetails(
+      android: android,
+      iOS: ios,
+    );
+
+    await flutterLocalNotificationsPlugin.show(
+      LocalNotificationConstants.notificationId_3,
+      title,
+      body,
+      details,
+      payload: LocalNotificationConstants.birthdayNotificationPayload,
+    );
+  }
+
+
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
   }

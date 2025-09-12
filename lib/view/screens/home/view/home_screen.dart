@@ -308,6 +308,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
       if (payload == LocalNotificationConstants.notificationPayload) {
         jumpToPage(1);
+      } else if (payload ==
+          LocalNotificationConstants.birthdayNotificationPayload) {
+
       } else {
         _handleNotificationAction(payload);
       }
@@ -343,5 +346,4 @@ class _HomeScreenState extends State<HomeScreen> {
   void navigateToScreen(String routeName) {
     locator<NavigationService>().navigateTo(routeName);
   }
-
 }

@@ -25,4 +25,5 @@ class SharedPrefsConstants {
   static const String fadfadaPinCode = 'FADFADA_PIN_CODE';
   static const String fadfadaSecurityQuestion = 'FADFADA_SECURITY_QUESTION';
   static const String fadfadaSecurityAnswer = 'FADFADA_SECURITY_ANSWER';
+  static const String lastSentBirthdayDate = 'LAST_SENT_BIRTHDAY_DATE';
 }
