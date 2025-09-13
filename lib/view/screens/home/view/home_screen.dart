@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
         jumpToPage(1);
       } else if (payload ==
           LocalNotificationConstants.birthdayNotificationPayload) {
-
+        navigateToScreen(RouteName.BIRTHDAY_CELEBRATION_SCREEN);
       } else {
         _handleNotificationAction(payload);
       }

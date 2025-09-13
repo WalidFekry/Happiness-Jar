@@ -18,9 +18,11 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
+import '../../../../routs/routs_names.dart';
 import '../../../../services/ads_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../../services/local_notification_service.dart';
+import '../../../../services/navigation_service.dart';
 import '../model/notifications_count.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -209,6 +211,9 @@ class HomeViewModel extends BaseViewModel {
 
     final daysLeft = daysUntilBirthday(birthday);
 
+    if (daysLeft == 0){
+      locator<NavigationService>().navigateTo(RouteName.BIRTHDAY_CELEBRATION_SCREEN);
+    }
 
     if (lastSentBirthdayDate == today) return;
 
