@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
-import 'package:happiness_jar/routs/routs_names.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
@@ -15,7 +14,8 @@ class BirthdayCelebrationScreen extends StatefulWidget {
   final String? userName;
   final DateTime? birthday;
 
-  const BirthdayCelebrationScreen({super.key, required this.userName, required this.birthday});
+  const BirthdayCelebrationScreen(
+      {super.key, required this.userName, required this.birthday});
 
   @override
   State<BirthdayCelebrationScreen> createState() =>
@@ -188,9 +188,10 @@ class _BirthdayCelebrationScreenState extends State<BirthdayCelebrationScreen>
                                 child: ElevatedButton.icon(
                                   onPressed: () {
                                     CommonFunctions.shareMessage(
-                                        "🎉 عيد ميلادي النهاردة! كل سنة وأنا بخير \n"
-                                        "🥰 بداية جديدة وسنة كلها أمل ونجاحات \n\n"
-                                        "💙 شكراً لتطبيق برطمان السعادة اللي فاجئني بالتهنئة");
+                                        " عيد ميلادي النهاردة! كل سنة وأنا بخير 🎉 \n"
+                                        " بداية جديدة وسنة كلها أمل ونجاحات 🥰 \n\n"
+                                        "شكراً لتطبيق برطمان السعادة اللي فاجئني بالتهنئة 💙",
+                                        showSignature: false);
                                   },
                                   icon: const Icon(
                                     Icons.share,
@@ -218,7 +219,10 @@ class _BirthdayCelebrationScreenState extends State<BirthdayCelebrationScreen>
                                       MediaQuery(
                                         data: MediaQueryData.fromView(
                                             View.of(context)),
-                                        child: BirthdayCelebrationScreen(userName: widget.userName, birthday: widget.birthday,),
+                                        child: BirthdayCelebrationScreen(
+                                          userName: widget.userName,
+                                          birthday: widget.birthday,
+                                        ),
                                       ),
                                     );
                                   },
@@ -246,12 +250,13 @@ class _BirthdayCelebrationScreenState extends State<BirthdayCelebrationScreen>
                         Center(
                           child: GestureDetector(
                             onTap: () {
-                            locator<NavigationService>().goBack();
+                              locator<NavigationService>().goBack();
                             },
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
                               curve: Curves.easeInOut,
-                              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 15),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
@@ -270,7 +275,11 @@ class _BirthdayCelebrationScreenState extends State<BirthdayCelebrationScreen>
                                   ),
                                 ],
                               ),
-                              child: const TitleTextWidget(label: "الدخول للتطبيق 🚀",fontSize: 14,color: Colors.white,),
+                              child: const TitleTextWidget(
+                                label: "الدخول للتطبيق 🚀",
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
