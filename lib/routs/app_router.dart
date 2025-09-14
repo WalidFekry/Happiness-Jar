@@ -19,6 +19,8 @@ import 'package:happiness_jar/view/screens/home/view/home_screen.dart';
 import 'package:happiness_jar/view/screens/posts/view/posts_user_screen.dart';
 import 'package:happiness_jar/view/screens/profile/view/profile_screen.dart';
 
+import '../services/current_session_service.dart';
+import '../view/screens/birthday/birthday_celebration_screen.dart';
 import '../view/screens/exit_app/view/exit_app_screen.dart';
 import '../view/screens/fadfada/view/edit_fadfada_screen.dart';
 
@@ -78,6 +80,13 @@ class AppRouter {
         return _getPageRoute(
             MessagesCategoriesContent(messagesCategoriesArguments,
                 int.parse(routingData['index'].toString())),
+            settings);
+      case RouteName.BIRTHDAY_CELEBRATION_SCREEN:
+        final userName = CurrentSessionService.cachedUserName;
+        final userBirthday = CurrentSessionService.cachedUserBirthday;
+        return _getPageRoute(
+            BirthdayCelebrationScreen(
+                userName: userName, birthday: userBirthday),
             settings);
       default:
         return _getPageRoute(const ExitAppScreen(), settings);

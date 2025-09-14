@@ -68,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
       viewModel.showOpenAd(context);
       viewModel.getUserData();
       viewModel.getNotificationsCount();
-      viewModel.refreshToken();
       viewModel.getTodayAdvice();
       viewModel.showInAppReview();
       viewModel.checkNotificationsPermission(context);
@@ -308,6 +307,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
       if (payload == LocalNotificationConstants.notificationPayload) {
         jumpToPage(1);
+      } else if (payload ==
+          LocalNotificationConstants.birthdayNotificationPayload) {
+        navigateToScreen(RouteName.BIRTHDAY_CELEBRATION_SCREEN);
       } else {
         _handleNotificationAction(payload);
       }
@@ -343,5 +345,4 @@ class _HomeScreenState extends State<HomeScreen> {
   void navigateToScreen(String routeName) {
     locator<NavigationService>().navigateTo(routeName);
   }
-
 }

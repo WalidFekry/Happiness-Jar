@@ -15,8 +15,14 @@ import 'package:vision_gallery_saver/vision_gallery_saver.dart';
 class CommonFunctions {
   static ScreenshotController screenshotController = ScreenshotController();
 
-  static Future<void> shareMessage(String? message) async {
-    await Share.share('$message \n\n من تطبيق برطمان السعادة 💙');
+  static Future<void> shareMessage(String? message, {bool showSignature = true}) async {
+    String finalMessage = message ?? '';
+
+    if (showSignature) {
+      finalMessage += '\n\nمن تطبيق برطمان السعادة 💙';
+    }
+
+    await Share.share(finalMessage);
   }
 
   static void copyMessage(String? message) {

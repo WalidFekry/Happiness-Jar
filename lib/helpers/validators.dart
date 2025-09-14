@@ -22,4 +22,27 @@ class Validators {
     }
     return null; // Valid input
   }
+
+  static String? validateBirthDate(DateTime? date) {
+    if (date == null) {
+      return null;
+    }
+
+    final now = DateTime.now();
+
+    int age = now.year - date.year;
+    if (now.month < date.month ||
+        (now.month == date.month && now.day < date.day)) {
+      age--;
+    }
+
+    if (age < 5) {
+      return "العمر يجب أن يكون على الأقل 5 سنوات ⚠️";
+    }
+    if (age > 120) {
+      return "العمر غير منطقي ⚠️";
+    }
+
+    return null;
+  }
 }
