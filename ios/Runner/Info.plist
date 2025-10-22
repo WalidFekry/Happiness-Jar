@@ -67,6 +67,8 @@
         </array>
         <key>GADApplicationIdentifier</key>
         <string>ca-app-pub-3354189036871191~7196036141</string>
+        <key>NSUserTrackingUsageDescription</key>
+        <string>This identifier will be used to deliver personalized ads to you.</string>
         <key>NSPhotoLibraryUsageDescription</key>
         <string>We need access to the photo library so that you can select and upload a profile picture within the app.</string>
         <key>NSMicrophoneUsageDescription</key>

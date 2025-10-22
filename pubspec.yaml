@@ -3,7 +3,7 @@ description: "Happiness jar project."
 
 publish_to: 'none'
 
-version: 1.9.0+49
+version: 1.9.2+53
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -40,7 +40,8 @@ dependencies:
   url_launcher: ^6.3.0
   package_info_plus: ^8.0.0
   screenshot: ^3.0.0
-  google_mobile_ads: ^5.1.0
+  google_mobile_ads: ^6.0.0
+  app_tracking_transparency: ^2.0.6+1
   flutter_fortune_wheel: ^1.3.1
   cached_network_image: ^3.3.1
   flutter_local_notifications: ^17.2.2

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
@@ -37,12 +38,14 @@ class GetStartedButton extends StatelessWidget {
         child: InkWell(
           onTap: () async {
             if(route == RouteName.GET_NOTIFICATION_SCREEN) {
-              if(Platform.isAndroid){
-                locator<NavigationService>().navigateToAndClearStack(route);
-              }else{
-                locator<NavigationService>().navigateToAndClearStack(RouteName.REGISTER);
-              }
+            locator<NavigationService>().navigateToAndClearStack(route);
             }else {
+              if (Platform.isIOS) {
+                final status = await AppTrackingTransparency.trackingAuthorizationStatus;
+                if (status == TrackingStatus.notDetermined) {
+                  await AppTrackingTransparency.requestTrackingAuthorization();
+                }
+              }
               FirebaseService.requestPermission();
               locator<NavigationService>().navigateToAndClearStack(route);
             }
