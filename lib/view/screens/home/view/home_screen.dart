@@ -243,6 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "favorite": () => jumpToPage(4),
       "feelings": () => navigateToScreen(RouteName.FEELINGS_SCREEN),
       "fadfada": () => navigateToScreen(RouteName.FADFADA_SCREEN),
+      "videos": () => navigateToScreen(RouteName.VIDEOS_SCREEN),
       "rate": () => rateApp(),
       "openUrl": () {
         final url = message.data["url"];

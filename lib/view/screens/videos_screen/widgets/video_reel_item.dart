@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_jar/view/screens/videos_screen/widgets/video_actions.dart';
 import 'package:video_player/video_player.dart';
+
 import '../../../../constants/app_colors.dart';
+import '../../../../constants/assets_manager.dart';
 import '../../../../helpers/common_functions.dart';
 import '../../../../helpers/spacing.dart';
 import '../../../../services/locator.dart';
@@ -87,7 +89,7 @@ class _VideoReelItemState extends State<VideoReelItem> {
                   });
                 },
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.black38,
                     shape: BoxShape.circle,
                   ),
@@ -150,7 +152,7 @@ class _VideoReelItemState extends State<VideoReelItem> {
                       });
                     },
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.black38,
                         shape: BoxShape.circle,
                       ),
@@ -176,12 +178,14 @@ class _VideoReelItemState extends State<VideoReelItem> {
                       setState(() {});
                     },
                     child: VideoActionsItem(
-                      Icons.unarchive,
-                      CommonFunctions.formatNumberArabic(widget.video.likes!),
+                      text: CommonFunctions.formatNumberArabic(
+                          widget.video.likes!),
                       iconSvg: SvgPicture.asset(
-                        'assets/icons/ic_like.svg',
+                        AssetsManager.like,
                         colorFilter: ColorFilter.mode(
-                          widget.video.isLiked! ? Colors.red : AppColors.lightColor1,
+                          widget.video.isLiked!
+                              ? Theme.of(context).cardColor
+                              : Theme.of(context).iconTheme.color!,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -194,7 +198,8 @@ class _VideoReelItemState extends State<VideoReelItem> {
                           widget.onShare!();
                         }
                       },
-                      child: VideoActionsItem(Icons.share, 'مشاركة')),
+                      child: const VideoActionsItem(
+                          icon: Icons.share, text: 'مشاركة')),
                   const SizedBox(height: 16),
                   if (!widget.isDownloaded)
                     GestureDetector(
@@ -203,8 +208,8 @@ class _VideoReelItemState extends State<VideoReelItem> {
                             widget.onDownload!();
                           }
                         },
-                        child: VideoActionsItem(
-                            Icons.download_rounded, 'تحميل')),
+                        child: const VideoActionsItem(
+                            icon: Icons.download_rounded, text: 'تحميل')),
                 ],
               ),
             ),

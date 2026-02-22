@@ -104,13 +104,13 @@ class VideosViewModel extends BaseViewModel {
       downloadedVideos.add(video.id!);
       showTopSnackBar(
         Overlay.of(context),
-        CustomSnackBar.success(
+        CustomSnackBar.info(
           backgroundColor: Theme.of(context)
               .iconTheme
               .color!,
           message: "جاري تحميل الفيديو ⌛",
           icon: Icon(
-            IconlyBold.heart,
+            IconlyBold.download,
             color: Theme.of(context).cardColor,
             size: 50,
           ),
@@ -153,7 +153,7 @@ class VideosViewModel extends BaseViewModel {
                   .color!,
               message: "تم تحميل الفيديو بنجاح ✅",
               icon: Icon(
-                IconlyBold.heart,
+                IconlyBold.download,
                 color: Theme.of(context).cardColor,
                 size: 50,
               ),
@@ -177,26 +177,24 @@ class VideosViewModel extends BaseViewModel {
     if (videoUrl == null || videoUrl.isEmpty) return;
 
     final shareText = '''
-📹 شاهد هذا المقطع المميز:
+📹 شاهد هذا المقطع:
 $videoUrl
 
-💚 لو حابب تشوف فيديوهات أكتر في التدبر والقرآن والمقاطع الدينية المؤثرة:
+💖 احصل على جرعتك اليومية من الإيجابية مع تطبيق *برطمان السعادة*!
+• رسائل يومية ملهمة وتحفيزية
+• إشعارات تلقائية بدون الحاجة لفتح التطبيق
+• حفظ الرسائل المفضلة والوضع الليلي
+• يعمل بدون إنترنت
 
-📱 حمّل تطبيق *مكتبتي بلس* الآن!
-رفيقك اليومي لكل ما تحتاجه من:
-• مواقيت الصلاة
-• أذكار وأدعية
-• مسابقات دينية
-• محتوى إيماني متجدد
-— وكل هذا بدون إنترنت وبواجهة سهلة وسريعة
+📲 حمّل التطبيق الآن:
 
 🔹 Google Play:
-https://play.google.com/store/apps/details?id=com.maktbti.plus
+https://play.google.com/store/apps/details?id=com.jar.happiness
 
 🔹 App Store:
-https://apps.apple.com/app/id6450314729
+https://apps.apple.com/app/id6565808195
 
-🌿 شارك الخير وكن سببًا في نشر الفائدة
+🌿 شارك السعادة وكن سببًا في نشر الإيجابية!
 ''';
 
     SharePlus.instance.share(

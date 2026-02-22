@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../enums/screen_state.dart';
+import '../../../widgets/custom_linear_progress_Indicator.dart';
 import '../../base_screen.dart';
 import '../view_model/videos_view_model.dart';
 import '../widgets/video_reel_item.dart';
@@ -75,7 +76,7 @@ class VideosScreen extends StatelessWidget {
                       );
                     },
                   )
-                : const Center(child: LinearProgressIndicator()),
+                : const Center(child: CustomLinearProgressIndicator()),
           ),
         );
       },
