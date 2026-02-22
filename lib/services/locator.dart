@@ -14,6 +14,7 @@ import 'package:happiness_jar/view/screens/messages/view_model/messages_view_mod
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
 import 'package:happiness_jar/view/screens/posts/view_model/posts_view_model.dart';
 import 'package:happiness_jar/view/screens/profile/view_model/profile_view_model.dart';
+import 'package:happiness_jar/view/screens/videos_screen/view_model/videos_view_model.dart';
 
 import '../view/screens/fadfada/view_model/fadfada_view_model.dart';
 import '../view/screens/feelings/view_model/feelings_view_model.dart';
@@ -40,4 +41,5 @@ void setupLocator() {
   locator.registerFactory(() => ProfileViewModel());
   locator.registerFactory(() => PostsViewModel());
   locator.registerFactory(() => FadfadaViewModel());
+  locator.registerFactory(() => VideosViewModel());
 }

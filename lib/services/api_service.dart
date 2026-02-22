@@ -20,6 +20,7 @@ import '../view/screens/home/model/notifications_count.dart';
 import '../view/screens/messages/model/messages_model.dart';
 import '../view/screens/messages/model/wheel_model.dart';
 import '../view/screens/notifications/model/notification_model.dart';
+import '../view/screens/videos_screen/model/video_response_model.dart';
 
 class ApiService {
   var dio = Dio();
@@ -229,6 +230,40 @@ class ApiService {
       var response = await dio.get(ApiConstants.feelingsContent);
       var feelingsContent = FeelingsContentModel.fromJson(response.data);
       return Resource(Status.SUCCESS, data: feelingsContent);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<VideoResponseModel>> getVideos() async {
+    try {
+      var response = await dio.get(
+        ApiConstants.videos,
+      );
+      var videoResponse = VideoResponseModel.fromJson(response.data);
+      return Resource(Status.SUCCESS, data: videoResponse);
+    } catch (e) {
+      debugPrint(e.toString());
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<bool>> videoAction({required String action, required int id}) async {
+    try {
+      final response = await dio.get(
+        ApiConstants.videoAction,
+        queryParameters: {
+          'action': action,
+          'id': id.toString(),
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return Resource(Status.SUCCESS, data: true);
+      } else {
+        return Resource(Status.ERROR, errorMessage: 'Failed with status code ${response.statusCode}');
+      }
     } catch (e) {
       debugPrint(e.toString());
       return Resource(Status.ERROR, errorMessage: e.toString());

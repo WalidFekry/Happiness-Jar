@@ -17,4 +17,5 @@ class RouteName {
   static const String LOGIN_FADFADA_PIN_SCREEN = '/login_fadfada_pin_screen';
   static const String FORGOT_FADFADA_PIN_SCREEN = '/forgot_fadfada_pin_screen';
   static const String BIRTHDAY_CELEBRATION_SCREEN = '/birthday_celebration_screen';
+  static const String VIDEOS_SCREEN = '/videos_screen';
 }
