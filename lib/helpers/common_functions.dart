@@ -132,4 +132,20 @@ class CommonFunctions {
       }
     });
   }
+
+  static String formatNumberArabic(int number) {
+    if (number < 1000) {
+      return number.toString();
+    } else if (number < 1000000) {
+      double result = number / 1000;
+      String formatted =
+      result.toStringAsFixed(result.truncateToDouble() == result ? 0 : 1);
+      return '$formatted ألف';
+    } else {
+      double result = number / 1000000;
+      String formatted =
+      result.toStringAsFixed(result.truncateToDouble() == result ? 0 : 1);
+      return '$formatted مليون';
+    }
+  }
 }

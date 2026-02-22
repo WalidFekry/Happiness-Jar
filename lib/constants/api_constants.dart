@@ -14,4 +14,6 @@ class ApiConstants {
   static const String feelingsContent = "feelings_content.php";
   static const String notificationContent = "get_notifications_count.php";
   static const String deleteAccount = "delete_account.php";
+  static const String videos = "https://post.walid-fekry.com/maktbti-plus/api/videos_api.php?order=all";
+  static const String videoAction = "https://post.walid-fekry.com/maktbti-plus/api/videos_api.php";
 }
