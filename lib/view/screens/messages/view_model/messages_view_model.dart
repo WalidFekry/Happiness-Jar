@@ -71,6 +71,7 @@ class MessagesViewModel extends BaseViewModel {
           return;
         }
         showEmptyJar = true;
+        adsService.loadRewardedAd();
       }
     } else {
       showEmptyJar = false;

@@ -52,6 +52,7 @@ class EmptyMessageWidget extends StatelessWidget {
                     "لقد وصلت إلى نهاية رسائل البرطمان ⌛ \n عُد بعد 6 ساعات 🕕 \n لإكتشاف رسائل جديدة 💙 \n يا $userName 🦋",
                 textAlign: TextAlign.center,
                 fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
             verticalSpace(20),
@@ -70,8 +71,7 @@ class EmptyMessageWidget extends StatelessWidget {
                     },
                     label: "عجلة الهدايا"), // AppTextButton(
                 GestureDetector(
-                  onTap: () {
-                        adsService.loadRewardedAd();
+                  onTap: () async {
                         showDialog(
                             context: context,
                             barrierDismissible: false,

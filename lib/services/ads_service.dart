@@ -138,6 +138,7 @@ class AdsService {
       });
     } else {
       locator<NavigationService>().goBack();
+      loadRewardedAd();
       showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.error(
