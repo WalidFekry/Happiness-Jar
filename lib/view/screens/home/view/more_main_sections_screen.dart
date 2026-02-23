@@ -14,23 +14,36 @@ class MoreMainSectionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildSectionCard(
-                imagePath: AssetsManager.speaking,
-                title: 'فضفضة',
-                context: context,
-                routeName: RouteName.FADFADA_SCREEN),
-            horizontalSpace(20),
-            _buildSectionCard(
-                imagePath: AssetsManager.feeling,
-                title: 'بماذا تشعر؟',
-                context: context,
-                routeName: RouteName.FEELINGS_SCREEN),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildSectionCard(
+                  imagePath: AssetsManager.quran,
+                  title: 'تدبّر',
+                  context: context,
+                  routeName: RouteName.VIDEOS_SCREEN),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildSectionCard(
+                  imagePath: AssetsManager.speaking,
+                  title: 'فضفضة',
+                  context: context,
+                  routeName: RouteName.FADFADA_SCREEN),
+              horizontalSpace(20),
+              _buildSectionCard(
+                  imagePath: AssetsManager.feeling,
+                  title: 'بماذا تشعر؟',
+                  context: context,
+                  routeName: RouteName.FEELINGS_SCREEN),
+            ],
+          ),
+        ],
       ),
     );
   }
