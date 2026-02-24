@@ -122,6 +122,39 @@ class LocalNotificationService {
     );
   }
 
+  // Show welcome notification
+  Future<void> showWelcomeNotification(String userName) async {
+    const AndroidNotificationDetails android = AndroidNotificationDetails(
+      LocalNotificationConstants.channelId_4,
+      LocalNotificationConstants.channelName_4,
+      channelDescription: LocalNotificationConstants.channelDescription_4,
+      importance: Importance.max,
+      priority: Priority.max,
+      autoCancel: false,
+      sound: RawResourceAndroidNotificationSound('notification_sound'),
+    );
+
+    const DarwinNotificationDetails ios = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+      interruptionLevel: InterruptionLevel.active,
+    );
+
+    NotificationDetails details = const NotificationDetails(
+      android: android,
+      iOS: ios,
+    );
+
+    await flutterLocalNotificationsPlugin.show(
+      LocalNotificationConstants.notificationId_4,
+      "مرحبًا بك يا $userName 👋",
+      "سعادتك تبدأ بخطوة… وقد بدأت الآن 💙",
+      details,
+      payload: LocalNotificationConstants.welcomeNotificationPayload,
+    );
+  }
+
 
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);

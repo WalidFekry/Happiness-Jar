@@ -11,9 +11,11 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../../../routs/routs_names.dart';
 import '../../../../services/current_session_service.dart';
+import '../../../../services/local_notification_service.dart';
 import '../../../../services/navigation_service.dart';
 
 class RegisterViewModel extends BaseViewModel {
+  final localNotificationService = locator<LocalNotificationService>();
   final prefs = locator<SharedPrefServices>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
@@ -51,6 +53,7 @@ class RegisterViewModel extends BaseViewModel {
     }
     await prefs.saveBoolean(SharedPrefsConstants.isLogin, true);
     locator<NavigationService>().navigateToAndClearStack(RouteName.HOME);
+    localNotificationService.showWelcomeNotification(nameController.text.trim());
   }
 
   void setDoneGetStarted() {
