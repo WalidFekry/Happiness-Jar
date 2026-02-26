@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../enums/screen_state.dart';
+import '../../../widgets/custom_circular_progress_Indicator.dart';
 import '../../../widgets/custom_linear_progress_Indicator.dart';
 import '../../base_screen.dart';
 import '../view_model/videos_view_model.dart';
@@ -57,7 +57,8 @@ class VideosScreen extends StatelessWidget {
                       final controller = viewModel.controllers[index];
                       if (controller == null ||
                           !controller.value.isInitialized) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child: CustomCircularProgressIndicator());
                       }
                       return VideoReelItem(
                         video: viewModel.videosList[index],
@@ -67,9 +68,9 @@ class VideosScreen extends StatelessWidget {
                           viewModel.likeVideo(viewModel.videosList[index].id!);
                         },
                         onDownload: () {
-                          viewModel.downloadVideo(index,context);
+                          viewModel.downloadVideo(index, context);
                         },
-                        onShare: (){
+                        onShare: () {
                           viewModel.shareVideo(index);
                         },
                         isDownloaded: viewModel.isDownloaded(index),
