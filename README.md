@@ -24,6 +24,7 @@
 - **Favorite Screen:** Access your saved favorite messages.
 - **Feelings Screen:** Users can share and express their current emotions and explore a range of emotions shared by the community.
 - **Fadfada Screen:** Users can freely express their thoughts, feelings, and concerns in a private space, allowing them to release emotions and reflect.
+- **Videos Screen:** Watch inspiring Qur’anic videos and reflective Islamic content that helps you contemplate, strengthen your faith, and connect deeply with the meanings of the Qur’an.
   
 ## 📁 File Structure
 <img src="assets/screenshots/file_structure.png" width="500" >
@@ -104,6 +105,8 @@
   badges: ^3.1.2
   vision_gallery_saver: ^2.0.2
   audio_waveforms: ^1.3.0
+  video_player: ^2.11.0
+  device_info_plus: ^11.3.0
   flutter_native_splash: ^2.4.1
 ```
 
