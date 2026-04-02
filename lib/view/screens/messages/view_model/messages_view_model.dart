@@ -142,15 +142,11 @@ class MessagesViewModel extends BaseViewModel {
     getLastMessagesTime();
   }
 
-  void changeOpacity() {
+  void onJarTap() {
     opacity = 0.0;
     setState(ViewState.Idle);
-  }
-
-  void setJarMessages() {
-    Duration duration = const Duration(seconds: 2);
-    Future.delayed(duration, () {
-      showJarMessages = !showJarMessages;
+    Future.delayed(const Duration(milliseconds: 500), () {
+      showJarMessages = false;
       setState(ViewState.Idle);
     });
   }

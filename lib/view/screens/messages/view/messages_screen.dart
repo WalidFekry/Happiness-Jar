@@ -85,59 +85,85 @@ class MessagesScreen extends StatelessWidget {
   }
 
   Widget _buildJarMessageButton(MessagesViewModel viewModel, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        viewModel.changeOpacity();
-        viewModel.setJarMessages();
-      },
-      child: Visibility(
-        visible: viewModel.showJarMessages,
+    return Visibility(
+      visible: viewModel.showJarMessages,
+      child: AnimatedScale(
+        scale: viewModel.opacity == 0 ? 0.85 : 1,
+        duration: const Duration(milliseconds: 400),
         child: AnimatedOpacity(
           opacity: viewModel.opacity,
-          duration: const Duration(seconds: 2),
-          child: Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              border: Border.all(color: Colors.grey, width: 1.0),
+          duration: const Duration(milliseconds: 400),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
               borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Stack(children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const TitleTextWidget(label: "إضغط لفتح رسائل البرطمان 💙"),
-                  TitleTextWidget(label: 'يا ${viewModel.userName} 👇'),
-                  verticalSpace(15),
-                  Center(
-                    child: Image.asset(
-                      AssetsManager.appLogo,
-                      width: 150,
-                      fit: BoxFit.cover,
+              onTap: () {
+                viewModel.onJarTap();
+              },
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  border: Border.all(color: Colors.grey, width: 1.0),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3),
                     ),
-                  ),
-                ],
-              ),
-              Positioned(
-                bottom: -20,
-                left: -100,
-                child: Lottie.asset(
-                  AssetsManager.openBox,
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const TitleTextWidget(
+                            label: "إفتح البرطمان 💙",
+                            fontSize: 20,
+                          ),
+                          TitleTextWidget(
+                            label: 'يا ${viewModel.userName} 👇',
+                            fontSize: 18,
+                          ),
+                          verticalSpace(15),
+                          TweenAnimationBuilder(
+                            tween: Tween<double>(begin: 0.95, end: 1),
+                            duration: const Duration(milliseconds: 600),
+                            curve: Curves.easeOutBack,
+                            builder: (context, value, child) {
+                              return Transform.scale(
+                                scale: value,
+                                child: child,
+                              );
+                            },
+                            child: Image.asset(
+                              AssetsManager.appLogo,
+                              width: 125,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -20,
+                      left: -100,
+                      child: Lottie.asset(
+                        AssetsManager.openBox,
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ]),
+            ),
           ),
         ),
       ),

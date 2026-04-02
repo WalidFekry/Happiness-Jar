@@ -62,6 +62,12 @@ class AdsService {
 
   // Load and show an app open ad
   Future<void> showOpenAd(BuildContext context) async {
+    bool isFirstTime =
+        await prefs.getBoolean(SharedPrefsConstants.openAdFirstTime);
+    if (!isFirstTime) {
+      await prefs.saveBoolean(SharedPrefsConstants.openAdFirstTime, true);
+      return;
+    }
     int adDisplayCount =
         await prefs.getInteger(SharedPrefsConstants.openAdDisplayCount);
     int lastAdDisplayTime =
