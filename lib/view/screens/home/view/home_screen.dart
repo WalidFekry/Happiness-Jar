@@ -150,8 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: badges.Badge(
                     showBadge:
                         viewModel.newNotificationsCount == 0 ? false : true,
-                    badgeContent:
-                        Text(viewModel.newNotificationsCount.toString()),
+                    badgeContent: Text(viewModel.newNotificationsCount == 99
+                        ? "99+"
+                        : viewModel.newNotificationsCount.toString()),
                     child: const Icon(IconlyBold.notification),
                   ),
                   label: "الإشعارات"),
@@ -163,7 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   selectedIcon: const Icon(IconlyLight.paper),
                   icon: badges.Badge(
                     showBadge: viewModel.newPostsCount == 0 ? false : true,
-                    badgeContent: Text(viewModel.newPostsCount.toString()),
+                    badgeContent: Text(viewModel.newPostsCount == 99
+                        ? "99+"
+                        : viewModel.newPostsCount.toString()),
                     child: const Icon(IconlyBold.paper),
                   ),
                   label: "الإقتباسات"),

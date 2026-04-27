@@ -123,6 +123,12 @@ class HomeViewModel extends BaseViewModel {
           await prefs.getInteger(SharedPrefsConstants.notificationsCount);
       newPostsCount = postsCount - savedPostsCount;
       newNotificationsCount = notificationsCount - savedNotificationsCount;
+      if (newPostsCount > 99) {
+        newPostsCount = 99;
+      }
+      if (newNotificationsCount > 99) {
+        newNotificationsCount = 99;
+      }
     }
     setState(ViewState.Idle);
   }
