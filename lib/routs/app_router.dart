@@ -23,6 +23,7 @@ import '../services/current_session_service.dart';
 import '../view/screens/birthday/birthday_celebration_screen.dart';
 import '../view/screens/exit_app/view/exit_app_screen.dart';
 import '../view/screens/fadfada/view/edit_fadfada_screen.dart';
+import '../view/screens/profile/view/widget_settings_screen.dart';
 import '../view/screens/videos_screen/view/videos_screen.dart';
 
 class AppRouter {
@@ -91,6 +92,8 @@ class AppRouter {
             settings);
       case RouteName.VIDEOS_SCREEN:
         return _getPageRoute(const VideosScreen(), settings);
+      case RouteName.WIDGET_SETTINGS:
+        return _getPageRoute(const WidgetSettingsScreen(), settings);
       default:
         return _getPageRoute(const ExitAppScreen(), settings);
     }

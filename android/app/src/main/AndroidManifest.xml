@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jar.happiness">
 
     <application
         android:name="${applicationName}"
@@ -68,6 +69,16 @@
         <meta-data
             android:name="io.flutter.embedding.android.DisableSurfaceControl"
             android:value="true" />
+
+        <receiver android:name="com.jar.happiness.HappinessJarWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/happiness_jar_widget_info" />
+        </receiver>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

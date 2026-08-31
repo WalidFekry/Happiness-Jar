@@ -159,15 +159,20 @@ class AppDatabase {
     return data;
   }
 
-  Future<List<MessagesNotifications>> getMessagesNotificationContent() async {
+  Future<List<MessagesNotifications>> getMessagesNotificationContent({
+    int? limit,
+  }) async {
     final Database db = await database;
-    final List<Map<String, dynamic>> maps = await db
-        .rawQuery('SELECT * FROM messages_notifications ORDER BY RANDOM()');
-    List<MessagesNotifications> data = [];
-    for (var item in maps) {
-      data.add(MessagesNotifications.fromJson(item));
-    }
-    return data;
+
+    final String limitQuery = limit != null ? ' LIMIT $limit' : '';
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+      'SELECT * FROM messages_notifications ORDER BY RANDOM()$limitQuery',
+    );
+
+    return maps
+        .map((item) => MessagesNotifications.fromJson(item))
+        .toList();
   }
 
   Future<List<MessagesNotifications>> getMessageNotificationContentById(

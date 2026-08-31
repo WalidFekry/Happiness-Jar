@@ -15,6 +15,7 @@ import 'package:happiness_jar/view/screens/home/widgets/open_setting_app_dialog.
 import 'package:in_app_review/in_app_review.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:happiness_jar/services/widget_service.dart';
 import '../../../../db/app_database.dart';
 import '../../../../enums/status.dart';
 import '../../../../models/resources.dart';
@@ -31,6 +32,8 @@ class HomeViewModel extends BaseViewModel {
   final appDatabase = locator<AppDatabase>();
   final adsService = locator<AdsService>();
   final localNotificationService = locator<LocalNotificationService>();
+  final widgetService = locator<WidgetService>();
+
   int notificationsCount = 0;
   int postsCount = 0;
   int newNotificationsCount = 0;
@@ -163,6 +166,10 @@ class HomeViewModel extends BaseViewModel {
         });
       }
     }
+  }
+
+  void refreshWidget(){
+    widgetService.refreshWidget();
   }
 
   /// Fetch advice message from the database or API

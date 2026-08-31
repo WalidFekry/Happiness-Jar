@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="#1A2745">
+
+    <!-- Logo -->
+    <ImageView
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="6dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="برطمان السعادة" />
+
+    <!-- Message -->
+    <TextView
+        android:id="@+id/widget_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="لا تستعجل الأشياء الجميلة، فلكل شيء وقته الجميل."
+        android:textColor="#F3F5FA"
+        android:textSize="18sp"
+        android:fontFamily="sans"
+        android:lineSpacingExtra="2dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:maxLines="6"
+        android:ellipsize="end" />
+
+</LinearLayout>
