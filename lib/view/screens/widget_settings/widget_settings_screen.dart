@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/constants/app_colors.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
+import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/custom_app_bar.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
 import 'package:home_widget/home_widget.dart';
 
-import '../../../../constants/assets_manager.dart';
+import '../../../constants/assets_manager.dart';
+import '../../../services/widget_service.dart';
 
 class WidgetSettingsScreen extends StatelessWidget {
   const WidgetSettingsScreen({super.key});
@@ -45,6 +47,13 @@ class WidgetSettingsScreen extends StatelessWidget {
             ),
             verticalSpace(30),
             _buildInstructionSection(context),
+            verticalSpace(20),
+            _buildFeatureItem(
+              context,
+              icon: Icons.touch_app,
+              title: "وصول سريع",
+              description: "اضغط على الويدجت في أي وقت لفتح التطبيق وقراءة المزيد.",
+            ),
             verticalSpace(30),
             if(Platform.isAndroid) ... [
               ElevatedButton(
@@ -139,6 +148,37 @@ class WidgetSettingsScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildFeatureItem(BuildContext context,
+      {required IconData icon,
+      required String title,
+      required String description}) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: AppColors.lightColor1.withOpacity(0.1),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: AppColors.lightColor1),
+        ),
+        horizontalSpace(15),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SubtitleTextWidget(label: title, fontSize: 16),
+              ContentTextWidget(
+                label: description,
+                fontSize: 13,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildWidgetPreview(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -180,7 +220,8 @@ class WidgetSettingsScreen extends StatelessWidget {
     );
   }
 
-  void _requestPinWidget() {
+  Future<void> _requestPinWidget() async {
+      await locator<WidgetService>().refreshWidget();
       HomeWidget.requestPinWidget(
         androidName: 'HappinessJarWidgetProvider',
       );
