@@ -1,61 +1,55 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/foundation.dart';
-import 'package:home_widget/home_widget.dart';
-import 'package:happiness_jar/view/screens/notifications/model/notification_model.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/services/locator.dart';
+import 'package:home_widget/home_widget.dart';
 
 class WidgetService {
   static const String _groupId = 'group.com.jar.happiness';
   static const String _androidWidgetName = 'HappinessJarWidgetProvider';
   static const String _iosWidgetName = 'HappinessJarWidget';
 
-  Future<void> updateWidget(MessagesNotifications? message) async {
-    if (message == null) return;
-
+  /// Fetches 24 random messages and saves them to shared storage for the native widgets to use.
+  /// This eliminates the need for the widgets to trigger Flutter or SQLite every hour.
+  Future<void> refreshWidgetMessages() async {
     try {
-      await HomeWidget.setAppGroupId(_groupId);
-      
-      // For Android
-      await HomeWidget.saveWidgetData<String>('message_text', message.text);
-      
-      // For iOS (Prepare 24 messages for the next 24 hours)
-      if(Platform.isIOS){
-        final appDatabase = locator<AppDatabase>();
-        final allMessages = await appDatabase.getMessagesNotificationContent(limit: 24);
-        if (allMessages.isNotEmpty) {
-          final batch = allMessages.take(24).map((m) => m.text).toList();
-          await HomeWidget.saveWidgetData<String>('message_list', jsonEncode(batch));
-        }
-      }
+      final appDatabase = locator<AppDatabase>();
+      final messages =
+          await appDatabase.getMessagesNotificationContent(limit: 24);
 
+      if (messages.isEmpty) return;
+
+      final messageTexts = messages
+          .map((m) => m.text)
+          .where((text) => text != null)
+          .cast<String>()
+          .toList();
+
+      if (messageTexts.isEmpty) return;
+
+      await HomeWidget.setAppGroupId(_groupId);
+
+      // Save the list of messages for both platforms to use locally
+      await HomeWidget.saveWidgetData<String>(
+          'message_list', jsonEncode(messageTexts));
+
+      // Save the first message as a fallback/initial text
+      await HomeWidget.saveWidgetData<String>(
+          'message_text', messageTexts.first);
+
+      // Reset index to 0 for a fresh cycle
+      await HomeWidget.saveWidgetData<int>('message_index', 0);
+
+      // Trigger native update to apply changes immediately
       await HomeWidget.updateWidget(
         androidName: _androidWidgetName,
         iOSName: _iosWidgetName,
       );
     } catch (e) {
       if (kDebugMode) {
-        print('Error updating widget: $e');
+        print('Error refreshing widget messages: $e');
       }
-    }
-  }
-
-  Future<void> refreshWidget() async {
-    final appDatabase = locator<AppDatabase>();
-    final messages = await appDatabase.getMessagesNotificationContent(limit: 1);
-    if (messages.isNotEmpty) {
-      await updateWidget(messages.first);
-    }
-  }
-
-  static Future<void> handleWidgetAction(Uri? uri) async {
-    if (uri == null) return;
-
-    if (uri.host == 'update_message') {
-      setupLocator();
-      final widgetService = WidgetService();
-      await widgetService.refreshWidget();
     }
   }
 }

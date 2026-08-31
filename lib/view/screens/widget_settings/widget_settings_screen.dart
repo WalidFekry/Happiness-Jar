@@ -42,18 +42,11 @@ class WidgetSettingsScreen extends StatelessWidget {
             verticalSpace(10),
             const ContentTextWidget(
               label:
-                  "أضف ويدجت برطمان السعادة لشاشتك الرئيسية لتصلك رسالة إيجابية وسعيدة تتغير تلقائياً طوال اليوم.",
+                  "أضف ويدجت السعادة لشاشتك الرئيسية لتصلك رسائل من البرطمان تتغير تلقائياً طوال اليوم.",
               textAlign: TextAlign.center,
             ),
             verticalSpace(30),
             _buildInstructionSection(context),
-            verticalSpace(20),
-            _buildFeatureItem(
-              context,
-              icon: Icons.touch_app,
-              title: "وصول سريع",
-              description: "اضغط على الويدجت في أي وقت لفتح التطبيق وقراءة المزيد.",
-            ),
             verticalSpace(30),
             if(Platform.isAndroid) ... [
               ElevatedButton(
@@ -148,36 +141,6 @@ class WidgetSettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureItem(BuildContext context,
-      {required IconData icon,
-      required String title,
-      required String description}) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: AppColors.lightColor1.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: AppColors.lightColor1),
-        ),
-        horizontalSpace(15),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SubtitleTextWidget(label: title, fontSize: 16),
-              ContentTextWidget(
-                label: description,
-                fontSize: 13,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildWidgetPreview(BuildContext context) {
     return Container(
@@ -221,7 +184,7 @@ class WidgetSettingsScreen extends StatelessWidget {
   }
 
   Future<void> _requestPinWidget() async {
-      await locator<WidgetService>().refreshWidget();
+      await locator<WidgetService>().refreshWidgetMessages();
       HomeWidget.requestPinWidget(
         androidName: 'HappinessJarWidgetProvider',
       );

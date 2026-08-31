@@ -7,7 +7,7 @@ struct Provider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), message: "برطمان السعادة يتمنى لك يوماً سعيداً ✨")
+        let entry = SimpleEntry(date: Date(), message: "برطمان السعادة يتمنى لك يوماً سعيداً")
         completion(entry)
     }
 
@@ -22,7 +22,7 @@ struct Provider: TimelineProvider {
 
         if messages.isEmpty {
             // Fallback if no messages are available
-            let entry = SimpleEntry(date: currentDate, message: userDefaults?.string(forKey: "message_text") ?? "برطمان السعادة يتمنى لك يوماً سعيداً ✨")
+            let entry = SimpleEntry(date: currentDate, message: userDefaults?.string(forKey: "message_text") ?? "برطمان السعادة يتمنى لك يوماً سعيداً")
             entries.append(entry)
         } else {
             // 2. Create a timeline entry for each hour using the provided messages

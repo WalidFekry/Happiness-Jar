@@ -168,8 +168,8 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  void refreshWidget(){
-    widgetService.refreshWidget();
+  void refreshWidgetMessages(){
+    widgetService.refreshWidgetMessages();
   }
 
   /// Fetch advice message from the database or API
