@@ -25,8 +25,14 @@ class MoreMainSectionsScreen extends StatelessWidget {
                   title: 'تدبّر',
                   context: context,
                   routeName: RouteName.VIDEOS_SCREEN),
+              _buildSectionCard(
+                  imagePath: AssetsManager.feeling,
+                  title: 'بماذا تشعر؟',
+                  context: context,
+                  routeName: RouteName.FEELINGS_SCREEN),
             ],
           ),
+          verticalSpace(10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -37,10 +43,10 @@ class MoreMainSectionsScreen extends StatelessWidget {
                   routeName: RouteName.FADFADA_SCREEN),
               horizontalSpace(20),
               _buildSectionCard(
-                  imagePath: AssetsManager.feeling,
-                  title: 'بماذا تشعر؟',
+                  imagePath: AssetsManager.widget,
+                  title: 'ويدجت السعادة',
                   context: context,
-                  routeName: RouteName.FEELINGS_SCREEN),
+                  routeName: RouteName.WIDGET_SETTINGS),
             ],
           ),
         ],
