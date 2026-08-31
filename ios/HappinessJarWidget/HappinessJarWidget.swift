@@ -7,7 +7,14 @@ struct Provider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), message: "برطمان السعادة يتمنى لك يوماً سعيداً")
+        let userDefaults = UserDefaults(suiteName: "group.com.jar.happiness")
+        let jsonString = userDefaults?.string(forKey: "message_list") ?? "[]"
+        let messages = decodeMessages(from: jsonString)
+
+        // Show the first message in snapshot/preview if available
+        let displayMessage = messages.first ?? userDefaults?.string(forKey: "message_text") ?? "برطمان السعادة يتمنى لك يوماً سعيداً"
+
+        let entry = SimpleEntry(date: Date(), message: displayMessage)
         completion(entry)
     }
 
@@ -54,15 +61,18 @@ struct HappinessJarWidgetEntryView : View {
 
     var body: some View {
         ZStack {
+            // Background Color (Matches Android #1A2745)
             Color(hex: "1A2745")
                 .ignoresSafeArea()
 
             VStack(alignment: .center, spacing: 6) {
+                // Logo (Matches Android 46dp)
                 Image("logo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 46, height: 46)
 
+                // Message (Matches Android 18sp / #F3F5FA)
                 Text(entry.message)
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(Color(hex: "F3F5FA"))
@@ -97,16 +107,6 @@ struct HappinessJarWidget: Widget {
         .description("رسائل يومية متجددة من البرطمان.")
         .supportedFamilies([.systemSmall, .systemMedium])
         .contentMarginsDisabled()
-    }
-}
-
-extension WidgetConfiguration {
-    func contentMarginsDisabled() -> some WidgetConfiguration {
-        if #available(iOS 17.0, *) {
-            return self.contentMarginsDisabled()
-        } else {
-            return self
-        }
     }
 }
 
