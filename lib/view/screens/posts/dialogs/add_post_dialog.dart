@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/helpers/validators.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -54,7 +54,7 @@ class AddPostDialog extends StatelessWidget {
                                         .userNameController.text.isNotEmpty
                                     ? GestureDetector(
                                         onTap: () => viewModel.clearUserName(),
-                                        child: Icon(IconlyLight.close_square,
+                                        child: Icon(IconlyLight.closeSquare,
                                             color: Theme.of(context).cardColor),
                                       )
                                     : null,
@@ -80,7 +80,7 @@ class AddPostDialog extends StatelessWidget {
                                       .postController.text.isNotEmpty
                                   ? GestureDetector(
                                       onTap: () => viewModel.clearPost(),
-                                      child: Icon(IconlyLight.close_square,
+                                      child: Icon(IconlyLight.closeSquare,
                                           color: Theme.of(context).cardColor),
                                     )
                                   : null,

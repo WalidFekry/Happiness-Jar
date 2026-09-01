@@ -4,7 +4,7 @@ import 'package:happiness_jar/view/screens/categories/view_model/categories_view
 import 'package:happiness_jar/view/widgets/no_internet.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 
 
 class CategoriesScreen extends StatelessWidget {
@@ -39,7 +39,7 @@ class CategoriesScreen extends StatelessWidget {
                           child: ListTile(
                             title: Center(child: SubtitleTextWidget(label: viewModel.list[index].title)),
                             leading: Icon(Icons.tag,color: Theme.of(context).cardColor),
-                            trailing: Icon(IconlyLight.arrow_left,color: Theme.of(context).iconTheme.color),
+                            trailing: Icon(IconlyLight.arrowLeft,color: Theme.of(context).iconTheme.color),
                           ),
                         ),
                       ),

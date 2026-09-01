@@ -4,7 +4,7 @@ import 'package:happiness_jar/view/screens/auth/view_model/register_view_model.d
 import 'package:happiness_jar/view/widgets/content_text.dart';
 import 'package:happiness_jar/view/widgets/subtitle_text.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 
 import '../../../../constants/app_constants.dart';
 import '../../../../helpers/spacing.dart';
@@ -55,7 +55,7 @@ class RegisterScreen extends StatelessWidget {
                         children: [
                           const SubtitleTextWidget(label: "اختار صورة من هنا"),
                           Icon(
-                            IconlyBold.arrow_left_2,
+                            IconlyBold.arrowLeft2,
                             color: Theme.of(context).iconTheme.color,
                           ),
                           GestureDetector(
@@ -97,7 +97,7 @@ class RegisterScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: 'واكتب اسمك هنا ..',
                           prefixIcon: Icon(
-                            IconlyLight.add_user,
+                            IconlyLight.addUser,
                             color: Theme.of(context).iconTheme.color,
                           ),
                         ),

@@ -10,7 +10,7 @@ import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/screens/home/view_model/home_view_model.dart';
 import 'package:happiness_jar/view/screens/home/widgets/share_app_dialog.dart';
 import 'package:happiness_jar/view/screens/posts/view/posts_screen.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -176,8 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(IconlyBold.heart),
                   label: "المفضلة"),
               const NavigationDestination(
-                  selectedIcon: Icon(IconlyLight.more_circle),
-                  icon: Icon(IconlyBold.more_circle),
+                  selectedIcon: Icon(IconlyLight.moreCircle),
+                  icon: Icon(IconlyBold.moreCircle),
                   label: "المزيد"),
             ],
           ));

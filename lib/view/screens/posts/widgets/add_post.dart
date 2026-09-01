@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/screens/posts/view_model/posts_view_model.dart';
 import 'package:happiness_jar/view/screens/posts/dialogs/add_post_dialog.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 
 import '../../../widgets/title_text.dart';
 
@@ -17,7 +17,7 @@ class AddPost extends StatelessWidget {
         const TitleTextWidget(label: "كُن إيجابياً 💙"),
         const Spacer(),
         Icon(
-          IconlyLight.arrow_left,
+          IconlyLight.arrowLeft,
           color: Theme.of(context).iconTheme.color,
           size: 30,
         ),

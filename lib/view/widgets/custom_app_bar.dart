@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 
 import '../../constants/assets_manager.dart';
 import '../../services/locator.dart';
@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             locator<NavigationService>().goBack();
           },
           icon: Icon(
-            IconlyLight.arrow_left_2,
+            IconlyLight.arrowLeft2,
             size: 35,
             color: Theme.of(context).iconTheme.color,
           ),

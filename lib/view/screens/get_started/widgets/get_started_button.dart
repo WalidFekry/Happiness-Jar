@@ -8,7 +8,7 @@ import 'package:happiness_jar/services/firebase_service.dart';
 import 'package:happiness_jar/services/locator.dart';
 import 'package:happiness_jar/services/navigation_service.dart';
 import 'package:happiness_jar/view/widgets/title_text.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 
 import '../../../../routs/routs_names.dart';
 
@@ -63,7 +63,7 @@ class GetStartedButton extends StatelessWidget {
                   label: text,
                 ),
                 horizontalSpace(4),
-                Icon(IconlyLight.arrow_left_2,
+                Icon(IconlyLight.arrowLeft2,
                     size: 20, color: Theme.of(context).iconTheme.color),
               ],
             ),

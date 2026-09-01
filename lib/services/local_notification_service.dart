@@ -16,7 +16,7 @@ class LocalNotificationService {
       iOS: DarwinInitializationSettings(),
     );
     flutterLocalNotificationsPlugin.initialize(
-      settings,
+      settings: settings,
       onDidReceiveNotificationResponse: onTap,
       onDidReceiveBackgroundNotificationResponse: onTap,
     );
@@ -47,10 +47,10 @@ class LocalNotificationService {
     );
 
     await flutterLocalNotificationsPlugin.show(
-      LocalNotificationConstants.notificationId_2,
-      message.notification?.title,
-      message.notification?.body,
-      details,
+      id: LocalNotificationConstants.notificationId_2,
+      title: message.notification?.title,
+      body: message.notification?.body,
+      notificationDetails: details,
       payload: message.data["click_action"],
     );
   }
@@ -80,12 +80,13 @@ class LocalNotificationService {
     );
 
     await flutterLocalNotificationsPlugin.periodicallyShow(
-      LocalNotificationConstants.notificationId,
-      LocalNotificationConstants.notificationTitle,
-      LocalNotificationConstants.notificationBody,
-      RepeatInterval.daily,
-      details,
+      id: LocalNotificationConstants.notificationId,
+      title: LocalNotificationConstants.notificationTitle,
+      body: LocalNotificationConstants.notificationBody,
+      repeatInterval: RepeatInterval.daily,
+      notificationDetails: details,
       payload: LocalNotificationConstants.notificationPayload,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
 
@@ -114,10 +115,10 @@ class LocalNotificationService {
     );
 
     await flutterLocalNotificationsPlugin.show(
-      LocalNotificationConstants.notificationId_3,
-      title,
-      body,
-      details,
+      id: LocalNotificationConstants.notificationId_3,
+      title: title,
+      body: body,
+      notificationDetails: details,
       payload: LocalNotificationConstants.birthdayNotificationPayload,
     );
   }
@@ -147,17 +148,17 @@ class LocalNotificationService {
     );
 
     await flutterLocalNotificationsPlugin.show(
-      LocalNotificationConstants.notificationId_4,
-      "مرحبًا بك يا $userName 👋",
-      "سعادتك تبدأ بخطوة… وقد بدأت الآن 💙",
-      details,
+      id: LocalNotificationConstants.notificationId_4,
+      title: "مرحبًا بك يا $userName 👋",
+      body: "سعادتك تبدأ بخطوة… وقد بدأت الآن 💙",
+      notificationDetails: details,
       payload: LocalNotificationConstants.welcomeNotificationPayload,
     );
   }
 
 
   Future<void> cancelNotification(int id) async {
-    await flutterLocalNotificationsPlugin.cancel(id);
+    await flutterLocalNotificationsPlugin.cancel(id: id);
   }
 }
 

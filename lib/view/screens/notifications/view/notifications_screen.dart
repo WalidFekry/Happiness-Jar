@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:happiness_jar/view/screens/notifications/view_model/notifications_view_model.dart';
 import 'package:happiness_jar/view/screens/notifications/widgets/notifications_list_view.dart';
 import 'package:happiness_jar/view/widgets/no_internet.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -95,7 +95,7 @@ class NotificationsScreen extends StatelessWidget {
                   },
                   icon: viewModel.searchController.text.isEmpty
                       ? const Icon(IconlyLight.search)
-                      : const Icon(IconlyLight.close_square),
+                      : const Icon(IconlyLight.closeSquare),
                 ),
               ),
               keyboardType: TextInputType.number,

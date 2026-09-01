@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_jar/helpers/spacing.dart';
 import 'package:happiness_jar/view/screens/messages/widgets/no_internet.dart';
 import 'package:happiness_jar/view/widgets/custom_circular_progress_Indicator.dart';
-import 'package:iconly/iconly.dart';
+import 'package:iconly_plus/iconly_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -223,7 +223,7 @@ class MessagesScreen extends StatelessWidget {
       visible: viewModel.prevMessage,
       child: Flexible(
         child: IconButton(
-          icon: const Icon(IconlyBold.arrow_right, size: 35),
+          icon: const Icon(IconlyBold.arrowRight, size: 35),
           onPressed: () {
             viewModel.prevMessages();
           },
@@ -237,7 +237,7 @@ class MessagesScreen extends StatelessWidget {
       visible: viewModel.nextMessage,
       child: Flexible(
         child: IconButton(
-          icon: const Icon(IconlyBold.arrow_left, size: 35),
+          icon: const Icon(IconlyBold.arrowLeft, size: 35),
           onPressed: () {
             viewModel.nextMessages();
           },
