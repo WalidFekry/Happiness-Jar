@@ -32,7 +32,9 @@ struct Provider: TimelineProvider {
             let entry = SimpleEntry(date: currentDate, message: userDefaults?.string(forKey: "message_text") ?? "برطمان السعادة يتمنى لك يوماً سعيداً")
             entries.append(entry)
         } else {
-            // 2. Create a timeline entry for each hour using the provided messages
+            // 2. Create a 24-hour timeline based on the cached list
+            // We use the count of messages to ensure we don't go out of bounds
+            // Typically Flutter provides 24 messages.
             for hourOffset in 0 ..< messages.count {
                 let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
                 let entry = SimpleEntry(date: entryDate, message: messages[hourOffset])
@@ -40,7 +42,8 @@ struct Provider: TimelineProvider {
             }
         }
 
-        // 3. Schedule the next timeline refresh after the last message is used
+        // 3. Reload when the last entry is shown or after a cycle
+        // If we have 24 messages, this will last for 24 hours.
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
@@ -66,13 +69,13 @@ struct HappinessJarWidgetEntryView : View {
                 .ignoresSafeArea()
 
             VStack(alignment: .center, spacing: 6) {
-                // Logo (Matches Android 46dp)
+                // Logo (Matches Android 46pt)
                 Image("logo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 46, height: 46)
 
-                // Message (Matches Android 18sp / #F3F5FA)
+                // Message (Matches Android 18pt / #F3F5FA)
                 Text(entry.message)
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(Color(hex: "F3F5FA"))
@@ -110,6 +113,16 @@ struct HappinessJarWidget: Widget {
     }
 }
 
+extension WidgetConfiguration {
+    func contentMarginsDisabled() -> some WidgetConfiguration {
+        if #available(iOS 17.0, *) {
+            return self.contentMarginsDisabled()
+        } else {
+            return self
+        }
+    }
+}
+
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -117,11 +130,11 @@ extension Color {
         Scanner(string: hex).scanHexInt64(&int)
         let a, r, g, b: UInt64
         switch hex.count {
-        case 3:
+        case 3: // RGB (12-bit)
             (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6:
+        case 6: // RGB (24-bit)
             (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8:
+        case 8: // ARGB (32-bit)
             (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
         default:
             (a, r, g, b) = (1, 1, 1, 0)

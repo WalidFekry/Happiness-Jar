@@ -6,10 +6,22 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.RemoteViews
+import androidx.work.*
 import es.antonborri.home_widget.HomeWidgetProvider
 import org.json.JSONArray
+import java.util.concurrent.TimeUnit
 
 class HappinessJarWidgetProvider : HomeWidgetProvider() {
+
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        scheduleWidgetUpdate(context)
+    }
+
+    override fun onDisabled(context: Context) {
+        super.onDisabled(context)
+        WorkManager.getInstance(context).cancelUniqueWork("happiness_jar_widget_update")
+    }
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray, widgetData: SharedPreferences) {
         
@@ -27,9 +39,9 @@ class HappinessJarWidgetProvider : HomeWidgetProvider() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // 2. Logic to pick next message from the cached list
+        // 2. Logic to pick CURRENT message from the cached list
         val messageListJson = widgetData.getString("message_list", null)
-        var messageIndex = widgetData.getInt("message_index", 0)
+        val messageIndex = widgetData.getInt("message_index", 0)
         
         var currentMessage = widgetData.getString("message_text", "برطمان السعادة يتمنى لك يوماً سعيداً")
 
@@ -37,16 +49,9 @@ class HappinessJarWidgetProvider : HomeWidgetProvider() {
             try {
                 val jsonArray = JSONArray(messageListJson)
                 if (jsonArray.length() > 0) {
-                    // Ensure index is within bounds
-                    if (messageIndex < 0 || messageIndex >= jsonArray.length()) {
-                        messageIndex = 0
-                    }
-                    
-                    currentMessage = jsonArray.getString(messageIndex)
-                    
-                    // Increment and save for next time
-                    val nextIndex = (messageIndex + 1) % jsonArray.length()
-                    widgetData.edit().putInt("message_index", nextIndex).apply()
+                    // Use modulo in case index went out of bounds
+                    val safeIndex = if (messageIndex < 0 || messageIndex >= jsonArray.length()) 0 else messageIndex
+                    currentMessage = jsonArray.getString(safeIndex)
                 }
             } catch (e: Exception) {
                 // Keep default or current message if parsing fails
@@ -62,5 +67,22 @@ class HappinessJarWidgetProvider : HomeWidgetProvider() {
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
+        
+        // Ensure WorkManager is scheduled whenever we update
+        scheduleWidgetUpdate(context)
+    }
+
+    private fun scheduleWidgetUpdate(context: Context) {
+        val workRequest =
+            PeriodicWorkRequestBuilder<HappinessJarWidgetWorker>(
+                15,
+                TimeUnit.MINUTES
+            ).build()
+        
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            "happiness_jar_widget_update",
+            ExistingPeriodicWorkPolicy.KEEP,
+            workRequest
+        )
     }
 }

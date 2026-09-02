@@ -14,6 +14,7 @@ import 'constants/shared_preferences_constants.dart';
 import 'db/app_database.dart';
 import 'services/locator.dart';
 
+
 Future<void> initServices() async {
   await FirebaseService.init();
   setupLocator();
@@ -30,48 +31,41 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
   }
 }
 
- Future<bool> checkFirstOpen() async {
+Future<bool> checkFirstOpen() async {
   final prefs = locator<SharedPrefServices>();
   await prefs.init();
   return await prefs.getBoolean(SharedPrefsConstants.getStarted);
 }
 
 class HappinessJarApp extends StatelessWidget {
-  const HappinessJarApp(this.getStarted,{super.key});
+  const HappinessJarApp(this.getStarted, {super.key});
+
   final bool getStarted;
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            locale: context.locale,
-            supportedLocales: context.supportedLocales,
-            localizationsDelegates: context.localizationDelegates,
-            title: 'برطمان السعادة',
-            theme: Styles.themeData(
-              isDarkTheme: themeProvider.getIsDarkTheme,
-              context: context,
-            ),
-            initialRoute: getStarted ? RouteName.HOME : RouteName.GET_STARTED,
-            navigatorKey: locator<NavigationService>().navigatorKey,
-            onGenerateRoute: AppRouter.generateRoute,
-          );
-        },
-      ),
-    );
+    return ChangeNotifierProvider(create: (_) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          locale: context.locale,
+          supportedLocales: context.supportedLocales,
+          localizationsDelegates: context.localizationDelegates,
+          title: 'برطمان السعادة',
+          theme: Styles.themeData(
+            isDarkTheme: themeProvider.getIsDarkTheme, context: context,),
+          initialRoute: getStarted ? RouteName.HOME : RouteName.GET_STARTED,
+          navigatorKey: locator<NavigationService>().navigatorKey,
+          onGenerateRoute: AppRouter.generateRoute,);
+      },),);
   }
 }
 
 EasyLocalization easyLocalization(Widget child) {
   return EasyLocalization(
-    supportedLocales: const [Locale('en'),Locale('ar')],
+    supportedLocales: const [Locale('en'), Locale('ar')],
     startLocale: const Locale('ar'),
     saveLocale: true,
     path: 'assets/translations',
     useOnlyLangCode: true,
-    child: child,
-  );
+    child: child,);
 }

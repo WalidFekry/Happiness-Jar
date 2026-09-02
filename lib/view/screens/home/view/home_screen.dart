@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       viewModel.getTodayAdvice();
       viewModel.showInAppReview();
       viewModel.checkNotificationsPermission(context);
-      viewModel.refreshWidgetMessages();
+      viewModel.prepareWidgetMessages();
     }, onFinish: (viewModel) {
       viewModel.destroy();
     }, builder: (context, viewModel, child) {

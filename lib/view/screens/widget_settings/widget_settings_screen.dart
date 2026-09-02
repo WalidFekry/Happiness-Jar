@@ -184,7 +184,7 @@ class WidgetSettingsScreen extends StatelessWidget {
   }
 
   Future<void> _requestPinWidget() async {
-      await locator<WidgetService>().refreshWidgetMessages();
+      await locator<WidgetService>().prepareWidgetMessages();
       HomeWidget.requestPinWidget(
         androidName: 'HappinessJarWidgetProvider',
       );
