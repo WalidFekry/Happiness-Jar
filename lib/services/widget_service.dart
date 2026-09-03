@@ -1,9 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
-import 'package:home_widget/home_widget.dart';
-import 'package:happiness_jar/view/screens/notifications/model/notification_model.dart';
 import 'package:happiness_jar/db/app_database.dart';
 import 'package:happiness_jar/services/locator.dart';
+import 'package:home_widget/home_widget.dart';
 
 class WidgetService {
   static const String _groupId = 'group.com.jar.happiness';
@@ -16,8 +16,9 @@ class WidgetService {
     try {
       final appDatabase = locator<AppDatabase>();
       // Fetch 24 random messages
-      final messages = await appDatabase.getMessagesNotificationContent(limit: 24);
-      
+      final messages =
+          await appDatabase.getMessagesNotificationContent(limit: 24);
+
       if (messages.isEmpty) return;
 
       final messageTexts = messages
@@ -25,17 +26,19 @@ class WidgetService {
           .where((text) => text != null)
           .cast<String>()
           .toList();
-      
+
       if (messageTexts.isEmpty) return;
 
       await HomeWidget.setAppGroupId(_groupId);
-      
+
       // Save the list of messages for native rotation
-      await HomeWidget.saveWidgetData<String>('message_list', jsonEncode(messageTexts));
-      
+      await HomeWidget.saveWidgetData<String>(
+          'message_list', jsonEncode(messageTexts));
+
       // Save the current message as a fallback/initial text
-      await HomeWidget.saveWidgetData<String>('message_text', messageTexts.first);
-      
+      await HomeWidget.saveWidgetData<String>(
+          'message_text', messageTexts.first);
+
       // Reset index to 0 for a fresh cycle
       await HomeWidget.saveWidgetData<int>('message_index', 0);
 

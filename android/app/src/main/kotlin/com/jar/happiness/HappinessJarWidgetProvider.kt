@@ -11,6 +11,7 @@ import es.antonborri.home_widget.HomeWidgetProvider
 import org.json.JSONArray
 import java.util.concurrent.TimeUnit
 
+
 class HappinessJarWidgetProvider : HomeWidgetProvider() {
 
     override fun onEnabled(context: Context) {
@@ -73,12 +74,10 @@ class HappinessJarWidgetProvider : HomeWidgetProvider() {
     }
 
     private fun scheduleWidgetUpdate(context: Context) {
-        val workRequest =
-            PeriodicWorkRequestBuilder<HappinessJarWidgetWorker>(
-                15,
-                TimeUnit.MINUTES
-            ).build()
-        
+        val workRequest = PeriodicWorkRequestBuilder<HappinessJarWidgetWorker>(
+            1, TimeUnit.HOURS
+        ).build()
+
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "happiness_jar_widget_update",
             ExistingPeriodicWorkPolicy.KEEP,
